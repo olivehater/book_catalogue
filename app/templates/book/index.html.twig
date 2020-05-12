@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_book_list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_book_list'|trans }}</h1>
+    {% if books is defined and books|length %}
+        <table class="table table-striped">
+            <tr>
+                <th>{{ 'label_id'|trans }}</th>
+                <th>{{ 'label_created_at'|trans }}</th>
+                <th>{{ 'label_updated_at'|trans }}</th>
+                <th>{{ 'label_title'|trans }}</th>
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.createdAt|date('Y/m/d') }}</td>
+                    <td>{{ book.updatedAt|date('Y/m/d') }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>
+                        <a href="{{ url('book_show', {'id':book.id}) }}">{{ 'show_book'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            {{'empty_book_list' | trans}}
+        </div>
+    {% endif %}
+{% endblock %}
