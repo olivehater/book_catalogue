@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'show_book'|trans }}
+    {{ 'show_book_details'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -14,8 +14,12 @@
             <dd>{{ book.createdAt|date('Y/m/d') }}</dd>
             <dt>{{ 'label_updated_at'|trans }}</dt>
             <dd>{{ book.updatedAt|date('Y/m/d') }}</dd>
+            <dt>{{ 'label_category'|trans }}</dt>
+            <dd>{{ book.category.title }}</dd>
             <dt>{{ 'label_title'|trans }}</dt>
             <dd>{{ book.title }}</dd>
+            <dt>{{ 'label_author'|trans }}</dt>
+            <dd>{{ book.author.title }}</dd>
             <dt>{{ 'label_description'|trans }}</dt>
             <dd>{{ book.description }}</dd>
         </dl>

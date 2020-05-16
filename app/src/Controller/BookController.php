@@ -23,10 +23,10 @@ class BookController extends AbstractController
     /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \App\Repository\BookRepository $bookRepository Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
+     * @param \App\Repository\BookRepository            $bookRepository Book repository
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Pagination interface
      *
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator Pagination interface
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @Route(

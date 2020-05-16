@@ -55,6 +55,8 @@ abstract class AbstractBaseFixtures extends Fixture
     abstract protected function loadData(ObjectManager $manager): void;
 
     /**
+     * Create many objects at once.
+     *
      * @param int      $count     Number of objects to create
      * @param string   $groupName Tag these created objects with this group name, and use this later with getRandomReference(s) to fetch only from this specific group
      * @param callable $factory   Defines method of creating objects
@@ -79,6 +81,7 @@ abstract class AbstractBaseFixtures extends Fixture
      * Set random reference to the object.
      *
      * @param string $groupName Objects group name
+     *
      * @return object Random object reference
      */
     protected function getRandomReference(string $groupName): object
@@ -105,16 +108,16 @@ abstract class AbstractBaseFixtures extends Fixture
     /**
      * Get array of objects references based on count.
      *
-     * @param string $className Class name
-     * @param int $count Number of references
+     * @param string $groupName Group name
+     * @param int    $count     Number of references
      *
      * @return array Result
      */
-    protected function getRandomReferences(string $className, int $count): array
+    protected function getRandomReferences(string $groupName, int $count): array
     {
         $references = [];
         while (count($references) < $count) {
-            $references[] = $this->getRandomReference($className);
+            $references[] = $this->getRandomReference($groupName);
         }
 
         return $references;

@@ -1,9 +1,12 @@
 <?php
-
+/**
+ * Author repository.
+ */
 namespace App\Repository;
 
 use App\Entity\Author;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,37 +17,46 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AuthorRepository extends ServiceEntityRepository
 {
+    /**
+     * Items per page.
+     *
+     * @constant int
+     */
+    const PAGINATOR_ITEMS_PER_PAGE = 6;
+
+    /**
+     * AuthorRepository constructor.
+     *
+     * @param \Doctrine\Persistence\ManagerRegistry $registry Manager registry.
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Author::class);
     }
 
-    // /**
-    //  * @return Author[] Returns an array of Author objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get or create new query.
+     *
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder // tworzy lub pobiera query buildera
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        // jeśli nie ma query buildera to utworz nowy
+        return $queryBuilder ?? $this->createQueryBuilder('author'); // task to alias
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Author
+    /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builer
+     */
+    public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->getOrCreateQueryBuilder()
+            //->select('category', 'task.id') // nie wiem czemu nie działa
+            //->innerJoin('category.tasks', 'tasks')
+            ->orderBy('author.title', 'ASC'); // domyśne sortowanie
     }
-    */
 }

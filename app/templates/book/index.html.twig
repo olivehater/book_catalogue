@@ -6,6 +6,13 @@
 
 {% block body %}
     <h1>{{ 'title_book_list'|trans }}</h1>
+
+    <h5>{{ 'see_more'|trans }}</h5>
+    <ul class="dl-horizontal"> {# dl tag, a list with term and descriptions #}
+        <li><a href="{{ url('category_index') }}">{{'category_list'|trans}}</a></li>
+        <li><a href="{{ url('author_index') }}">{{'author_list'|trans}}</a></li>
+    </ul>
+
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -18,6 +25,11 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'book.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'book.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'book.title') }}</th>
+                {#<th>{{ 'label_author' |trans}}</th>#}
+                <th>{{ knp_pagination_sortable(pagination, 'label_author'|trans, 'author.title') }}</th>
+                {#<th>{{ 'label_category'|trans }}</th>#}
+                <th>{{ knp_pagination_sortable(pagination, 'label_category'|trans, 'category.title') }}</th>
+                <th>{{ 'label_tag'|trans }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
             {% for book in pagination.items %}
@@ -26,8 +38,13 @@
                     <td>{{ book.createdAt|date('Y/m/d') }}</td>
                     <td>{{ book.updatedAt|date('Y/m/d') }}</td>
                     <td>{{ book.title }}</td>
+                    <td><a href="{{ url('author_show', {'id':book.author.id}) }}">{{ book.author.title }}</a></td>
+                    {#<td>{{ book.author.title }}</td>#}
+                    <td><a href="{{ url('category_show', {'id':book.category.id}) }}">{{ book.category.title }}</a></td>
+                    {#<td>{{ book.category.title }}</td>#}
+                    <td>{{ 'label_author' }}</td>
                     <td>
-                        <a href="{{ url('book_show', {'id':book.id}) }}">{{ 'show_book'|trans }}</a>
+                        <a href="{{ url('book_show', {'id':book.id}) }}">{{ 'action_show'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}

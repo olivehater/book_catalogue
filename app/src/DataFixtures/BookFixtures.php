@@ -6,12 +6,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\Book;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
  * Class BookFixtures.
  */
-class BookFixtures extends AbstractBaseFixtures
+class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
      * Load data.
@@ -26,10 +27,26 @@ class BookFixtures extends AbstractBaseFixtures
             $book->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $book->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $book->setDescription($this->faker->text);
+            $book->setCategory($this->getRandomReference('categories'));
+            $book->setAuthor($this->getRandomReference('authors'));
 
             return $book;
         });
 
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on.
+     *
+     * @return array Array of dependencies
+     */
+    public function getDependencies(): array
+    {
+        return [
+            CategoryFixtures::class,
+            AuthorFixtures::class,
+            ];
     }
 }

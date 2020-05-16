@@ -1,10 +1,14 @@
 <?php
+/**
+ * Category repository.
+ */
 
 namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +18,46 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
+    /**
+     * Items per page.
+     *
+     * @constant int
+     */
+    const PAGINATOR_ITEMS_PER_PAGE = 6;
+
+    /**
+     * CategoryRepository constructor.
+     *
+     * @param \Doctrine\Persistence\ManagerRegistry $registry manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builer
+     */
+    public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->getOrCreateQueryBuilder()
+            //->select('category', 'book.id') // nie wiem czemu nie działa
+            //->innerJoin('category.tasks', 'tasks')
+            ->orderBy('category.title', 'ASC'); // domyśne sortowanie
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Category
+    /**
+     * Get or create new query.
+     *
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder // tworzy lub pobiera query buildera
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        // jeśli nie ma query buildera to utworz nowy
+        return $queryBuilder ?? $this->createQueryBuilder('category'); // task to alias
     }
-    */
 }

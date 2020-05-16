@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="label_actions">
                 <source>label_actions</source>
-                <target>Pokaż</target>
+                <target>Akcje</target>
             </trans-unit>
             <trans-unit id="label_id">
                 <source>label_id</source>
@@ -26,13 +26,33 @@
                 <source>label_title</source>
                 <target>Tytuł</target>
             </trans-unit>
-            <trans-unit id="show_book">
-                <source>show_book</source>
-                <target>Szczegóły książki</target>
+            <trans-unit id="label_category">
+                <source>label_category</source>
+                <target>Kategoria</target>
+            </trans-unit>
+            <trans-unit id="label_author">
+                <source>label_author</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="label_tag">
+                <source>label_tag</source>
+                <target>Tagi</target>
+            </trans-unit>
+            <trans-unit id="action_show">
+                <source>action_show</source>
+                <target>Wyświetl</target>
             </trans-unit>
             <trans-unit id="empty_book_list">
                 <source>empty_book_list</source>
                 <target>Lista książek jest pusta...</target>
+            </trans-unit>
+            <trans-unit id="see_more">
+                <source>see_more</source>
+                <target>Zobacz więcej:</target>
+            </trans-unit>
+            <trans-unit id="category_list">
+                <source>category_list</source>
+                <target>Lista kategorii</target>
             </trans-unit>
 
 
@@ -52,6 +72,50 @@
                 <source>book_not_found</source>
                 <target>Książki nie znaleziono...</target>
             </trans-unit>
+            <trans-unit id="show_book_details">
+                <source>show_book_details</source>
+                <target>Szczegóły książki</target>
+            </trans-unit>
+
+            <trans-unit id="all_books_list_back">
+                <source>all_books_list_back</source>
+                <target>Powrót do listy książek</target>
+            </trans-unit>
+            <trans-unit id="all_category_list_back">
+                <source>all_category_list_back</source>
+                <target>Powrót do listy kategorii</target>
+            </trans-unit>
+            <trans-unit id="title_selected_category">
+                <source>title_selected_category</source>
+                <target>Wybrana kateoria</target>
+            </trans-unit>
+            <trans-unit id="show_category_details">
+                <source>show_category_details</source>
+                <target>Szczegóły kategorii</target>
+            </trans-unit>
+
+
+            <trans-unit id="author_list">
+                <source>author_list</source>
+                <target>Lista autorów</target>
+            </trans-unit>
+            <trans-unit id="show_author_details">
+                <source>show_author_details</source>
+                <target>Szczegóły autora</target>
+            </trans-unit>
+            <trans-unit id="title_selected_author">
+                <source>title_selected_author</source>
+                <target>Wybrany autor: %title%</target>
+            </trans-unit>
+            <trans-unit id="all_authors_list_back">
+                <source>all_authors_list_back</source>
+                <target>Powrót do listy autorów</target>
+            </trans-unit>
+            <trans-unit id="label_name_surname">
+                <source>label_name_surname</source>
+                <target>Imię i nazwisko</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
