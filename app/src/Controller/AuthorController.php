@@ -74,8 +74,8 @@ class AuthorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $author->setCreatedAt(new \DateTime());
-            $author->setUpdatedAt(new \DateTime());
+            //$author->setCreatedAt(new \DateTime());
+            //$author->setUpdatedAt(new \DateTime());
             $authorRepository->save($author);
 
             $this->addFlash('success', 'message_created_successfully');
@@ -112,7 +112,7 @@ class AuthorController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $author->setUpdatedAt(new \DateTime());
+            //$author->setUpdatedAt(new \DateTime());
             $authorRepository->save($author);
 
             $this->addFlash('success', 'message_updated_successfully');
