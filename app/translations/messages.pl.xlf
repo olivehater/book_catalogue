@@ -54,6 +54,10 @@
                 <source>category_list</source>
                 <target>Lista kategorii</target>
             </trans-unit>
+            <trans-unit id="label_edit">
+                <source>label_edit</source>
+                <target>Edytuj</target>
+            </trans-unit>
 
 
             <trans-unit id="title_book_details">

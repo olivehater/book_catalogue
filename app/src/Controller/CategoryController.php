@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class CategoryController
+ * Class CategoryController.
  *
  * @Route("/category")
  */
@@ -53,8 +53,8 @@ class CategoryController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \App\Repository\CategoryRepository $categoryRepository Category repository
+     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP Request
+     * @param \App\Repository\CategoryRepository        $categoryRepository Category repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -78,12 +78,55 @@ class CategoryController extends AbstractController
             $category->setUpdatedAt(new \DateTime());
             $categoryRepository->save($category);
 
+            $this->addFlash('success', 'message_created_successfully');
+
             return $this->redirectToRoute('category_index');
         }
 
         return $this->render(
             'category/create.html.twig',
             ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Edit action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
+     * @param \App\Entity\Category                      $category           Category entity
+     * @param \App\Repository\CategoryRepository        $categoryRepository Category repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/edit",
+     *     methods={"GET", "PUT"},
+     *     name="category_edit",
+     * )
+     */
+    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category->setUpdatedAt(new \DateTime());
+            $categoryRepository->save($category);
+
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render(
+            'category/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
         );
     }
 

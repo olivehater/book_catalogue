@@ -31,8 +31,8 @@
                     <td>
 
                         <a href="{{ url('category_show', {'id':category.id}) }}">{{ 'action_show'|trans }}</a>
-                        {#
                         <a href="{{ url('category_edit', {'id':category.id}) }}">{{ 'label_edit'|trans }}</a>
+                        {#
                         {% if not category.tasks|length %}
                             <a href="{{ url('category_delete', {'id':category.id}) }}">{{ 'label_delete'|trans }}</a>
                         {% endif %}

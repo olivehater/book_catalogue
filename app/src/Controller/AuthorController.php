@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class CategoryController.
+ * Class AuthorController.
  *
  * @Route("/author")
  */
@@ -24,9 +24,8 @@ class AuthorController extends AbstractController
     /**
      * Show all authors.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param AuthorRepository $authorRepository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator interface
+     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP request
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator Paginator interface
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -53,8 +52,8 @@ class AuthorController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Repository\AuthorRepository $authorRepository Category repository
+     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
+     * @param \App\Repository\AuthorRepository          $authorRepository Author repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -78,6 +77,8 @@ class AuthorController extends AbstractController
             $author->setUpdatedAt(new \DateTime());
             $authorRepository->save($author);
 
+            $this->addFlash('success', 'message_created_successfully');
+
             return $this->redirectToRoute('author_index');
         }
 
@@ -88,9 +89,48 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * Show selected category.
+     * Edit action.
      *
-     * @param Author $author
+     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
+     * @param \App\Entity\Author                        $author           Author entity
+     * @param \App\Repository\AuthorRepository          $authorRepository Author repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/{id}/edit",
+     *     methods={"GET", "PUT"},
+     *     name="author_edit",
+     * )
+     */
+    public function edit(Request $request, Author $author, AuthorRepository $authorRepository): Response
+    {
+        $form = $this->createForm(AuthorType::class, $author, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $author->setUpdatedAt(new \DateTime());
+            $authorRepository->save($author);
+
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('author_index');
+        }
+
+        return $this->render(
+            'author/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'author' => $author,
+            ]
+        );
+    }
+
+    /**
+     * Show selected author.
+     *
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(
