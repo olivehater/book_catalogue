@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Form\BookType;
 use App\Repository\BookRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +47,42 @@ class BookController extends AbstractController
         return $this->render(
             'book/index.html.twig',
             ['pagination' => $pagination]
+        );
+    }
+
+    /**
+     * Create action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Repository\BookRepository $bookRepository Book repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/create",
+     *     methods={"GET", "POST"},
+     *     name="book_create",
+     * )
+     */
+    public function create(Request $request, BookRepository $bookRepository): Response
+    {
+        $book = new Book();
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookRepository->save($book);
+            $this->addFlash('success', 'message_created_successfully');
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'book/create.html.twig',
+            ['form' => $form->createView()]
         );
     }
 

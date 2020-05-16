@@ -27,7 +27,9 @@ class CategoryType extends AbstractType
             [
                 'label' => 'label_category',
                 'required' => true,
-                'attr' => ['max_length' => 100],
+                'attr' => [
+                    'max_length' => 100,
+                ],
             ]
         );
     }

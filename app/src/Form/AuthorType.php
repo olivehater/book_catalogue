@@ -30,6 +30,17 @@ class AuthorType extends AbstractType
                 'attr' => ['max_length' => 100],
             ]
         );
+        $builder->add(
+            'description',
+            TextType::class,
+        [
+            'label' => 'label_description',
+            'required' => true,
+            'attr' => [
+                'max_length' => 2000,
+                ],
+        ]
+        );
     }
 
     /**

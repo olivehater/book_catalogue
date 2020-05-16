@@ -18,7 +18,10 @@
             <dd>{{ author.updatedAt|date('d/m/Y') }}</dd>
             <dt>{{ 'label_name_surname'|trans }}</dt>
             <dd>{{ author.title }}</dd>
+            <dt>{{ 'label_description'|trans }}</dt>
+            <dd>{{ author.description }}</dd>
         </dl>
+
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
             type: 'warning',

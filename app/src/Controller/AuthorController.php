@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use App\Repository\BookRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -146,6 +147,12 @@ class AuthorController extends AbstractController
      */
     public function delete(Request $request, Author $author, AuthorRepository $authorRepository): Response
     {
+        if ($author->getBooks()->count()) {
+            $this->addFlash('warning', 'message_author_contains_books');
+
+            return $this->redirectToRoute('author_index');
+        }
+
         $form = $this->createForm(FormType::class, $author, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
@@ -172,6 +179,8 @@ class AuthorController extends AbstractController
     /**
      * Show selected author.
      *
+     * @param Author $author
+     * @param BookRepository $bookRepository
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(
@@ -182,9 +191,12 @@ class AuthorController extends AbstractController
      */
     public function show(Author $author): Response
     {
+
         return $this->render(
             'author/show.html.twig',
-            ['author' => $author]
+            [
+                'author' => $author,
+            ]
         );
     }
 }

@@ -5,23 +5,26 @@
 
 namespace App\Entity;
 
-use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=AuthorRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  * @ORM\Table(name="authors")
+ *
+ * @UniqueEntity(fields={"title"})
  */
 class Author
 {
     /**
      * Primary key.
      *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -32,6 +35,8 @@ class Author
      * @var \DateTimeInterface
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\DateTime
      *
      * @Gedmo\Timestampable(on="create")
      */
@@ -44,6 +49,8 @@ class Author
      *
      * @ORM\Column(type="datetime")
      *
+     * @Assert\DateTime
+     *
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
@@ -53,12 +60,29 @@ class Author
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(
+     *     type="string",
+     *     length=100
+     * )
+     *
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="3",
+     *     max="100",
+     * )
      */
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity=Book::class, mappedBy="author")
+     * Books.
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Book[] Books
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Book",
+     *     mappedBy="author",
+     *     fetch="EXTRA_LAZY",
+     * )
      */
     private $books;
 
@@ -72,9 +96,24 @@ class Author
      *     length=100
      * )
      *
+     * @Assert\Type(type="string")
+     * @Assert\Length(
+     *     min="3",
+     *     max="100",
+     * )
+     *
      * @Gedmo\Slug(fields={"title"})
      */
     private $code;
+
+    /**
+     * Description.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    private $description;
 
     public function __construct()
     {
@@ -190,6 +229,18 @@ class Author
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

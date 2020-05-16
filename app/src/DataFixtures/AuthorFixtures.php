@@ -25,6 +25,7 @@ class AuthorFixtures extends AbstractBaseFixtures
             $author->setTitle($this->faker->firstName);
             $author->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $author->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
+            $author->setDescription($this->faker->text);
 
             return $author;
         });

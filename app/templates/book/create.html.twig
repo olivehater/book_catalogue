@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'default/_form.html.twig' with {
+        page_title: 'title_book_create',
+        attr: {
+            method: 'POST',
+            action: url('book_create')
+        },
+        back_to_list_path: 'book_index',
+    } %}
+{% endblock %}

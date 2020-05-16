@@ -70,7 +70,7 @@
             </trans-unit>
             <trans-unit id="label_description">
                 <source>label_description</source>
-                <target>Opis książki</target>
+                <target>Opis</target>
             </trans-unit>
             <trans-unit id="book_not_found">
                 <source>book_not_found</source>
@@ -171,6 +171,10 @@
             <trans-unit id="author_not_found">
                 <source>author_not_found</source>
                 <target>Autora nie znaleziono</target>
+            </trans-unit>
+            <trans-unit id="books_written">
+                <source>books_written</source>
+                <target>Napisane książki</target>
             </trans-unit>
 
 
