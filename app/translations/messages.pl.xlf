@@ -93,6 +93,14 @@
                 <source>show_category_details</source>
                 <target>Szczegóły kategorii</target>
             </trans-unit>
+            <trans-unit id="title_category_create">
+                <source>title_category_create</source>
+                <target>Dodaj nową kategorię</target>
+            </trans-unit>
+            <trans-unit id="action_save">
+                <source>action_save</source>
+                <target>Zapisz</target>
+            </trans-unit>
 
 
             <trans-unit id="author_list">
@@ -114,6 +122,10 @@
             <trans-unit id="label_name_surname">
                 <source>label_name_surname</source>
                 <target>Imię i nazwisko</target>
+            </trans-unit>
+            <trans-unit id="title_author_create">
+                <source>title_author_create</source>
+                <target>Dodaj nowego autora</target>
             </trans-unit>
 
         </body>

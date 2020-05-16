@@ -6,7 +6,7 @@
 
 {% block body %}
     <h1>{{ 'category_list' | trans }}</h1>
-    {#<a href="{{ url('category_create') }}">{{'title_category_create'|trans}}</a><br><br>#}
+    <a href="{{ url('category_create') }}">{{'title_category_create'|trans}}</a><br><br>
 
     {% if pagination is defined and pagination.items|length %} {#tasks to mapowanie z funkcji w contollerze#}
 

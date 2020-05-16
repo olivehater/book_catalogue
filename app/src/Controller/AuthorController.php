@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +47,43 @@ class AuthorController extends AbstractController
         return $this->render(
             'author/index.html.twig',
             ['pagination' => $pagination]
+        );
+    }
+
+    /**
+     * Create action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Repository\AuthorRepository $authorRepository Category repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/create",
+     *     methods={"GET", "POST"},
+     *     name="author_create",
+     * )
+     */
+    public function create(Request $request, AuthorRepository $authorRepository): Response
+    {
+        $author = new Author();
+        $form = $this->createForm(AuthorType::class, $author);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $author->setCreatedAt(new \DateTime());
+            $author->setUpdatedAt(new \DateTime());
+            $authorRepository->save($author);
+
+            return $this->redirectToRoute('author_index');
+        }
+
+        return $this->render(
+            'author/create.html.twig',
+            ['form' => $form->createView()]
         );
     }
 
