@@ -10,6 +10,7 @@ use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -121,6 +122,46 @@ class AuthorController extends AbstractController
 
         return $this->render(
             'author/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'author' => $author,
+            ]
+        );
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
+     * @param \App\Entity\Author                        $author           Entity author
+     * @param \App\Repository\AuthorRepository          $authorRepository Author repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP Response
+     *
+     * @Route(
+     *     "/{id}/delete",
+     *     methods={"GET", "DELETE"},
+     *     name="author_delete"
+     * )
+     */
+    public function delete(Request $request, Author $author, AuthorRepository $authorRepository): Response
+    {
+        $form = $this->createForm(FormType::class, $author, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $authorRepository->delete($author);
+            $this->addFlash('success', 'message_deleted_successfully');
+
+            return $this->redirectToRoute('author_index');
+        }
+
+        return $this->render(
+            'author/delete.html.twig',
             [
                 'form' => $form->createView(),
                 'author' => $author,

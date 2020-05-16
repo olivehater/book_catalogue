@@ -63,6 +63,7 @@
                 <target>Usuń</target>
             </trans-unit>
 
+
             <trans-unit id="title_book_details">
                 <source>title_book_details</source>
                 <target>Szczegóły książki "%title%"</target>
@@ -70,10 +71,6 @@
             <trans-unit id="label_description">
                 <source>label_description</source>
                 <target>Opis książki</target>
-            </trans-unit>
-            <trans-unit id="action_back_to_list">
-                <source>action_back_to_list</source>
-                <target>Powrót do listy książek</target>
             </trans-unit>
             <trans-unit id="book_not_found">
                 <source>book_not_found</source>
@@ -83,6 +80,7 @@
                 <source>show_book_details</source>
                 <target>Szczegóły książki</target>
             </trans-unit>
+
 
             <trans-unit id="all_books_list_back">
                 <source>all_books_list_back</source>
@@ -108,6 +106,14 @@
                 <source>action_save</source>
                 <target>Zapisz</target>
             </trans-unit>
+            <trans-unit id="action_create">
+                <source>action_create</source>
+                <target>Utwórz</target>
+            </trans-unit>
+            <trans-unit id="action_delete">
+                <source>action_delete</source>
+                <target>Usuń</target>
+            </trans-unit>
             <trans-unit id="title_category_edit">
                 <source>title_category_edit</source>
                 <target>Edycja kategorii: %title%</target>
@@ -116,7 +122,14 @@
                 <source>title_category_delete</source>
                 <target>Usuwanie kategorii: %title%</target>
             </trans-unit>
-
+            <trans-unit id="empty_category_list">
+                <source>empty_category_list</source>
+                <target>Lista kategorii jest pusta</target>
+            </trans-unit>
+            <trans-unit id="category_not_found">
+                <source>category_not_found</source>
+                <target>Kategorii nie znaleziono</target>
+            </trans-unit>
 
 
             <trans-unit id="author_list">
@@ -146,6 +159,24 @@
             <trans-unit id="title_author_edit">
                 <source>title_author_edit</source>
                 <target>Edycja autora: %title%</target>
+            </trans-unit>
+            <trans-unit id="title_author_delete">
+                <source>title_author_delete</source>
+                <target>Usuwanie autora: %title%</target>
+            </trans-unit>
+            <trans-unit id="empty_author_list">
+                <source>empty_author_list</source>
+                <target>Lista autorów jest pusta</target>
+            </trans-unit>
+            <trans-unit id="author_not_found">
+                <source>author_not_found</source>
+                <target>Autora nie znaleziono</target>
+            </trans-unit>
+
+
+            <trans-unit id="action_back">
+                <source>action_back</source>
+                <target>Powrót</target>
             </trans-unit>
 
         </body>

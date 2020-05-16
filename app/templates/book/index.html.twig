@@ -55,8 +55,9 @@
         </div>
 
     {% else %}
-        <div class="alert alert-danger" role="alert">
-            {{'empty_book_list' | trans}}
-        </div>
+        {% include 'default/_single_flash_message.html.twig' with {
+            type: 'warning',
+            message: 'empty_book_list'|trans
+        } %}
     {% endif %}
 {% endblock %}

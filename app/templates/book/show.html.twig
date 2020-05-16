@@ -23,14 +23,14 @@
             <dt>{{ 'label_description'|trans }}</dt>
             <dd>{{ book.description }}</dd>
         </dl>
-        <p>
-            <a href="{{ url('book_index') }}" title="{{ 'action_back_to_list'|trans }}">
-                {{ 'action_back_to_list'|trans }}
-            </a>
-        </p>
+
     {% else %}
-        <div class="alert alert-danger" role="alert">
-            {{'book_not_found' | trans}}
-        </div>
+        {% include 'default/_single_flash_message.html.twig' with {
+            type: 'warning',
+            message: 'book_not_found'|trans
+        } %}
     {% endif %}
+        <a href="{{ url('book_index') }}" title="{{ 'action_back_to_list'|trans }}">
+            {{ 'action_back_to_list'|trans }}
+        </a>
 {% endblock %}
