@@ -26,9 +26,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'book.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'book.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'book.title') }}</th>
-                {#<th>{{ 'label_author' |trans}}</th>#}
                 <th>{{ knp_pagination_sortable(pagination, 'label_author'|trans, 'author.title') }}</th>
-                {#<th>{{ 'label_category'|trans }}</th>#}
                 <th>{{ knp_pagination_sortable(pagination, 'label_category'|trans, 'category.title') }}</th>
                 <th>{{ 'label_tag'|trans }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
@@ -40,12 +38,17 @@
                     <td>{{ book.updatedAt|date('Y/m/d') }}</td>
                     <td>{{ book.title }}</td>
                     <td><a href="{{ url('author_show', {'id':book.author.id}) }}">{{ book.author.title }}</a></td>
-                    {#<td>{{ book.author.title }}</td>#}
                     <td><a href="{{ url('category_show', {'id':book.category.id}) }}">{{ book.category.title }}</a></td>
-                    {#<td>{{ book.category.title }}</td>#}
-                    <td>{{ 'label_author' }}</td>
+                    <td>
+                        {% for tag in book.getTags() %}
+                            {{ tag.title }}
+                        {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ url('book_show', {'id':book.id}) }}">{{ 'action_show'|trans }}</a>
+                        <a href="{{ url('book_edit', {'id':book.id}) }}">{{ 'label_edit'|trans }}</a>
+                        <a href="{{ url('book_delete', {'id':book.id}) }}">{{ 'label_delete'|trans }}</a>
+
                     </td>
                 </tr>
             {% endfor %}

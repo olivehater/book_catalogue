@@ -5,12 +5,13 @@
 
 namespace App\Entity;
 
-use App\Repository\BookRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass=BookRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  * @ORM\Table(name="books")
  */
 class Book
@@ -20,8 +21,8 @@ class Book
      *
      * @var int
      *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -69,17 +70,52 @@ class Book
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="books")
+     * Category.
+     *
+     * @var \App\Entity\Category Category
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="App\Entity\Category",
+     *     inversedBy="books"
+     * )
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="books")
+     * Author.
+     *
+     * @var \App\Entity\Author Author
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="App\Entity\Author",
+     *     inversedBy="books"
+     * )
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
 
+    /**
+     * Tags.
+     *
+     * @var array
+     *
+     * @ORM\ManyToMany(
+     *     targetEntity="App\Entity\Tag",
+     *     inversedBy="books",
+     *     orphanRemoval=true
+     * )
+     * @ORM\JoinTable(name="books_tags")
+     */
+    private $tags;
+
+    /**
+     * Book constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     /**
      * Getter for id.
@@ -171,28 +207,77 @@ class Book
         $this->description = $description;
     }
 
+    /**
+     * Getter for category.
+     *
+     * @return \App\Entity\Category|null Category
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    /**
+     * Setter for category.
+     *
+     * @param \App\Entity\Category|null $category Category
+     */
+    public function setCategory(?Category $category): void
     {
         $this->category = $category;
-
-        return $this;
     }
 
+    /**
+     * Getter for author.
+     *
+     * @return \App\Entity\Author|null Author
+     */
     public function getAuthor(): ?Author
     {
         return $this->author;
     }
 
-    public function setAuthor(?Author $author): self
+    /**
+     * Setter for author.
+     *
+     * @param \App\Entity\Author|null $author Author
+     */
+    public function setAuthor(?Author $author): void
     {
         $this->author = $author;
+    }
 
-        return $this;
+    /**
+     * Getter for tags.
+     *
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Tag[] Tags collection
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Add tag to collection.
+     *
+     * @param \App\Entity\Tag $tag Tag entity
+     */
+    public function addTag(Tag $tag): void
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+    }
+
+    /**
+     * Remove tag from collection.
+     *
+     * @param \App\Entity\Tag $tag Tag entity
+     */
+    public function removeTag(Tag $tag): void
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
     }
 }
-

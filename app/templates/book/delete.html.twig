@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_book_delete',
+    page_title_param: {'%title%': book.title},
+    attr: {
+        method: 'DELETE',
+        action: url('book_delete', {'id': book.id}),
+    },
+    back_to_list_path: 'book_index',
+} %}

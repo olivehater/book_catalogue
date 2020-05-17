@@ -62,6 +62,10 @@
                 <source>label_delete</source>
                 <target>Usuń</target>
             </trans-unit>
+            <trans-unit id="title_book_create">
+                <source>title_book_create</source>
+                <target>Dodaj nową książkę</target>
+            </trans-unit>
 
 
             <trans-unit id="title_book_details">
@@ -172,15 +176,48 @@
                 <source>author_not_found</source>
                 <target>Autora nie znaleziono</target>
             </trans-unit>
-            <trans-unit id="books_written">
-                <source>books_written</source>
-                <target>Napisane książki</target>
-            </trans-unit>
-
 
             <trans-unit id="action_back">
                 <source>action_back</source>
                 <target>Powrót</target>
+            </trans-unit>
+
+            <trans-unit id="message_created_successfully">
+                <source>message_created_successfully</source>
+                <target>Utworzono nowy rekord!</target>
+            </trans-unit>
+            <trans-unit id="message_updated_successfully">
+                <source>message_updated_successfully</source>
+                <target>Rekord został zaktualizowany!</target>
+            </trans-unit>
+            <trans-unit id="message_form_error">
+                <source>message_form_error</source>
+                <target>Błąd formularza</target>
+            </trans-unit>
+            <trans-unit id="message_deleted_successfully">
+                <source>message_deleted_successfully</source>
+                <target>Rekord został usunięty!</target>
+            </trans-unit>
+            <trans-unit id="message_author_contains_books">
+                <source>message_author_contains_books</source>
+                <target>Istnieją książki napisane przez tego autora!</target>
+            </trans-unit>
+            <trans-unit id="message_category_contains_books">
+                <source>message_category_contains_books</source>
+                <target>Istnieją książki w tej kategorii!</target>
+            </trans-unit>
+            <trans-unit id="label_none">
+                <source>label_none</source>
+                <target>Wybierz z listy</target>
+            </trans-unit>
+
+            <trans-unit id="title_book_edit">
+                <source>title_book_edit</source>
+                <target>Edycja książki "%title%"</target>
+            </trans-unit>
+            <trans-unit id="title_book_delete">
+                <source>title_book_delete</source>
+                <target>Usuwanie książki "%title%"</target>
             </trans-unit>
 
         </body>

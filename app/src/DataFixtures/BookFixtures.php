@@ -30,6 +30,15 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $book->setCategory($this->getRandomReference('categories'));
             $book->setAuthor($this->getRandomReference('authors'));
 
+            $tags = $this->getRandomReferences(
+                'tags',
+                $this->faker->numberBetween(0, 5)
+            );
+
+            foreach ($tags as $tag) {
+                $book->addTag($tag);
+            }
+
             return $book;
         });
 
