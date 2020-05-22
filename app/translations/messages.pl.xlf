@@ -100,7 +100,7 @@
             </trans-unit>
             <trans-unit id="title_selected_category">
                 <source>title_selected_category</source>
-                <target>Wybrana kateoria</target>
+                <target>Wybrana kategoria</target>
             </trans-unit>
             <trans-unit id="show_category_details">
                 <source>show_category_details</source>
@@ -235,6 +235,35 @@
             <trans-unit id="title_tag_delete">
                 <source>title_tag_delete</source>
                 <target>Usuwanie tagu "%title%"</target>
+            </trans-unit>
+
+            <trans-unit id="title_login">
+                <source>title_login</source>
+                <target>Logowanie</target>
+            </trans-unit>
+            <trans-unit id="please_sign_in">
+                <source>please_sign_in</source>
+                <target>Zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="email">
+                <source>email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="password">
+                <source>password</source>
+                <target>Hasło</target>
+            </trans-unit>
+            <trans-unit id="log_in">
+                <source>log_in</source>
+                <target>Zaloguj</target>
+            </trans-unit>
+            <trans-unit id="you_are_logged_in_as">
+                <source>you_are_logged_in_as</source>
+                <target>Jesteś zalogowany jako</target>
+            </trans-unit>
+            <trans-unit id="logout">
+                <source>logout</source>
+                <target>Wyloguj</target>
             </trans-unit>
 
         </body>

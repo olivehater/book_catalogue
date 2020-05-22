@@ -6,6 +6,16 @@
 {% endblock %}
 
 {% block body %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <div>{{ app.user.username }}</div>
+        <div>
+            <a href="{{ url('app_logout') }}">{{ 'logout'|trans }}</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ url('app_login') }}">{{ 'log_in'|trans }}</a>
+        </div>
+    {% endif %}
     <h1>{{ 'title_selected_author'|trans({'%title%': author.title|default('')}) }}</h1>
 
     {% if author is defined and author|length %}
@@ -30,6 +40,8 @@
     {% endif %}
 
     <a href="{{ url('book_index') }}">{{'all_books_list_back'|trans}}</a><br>
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ url('author_index') }}">{{'all_authors_list_back'|trans}}</a>
+    {% endif %}
 
 {% endblock %}

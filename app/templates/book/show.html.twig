@@ -5,6 +5,16 @@
 {% endblock %}
 
 {% block body %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <div>{{ app.user.username }}</div>
+        <div>
+            <a href="{{ url('app_logout') }}">{{ 'logout'|trans }}</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ url('app_login') }}">{{ 'log_in'|trans }}</a>
+        </div>
+    {% endif %}
     <h1>{{ 'title_book_details'|trans({'%title%': book.title|default('')}) }}</h1>
     {% if book is defined and book|length %}
         <dl class="dl-horizontal">
@@ -16,6 +26,12 @@
             <dd>{{ book.updatedAt|date('Y/m/d') }}</dd>
             <dt>{{ 'label_category'|trans }}</dt>
             <dd>{{ book.category.title }}</dd>
+            <dt>{{ 'label_tag'|trans }}</dt>
+            <dd>
+                {% for tag in book.getTags() %}
+                    {{ tag.title }}
+                {% endfor %}
+            </dd>
             <dt>{{ 'label_title'|trans }}</dt>
             <dd>{{ book.title }}</dd>
             <dt>{{ 'label_author'|trans }}</dt>
