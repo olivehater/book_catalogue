@@ -20,9 +20,9 @@ class TagType extends AbstractType
      * Builds form.
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder interface
-     * @param array $options The options
+     * @param array                                        $options The options
      */
-    public function  buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             'title',
