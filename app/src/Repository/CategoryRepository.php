@@ -11,6 +11,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
 /**
+ * Class CategoryRepository.
+ *
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
  * @method Category|null findOneBy(array $criteria, array $orderBy = null)
  * @method Category[]    findAll()
@@ -50,6 +52,8 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Delete record.
+     *
      * @param \App\Entity\Category $category Category entity
      *
      * @throws \Doctrine\ORM\ORMException
@@ -69,9 +73,9 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            //->select('category', 'book.id') // nie wiem czemu nie działa
-            //->innerJoin('category.tasks', 'tasks')
-            ->orderBy('category.title', 'ASC'); // domyśne sortowanie
+            //->select('category', 'book.id')
+            //->innerJoin('category.books', 'books')
+            ->orderBy('category.title', 'ASC');
     }
 
     /**
@@ -81,9 +85,9 @@ class CategoryRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */
-    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder // tworzy lub pobiera query buildera
+    private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         // jeśli nie ma query buildera to utworz nowy
-        return $queryBuilder ?? $this->createQueryBuilder('category'); // task to alias
+        return $queryBuilder ?? $this->createQueryBuilder('category');
     }
 }

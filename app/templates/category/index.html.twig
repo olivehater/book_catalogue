@@ -8,7 +8,7 @@
     <h1>{{ 'category_list' | trans }}</h1>
     <a href="{{ url('category_create') }}">{{'title_category_create'|trans}}</a><br><br>
 
-    {% if pagination is defined and pagination.items|length %} {#tasks to mapowanie z funkcji w contollerze#}
+    {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
@@ -20,7 +20,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'category.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'category.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'category.title') }}</th>
-                <th>{{ 'label_actions'|trans }}</th> {# nie muszą być sortowane #}
+                <th>{{ 'label_actions'|trans }}</th>
             </tr>
             {% for category in pagination.items %}
                 <tr>

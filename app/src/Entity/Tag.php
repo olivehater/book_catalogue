@@ -105,7 +105,6 @@ class Tag
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Book", mappedBy="tags")
      *
-     * @Assert\Type(type="Doctrine\Common\Collections\ArrayCollection")
      */
     private $books;
 
