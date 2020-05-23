@@ -293,6 +293,22 @@
                 <source>show_author</source>
                 <target>Pokaż autora</target>
             </trans-unit>
+            <trans-unit id="user_favourites">
+                <source>user_favourites</source>
+                <target>Ulubione książki</target>
+            </trans-unit>
+            <trans-unit id="empty_list_of_favourites">
+                <source>empty_list_of_favourites</source>
+                <target>Lista ulubionych jest pusta</target>
+            </trans-unit>
+            <trans-unit id="label_user">
+                <source>label_user</source>
+                <target>Użytkownik</target>
+            </trans-unit>
+            <trans-unit id="favourite_list">
+                <source>favourite_list</source>
+                <target>Twoje ulubione książki</target>
+            </trans-unit>
 
         </body>
     </file>
