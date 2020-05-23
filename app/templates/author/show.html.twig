@@ -6,16 +6,7 @@
 {% endblock %}
 
 {% block body %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <div>{{ app.user.username }}</div>
-        <div>
-            <a href="{{ url('app_logout') }}">{{ 'logout'|trans }}</a>
-        </div>
-    {% else %}
-        <div>
-            <a href="{{ url('app_login') }}">{{ 'log_in'|trans }}</a>
-        </div>
-    {% endif %}
+
     <h1>{{ 'title_selected_author'|trans({'%title%': author.title|default('')}) }}</h1>
 
     {% if author is defined and author|length %}
@@ -30,7 +21,30 @@
             <dd>{{ author.title }}</dd>
             <dt>{{ 'label_description'|trans }}</dt>
             <dd>{{ author.description }}</dd>
+            <dt><h4>{{ 'books_written'|trans }}</h4></dt>
         </dl>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'label_id'|trans }}</th>
+                <th>{{ 'label_title'|trans }}</th>
+                <th>{{ ' ' }}</th>
+                <th>{{ 'label_category'|trans }}</th>
+                <th>{{ ' ' }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in book %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.title }}</td>
+                    <td><a href="{{ url('book_show', {'id':item.id}) }}">{{ 'show_book'|trans }}</a></td>
+                    <td>{{ item.category.title }}</td>
+                    <td><a href="{{ url('category_show', {'id':item.category.id}) }}">{{ 'show_category'|trans }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
@@ -40,8 +54,6 @@
     {% endif %}
 
     <a href="{{ url('book_index') }}">{{'all_books_list_back'|trans}}</a><br>
-    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ url('author_index') }}">{{'all_authors_list_back'|trans}}</a>
-    {% endif %}
 
 {% endblock %}

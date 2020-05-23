@@ -6,6 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Entity\Book;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
@@ -179,8 +180,9 @@ class AuthorController extends AbstractController
     /**
      * Show selected author.
      *
-     * @param Author $author
-     * @param BookRepository $bookRepository
+     * @param \App\Entity\Author $author Author entity
+     * @param \App\Repository\BookRepository $repository Book repository
+     * @param \App\Entity\Book $book Book entity
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(
@@ -189,12 +191,13 @@ class AuthorController extends AbstractController
      *     name="author_show",
      * )
      */
-    public function show(Author $author): Response
+    public function show(Author $author, BookRepository $repository, Book $book): Response
     {
 
         return $this->render(
             'author/show.html.twig',
             [
+                'book' => $repository->findBy(['author' => $author]),
                 'author' => $author,
             ]
         );

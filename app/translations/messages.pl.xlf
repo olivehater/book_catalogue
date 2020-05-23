@@ -100,7 +100,7 @@
             </trans-unit>
             <trans-unit id="title_selected_category">
                 <source>title_selected_category</source>
-                <target>Wybrana kategoria</target>
+                <target>Wybrana kategoria: %title%</target>
             </trans-unit>
             <trans-unit id="show_category_details">
                 <source>show_category_details</source>
@@ -264,6 +264,26 @@
             <trans-unit id="logout">
                 <source>logout</source>
                 <target>Wyloguj</target>
+            </trans-unit>
+            <trans-unit id="books_written">
+                <source>books_written</source>
+                <target>Napisane książki</target>
+            </trans-unit>
+            <trans-unit id="books_in_this_category">
+                <source>books_in_this_category</source>
+                <target>Książki w tej kategorii</target>
+            </trans-unit>
+            <trans-unit id="show_book">
+                <source>show_book</source>
+                <target>Pokaż książkę</target>
+            </trans-unit>
+            <trans-unit id="show_category">
+                <source>show_category</source>
+                <target>Pokaż kategorię</target>
+            </trans-unit>
+            <trans-unit id="show_author">
+                <source>show_author</source>
+                <target>Pokaż autora</target>
             </trans-unit>
 
         </body>

@@ -5,8 +5,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -194,11 +196,14 @@ class CategoryController extends AbstractController
      *     name="category_show",
      * )
      */
-    public function show(Category $category): Response
+    public function show(Category $category, BookRepository $repository, Book $book): Response
     {
         return $this->render(
             'category/show.html.twig',
-            ['category' => $category]
+            [
+                'book' => $repository->findBy(['category' => $category]),
+                'category' => $category,
+            ]
         );
     }
 }

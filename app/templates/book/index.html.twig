@@ -5,27 +5,18 @@
 {% endblock %}
 
 {% block body %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <div>{{ app.user.username }}</div>
-        <div>
-            <a href="{{ url('app_logout') }}">{{ 'logout'|trans }}</a>
-        </div>
-    {% else %}
-        <div>
-            <a href="{{ url('app_login') }}">{{ 'log_in'|trans }}</a>
-        </div>
-    {% endif %}
+
     <h1>{{ 'title_book_list'|trans }}</h1>
 
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ url('book_create') }}">{{'title_book_create'|trans}}</a><br><br>
-
+        {% endif %}
             <ul class="dl-horizontal"> {# dl tag, a list with term and descriptions #}
                 <li><a href="{{ url('author_index') }}">{{'author_list'|trans}}</a></li>
                 <li><a href="{{ url('category_index') }}">{{'category_list'|trans}}</a></li>
                 <li><a href="{{ url('tag_index') }}">{{ 'tag_list'|trans }}</a></li>
             </ul>
-        {% endif %}
+
 
     {% if pagination is defined and pagination.items|length %}
 

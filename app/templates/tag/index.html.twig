@@ -28,8 +28,10 @@
                     <td>{{ tag.updatedAt|date('d/m/Y') }}</td>
                     <td>{{ tag.title }}</td>
                     <td>
-                        <a href="{{ url('tag_edit', {'id':tag.id}) }}">{{ 'label_edit'|trans }}</a>
-                        <a href="{{ url('tag_delete', {'id':tag.id}) }}">{{ 'label_delete'|trans }}</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ url('tag_edit', {'id':tag.id}) }}">{{ 'label_edit'|trans }}</a>
+                            <a href="{{ url('tag_delete', {'id':tag.id}) }}">{{ 'label_delete'|trans }}</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

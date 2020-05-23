@@ -6,7 +6,9 @@
 
 {% block body %}
     <h1>{{ 'category_list' | trans }}</h1>
-    <a href="{{ url('category_create') }}">{{'title_category_create'|trans}}</a><br><br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ url('category_create') }}">{{'title_category_create'|trans}}</a><br><br>
+    {% endif %}
 
     {% if pagination is defined and pagination.items|length %}
 
@@ -31,9 +33,11 @@
                     <td>
 
                         <a href="{{ url('category_show', {'id':category.id}) }}">{{ 'action_show'|trans }}</a>
-                        <a href="{{ url('category_edit', {'id':category.id}) }}">{{ 'label_edit'|trans }}</a>
-                        {% if not category.books|length %}
-                            <a href="{{ url('category_delete', {'id':category.id}) }}">{{ 'label_delete'|trans }}</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ url('category_edit', {'id':category.id}) }}">{{ 'label_edit'|trans }}</a>
+                            {% if not category.books|length %}
+                                <a href="{{ url('category_delete', {'id':category.id}) }}">{{ 'label_delete'|trans }}</a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>

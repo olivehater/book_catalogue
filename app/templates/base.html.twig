@@ -9,6 +9,16 @@
         {% endblock %}
     </head>
     <body>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <div>{{ app.user.username }}</div>
+        <div>
+            <a href="{{ url('app_logout') }}">{{ 'logout'|trans }}</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{{ url('app_login') }}">{{ 'log_in'|trans }}</a>
+        </div>
+    {% endif %}
         <div class="container-fluid">
             {% include 'default/_flash_messages.html.twig' %}
 
