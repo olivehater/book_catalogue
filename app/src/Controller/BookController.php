@@ -6,8 +6,11 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Favourite;
 use App\Form\BookType;
+use App\Form\FavouriteType;
 use App\Repository\BookRepository;
+use App\Repository\FavouriteRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -84,6 +87,48 @@ class BookController extends AbstractController
         return $this->render(
             'book/create.html.twig',
             ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * Add favourite.
+     *
+     * @param \App\Entity\Book                          $book                Book entity
+     * @param \Symfony\Component\HttpFoundation\Request $request             HTTP request
+     * @param \App\Repository\FavouriteRepository       $favouriteRepository Favourite repository
+     * @param \App\Repository\BookRepository            $bookRepository      Book repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/favourite",
+     *     methods={"GET", "POST"},
+     *     name="favourite_add"
+     *     )
+     */
+    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository, BookRepository $bookRepository): Response
+    {
+        $favourite = new Favourite();
+        $form = $this->createForm(FavouriteType::class, $favourite);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $favourite->setUser($this->getUser());
+            $favourite->setBook($book);
+            $favouriteRepository->save($favourite);
+
+            $this->addFlash('success', 'message_created_successfully');
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        return $this->render(
+            'favourite/add.html.twig',
+            ['form' => $form->createView(),
+                'book' => $book, ]
         );
     }
 

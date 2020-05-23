@@ -4,6 +4,8 @@
  */
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -85,6 +87,21 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * Favourite.
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Favourite", mappedBy="user")
+     */
+    private $favourite;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->favourite = new ArrayCollection();
+    }
 
     /**
      * Getter for Id.
@@ -191,5 +208,44 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * Getter for Favourite.
+     *
+     * @return Collection|Favourite[]
+     */
+    public function getFavourite(): Collection
+    {
+        return $this->favourite;
+    }
+
+    /**
+     * Add Favourite.
+     *
+     * @param Favourite $favourite Favourite
+     */
+    public function addFavourite(Favourite $favourite): void
+    {
+        if (!$this->favourite->contains($favourite)) {
+            $this->favourite[] = $favourite;
+            $favourite->setUser($this);
+        }
+    }
+
+    /**
+     * Remove favourite.
+     *
+     * @param Favourite $favourite Favourite
+     */
+    public function removeFavourite(Favourite $favourite): void
+    {
+        if ($this->favourite->contains($favourite)) {
+            $this->favourite->removeElement($favourite);
+            // set the owning side to null (unless already changed)
+            if ($favourite->getUser() === $this) {
+                $favourite->setUser(null);
+            }
+        }
     }
 }

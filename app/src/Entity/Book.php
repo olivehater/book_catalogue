@@ -110,11 +110,19 @@ class Book
     private $tags;
 
     /**
+     * Favourite.
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Favourite", mappedBy="book")
+     */
+    private $favourite;
+
+    /**
      * Book constructor.
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->favourite = new ArrayCollection();
     }
 
     /**
@@ -280,4 +288,44 @@ class Book
             $this->tags->removeElement($tag);
         }
     }
+
+    /**
+     * Getter for Favourite.
+     *
+     * @return Collection|Favourite[]
+     */
+    public function getFavourite(): Collection
+    {
+        return $this->favourite;
+    }
+
+    /**
+     * Add favourite.
+     *
+     * @param Favourite $favourite Favourite
+     */
+    public function addFavourite(Favourite $favourite): void
+    {
+        if (!$this->favourite->contains($favourite)) {
+            $this->favourite[] = $favourite;
+            $favourite->setBook($this);
+        }
+    }
+
+    /**
+     * Remove favourite.
+     *
+     * @param Favourite $favourite Favourite
+     */
+    public function removeFavourite(Favourite $favourite): void
+    {
+        if ($this->favourite->contains($favourite)) {
+            $this->favourite->removeElement($favourite);
+            // set the owning side to null (unless already changed)
+            if ($favourite->getBook() === $this) {
+                $favourite->setBook(null);
+            }
+        }
+    }
+
 }

@@ -185,6 +185,14 @@
                 <source>action_back</source>
                 <target>Powrót</target>
             </trans-unit>
+            <trans-unit id="add_to_favourites">
+                <source>add_to_favourites</source>
+                <target>Dodaj do ulubionych</target>
+            </trans-unit>
+            <trans-unit id="title_add_to_favourite">
+                <source>title_add_to_favourite</source>
+                <target>Dodaj do ulubionych: %title%</target>
+            </trans-unit>
 
             <trans-unit id="message_created_successfully">
                 <source>message_created_successfully</source>
