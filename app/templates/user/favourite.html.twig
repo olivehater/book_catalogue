@@ -24,6 +24,7 @@
                 <td>{{ item.createdAt|date('Y/m/d') }}</td>
                 <td>{{ item.book.title }}</td>
                 <td>{{ item.user.email }}</td>
+                <td><a href="{{ url('favourite_delete', {'id':item.id}) }}">{{ 'label_delete'|trans }}</a></td>
             </tr>
             {% endfor %}
         </table>

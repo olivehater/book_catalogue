@@ -309,6 +309,10 @@
                 <source>favourite_list</source>
                 <target>Twoje ulubione książki</target>
             </trans-unit>
+            <trans-unit id="title_favourite_delete">
+                <source>title_favourite_delete</source>
+                <target>Usuwanie z ulubionych książki "%title%"</target>
+            </trans-unit>
 
         </body>
     </file>

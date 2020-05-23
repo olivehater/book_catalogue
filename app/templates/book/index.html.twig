@@ -12,7 +12,9 @@
             <a href="{{ url('book_create') }}">{{'title_book_create'|trans}}</a><br><br>
         {% endif %}
             <ul class="dl-horizontal"> {# dl tag, a list with term and descriptions #}
+                {% if is_granted('ROLE_USER') %}
                 <li><a href="{{ url('user_favourite_index') }}">{{'favourite_list'|trans}}</a></li>
+                {% endif %}
                 <li><a href="{{ url('author_index') }}">{{'author_list'|trans}}</a></li>
                 <li><a href="{{ url('category_index') }}">{{'category_list'|trans}}</a></li>
                 <li><a href="{{ url('tag_index') }}">{{ 'tag_list'|trans }}</a></li>
