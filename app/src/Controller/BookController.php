@@ -218,11 +218,14 @@ class BookController extends AbstractController
     }
 
     /**
+     * Add comment.
+     *
      * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}",
      *     methods={"GET", "POST"},
@@ -247,6 +250,45 @@ class BookController extends AbstractController
 
         return $this->render(
             'book/show.html.twig',
+            [
+                'form' => $form->createView(),
+                'comment' => $comment,
+                'book' => $book,
+            ]
+        );
+    }
+
+    /**
+     * @param $id
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/{id}/deletecomment",
+     *     methods={"GET", "DELETE"},
+     *     name="comment_delete"
+     * )
+     */
+    public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
+    {
+        $form = $this->createForm(FormType::class, $comment, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        $book = $bookRepository->find($id);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentRepository->delete($comment);
+            $this->addFlash('success', 'message_deleted_successfully');
+
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]);
+        }
+
+        return $this->render(
+            'book/delete_comment.html.twig',
             [
                 'form' => $form->createView(),
                 'comment' => $comment,

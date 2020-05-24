@@ -329,6 +329,10 @@
                 <source>label_comment</source>
                 <target>Twój komentarz:</target>
             </trans-unit>
+            <trans-unit id="title_comment_delete">
+                <source>title_comment_delete</source>
+                <target>Usuwanie komentarza: %content%</target>
+            </trans-unit>
 
         </body>
     </file>

@@ -46,16 +46,20 @@
                     {{ form_end(form) }}
                 </div>
             {% endif %}
-
+            <div style="margin-top: 4%">
                 {% if book.getComment()|length %}
                     {% for comment in book.getComment() %}
                         <div style="border-style: groove">
                         <h6>{{ comment.getUser.username }}</h6>
                         <p>{{ comment.createdAt|date('Y/m/d') }}</p>
                         <p>{{ comment.getContent() }}</p>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ url('comment_delete', {'id':comment.id}) }}">{{ 'label_delete'|trans }}</a>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 {% endif %}
+            </div>
         </div>
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
