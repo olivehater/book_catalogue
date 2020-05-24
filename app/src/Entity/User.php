@@ -96,11 +96,17 @@ class User implements UserInterface
     private $favourite;
 
     /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     */
+    private $comment;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->favourite = new ArrayCollection();
+        $this->comment = new ArrayCollection();
     }
 
     /**
@@ -247,5 +253,36 @@ class User implements UserInterface
                 $favourite->setUser(null);
             }
         }
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComment(): Collection
+    {
+        return $this->comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comment->contains($comment)) {
+            $this->comment[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comment->contains($comment)) {
+            $this->comment->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

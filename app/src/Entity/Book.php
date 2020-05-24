@@ -117,12 +117,20 @@ class Book
     private $favourite;
 
     /**
+     * Comment.
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="book")
+     */
+    private $comment;
+
+    /**
      * Book constructor.
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->favourite = new ArrayCollection();
+        $this->comment = new ArrayCollection();
     }
 
     /**
@@ -326,6 +334,37 @@ class Book
                 $favourite->setBook(null);
             }
         }
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComment(): Collection
+    {
+        return $this->comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comment->contains($comment)) {
+            $this->comment[] = $comment;
+            $comment->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comment->contains($comment)) {
+            $this->comment->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getBook() === $this) {
+                $comment->setBook(null);
+            }
+        }
+
+        return $this;
     }
 
 }
