@@ -220,6 +220,9 @@ class BookController extends AbstractController
     /**
      * Add comment.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
+     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
+     * @param \App\Repository\BookRepository            $bookRepository    Book repository
      * @param $id
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
@@ -259,10 +262,17 @@ class BookController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Comment $comment Comment entity
+     * @param \App\Repository\CommentRepository $commentRepository Comment repository
+     * @param \App\Repository\BookRepository $bookRepository Book repository
      * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/deletecomment",
      *     methods={"GET", "DELETE"},
