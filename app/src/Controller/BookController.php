@@ -6,10 +6,13 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Comment;
 use App\Entity\Favourite;
 use App\Form\BookType;
+use App\Form\CommentType;
 use App\Form\FavouriteType;
 use App\Repository\BookRepository;
+use App\Repository\CommentRepository;
 use App\Repository\FavouriteRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -215,6 +218,44 @@ class BookController extends AbstractController
     }
 
     /**
+     * @param $id
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}",
+     *     methods={"GET", "POST"},
+     *     name="new_comment",
+     * )
+     */
+    public function addComment(Request $request, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        $book = $bookRepository->find($id);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setBook($book);
+            $comment->setUser($this->getUser());
+            $commentRepository->save($comment);
+
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); //żeby wiedzieć pod jakie id wrócić
+        }
+
+        return $this->render(
+            'book/show.html.twig',
+            [
+                'form' => $form->createView(),
+                'comment' => $comment,
+                'book' => $book,
+            ]
+        );
+    }
+
+    /**
      * Show action.
      *
      * @param \App\Entity\Book $book Book entity
@@ -233,7 +274,7 @@ class BookController extends AbstractController
         return $this->render(
             'book/show.html.twig',
             [
-                'book' => $book
+                'book' => $book,
             ]
         );
     }

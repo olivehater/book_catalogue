@@ -321,6 +321,14 @@
                 <source>add_comment</source>
                 <target>Dodaj komentarz</target>
             </trans-unit>
+            <trans-unit id="title_comment_new">
+                <source>title_comment_new</source>
+                <target>Dodaj komentarz</target>
+            </trans-unit>
+            <trans-unit id="label_comment">
+                <source>label_comment</source>
+                <target>Twój komentarz:</target>
+            </trans-unit>
 
         </body>
     </file>
