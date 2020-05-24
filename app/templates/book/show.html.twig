@@ -6,6 +6,9 @@
 
 {% block body %}
     <h1>{{ 'title_book_details'|trans({'%title%': book.title|default('')}) }}</h1>
+    <a href="{{ url('book_index') }}">
+        {{ 'all_books_list_back'|trans }}
+    </a>
     {% if book is defined and book|length %}
         <dl class="dl-horizontal">
             <dt>{{ 'label_id'|trans }}</dt>
@@ -29,7 +32,23 @@
             <dt>{{ 'label_description'|trans }}</dt>
             <dd>{{ book.description }}</dd>
         </dl>
-
+        <div class="comments">
+            <h3>{{ 'title_comments'|trans }}</h3>
+            <div style="margin-bottom: 1%">
+                <a href="#">
+                    {{ 'add_comment'|trans }}
+                </a>
+             </div>
+                {% if book.getComment()|length %}
+                    {% for comment in book.getComment() %}
+                        <div style="border-style: groove">
+                        <h6>{{ comment.getUser.username }}</h6>
+                        <p>{{ comment.createdAt|date('Y/m/d') }}</p>
+                        <p>{{ comment.getContent() }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+        </div>
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
             type: 'warning',

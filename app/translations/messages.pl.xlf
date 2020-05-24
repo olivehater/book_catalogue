@@ -313,6 +313,14 @@
                 <source>title_favourite_delete</source>
                 <target>Usuwanie z ulubionych książki "%title%"</target>
             </trans-unit>
+            <trans-unit id="title_comments">
+                <source>title_comments</source>
+                <target>Komentarze</target>
+            </trans-unit>
+            <trans-unit id="add_comment">
+                <source>add_comment</source>
+                <target>Dodaj komentarz</target>
+            </trans-unit>
 
         </body>
     </file>

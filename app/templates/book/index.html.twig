@@ -53,7 +53,9 @@
                     <td>
                         <a href="{{ url('book_show', {'id':book.id}) }}">{{ 'action_show'|trans }}</a>
                         {% if is_granted('ROLE_USER') %}
-                            <a href="{{ url('favourite_add', {'id':book.id}) }}">{{ 'add_to_favourites'|trans }}</a>
+
+                                <a href="{{ url('favourite_add', {'id':book.id}) }}">{{ 'add_to_favourites'|trans }}</a>
+
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ url('book_edit', {'id':book.id}) }}">{{ 'label_edit'|trans }}</a>
