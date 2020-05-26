@@ -191,7 +191,7 @@ class AuthorController extends AbstractController
      *     name="author_show",
      * )
      */
-    public function show(Author $author, BookRepository $repository, Book $book): Response
+    public function show(Author $author, BookRepository $repository): Response
     {
 
         return $this->render(

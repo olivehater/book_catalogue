@@ -190,24 +190,34 @@ class Category
     }
 
     /**
-     * @return Collection|Book[]
+     * Getter for Books.
+     *
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Book[] Book collection
      */
     public function getBooks(): Collection
     {
         return $this->books;
     }
 
-    public function addBook(Book $book): self
+    /**
+     * Add book to collection.
+     *
+     * @param \App\Entity\Book $book Book entity
+     */
+    public function addBook(Book $book): void
     {
         if (!$this->books->contains($book)) {
             $this->books[] = $book;
             $book->setCategory($this);
         }
-
-        return $this;
     }
 
-    public function removeBook(Book $book): self
+    /**
+     * Remove book from collection.
+     *
+     * @param \App\Entity\Book $book Book entity
+     */
+    public function removeBook(Book $book): void
     {
         if ($this->books->contains($book)) {
             $this->books->removeElement($book);
@@ -216,19 +226,25 @@ class Category
                 $book->setCategory(null);
             }
         }
-
-        return $this;
     }
 
+    /**
+     * Getter for Code.
+     *
+     * @return string|null Code
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
-    public function setCode(string $code): self
+    /**
+     * Setter for Code.
+     *
+     * @param string $code Code
+     */
+    public function setCode(string $code): void
     {
         $this->code = $code;
-
-        return $this;
     }
 }

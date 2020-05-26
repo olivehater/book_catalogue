@@ -262,10 +262,10 @@ class BookController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Entity\Comment $comment Comment entity
-     * @param \App\Repository\CommentRepository $commentRepository Comment repository
-     * @param \App\Repository\BookRepository $bookRepository Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
+     * @param \App\Entity\Comment                       $comment           Comment entity
+     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
+     * @param \App\Repository\BookRepository            $bookRepository    Book repository
      * @param $id
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response

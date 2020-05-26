@@ -88,7 +88,6 @@ class Tag
      * )
      *
      * @Assert\Type(type="string")
-     * @Assert\NotBlank
      * @Assert\Length(
      *     min="2",
      *     max="100"

@@ -32,6 +32,8 @@ class Comment
      *
      * @ORM\Column(type="datetime")
      *
+     * @Assert\DateTime
+     *
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
@@ -43,6 +45,8 @@ class Comment
      *
      * @ORM\Column(type="datetime")
      *
+     * @Assert\DateTime
+     *
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
@@ -52,6 +56,7 @@ class Comment
      *
      * @ORM\Column(type="string", length=255)
      *
+     * @Assert\Type(type="string")
      * @Assert\NotBlank
      * @Assert\Length(
      *     min="3",

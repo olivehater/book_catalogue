@@ -96,7 +96,7 @@ class User implements UserInterface
     private $favourite;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
     private $comment;
 
@@ -219,7 +219,7 @@ class User implements UserInterface
     /**
      * Getter for Favourite.
      *
-     * @return Collection|Favourite[]
+     * @return Collection|Favourite[] Favourite
      */
     public function getFavourite(): Collection
     {
@@ -256,24 +256,34 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Comment[]
+     * Getter for comment.
+     *
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Comment[] Comment collection
      */
     public function getComment(): Collection
     {
         return $this->comment;
     }
 
-    public function addComment(Comment $comment): self
+    /**
+     * Add comment to collection.
+     *
+     * @param \App\Entity\Comment $comment Comment entity
+     */
+    public function addComment(Comment $comment): void
     {
         if (!$this->comment->contains($comment)) {
             $this->comment[] = $comment;
             $comment->setUser($this);
         }
-
-        return $this;
     }
 
-    public function removeComment(Comment $comment): self
+    /**
+     * Remove comment from collection.
+     *
+     * @param \App\Entity\Comment $comment Comment entity
+     */
+    public function removeComment(Comment $comment): void
     {
         if ($this->comment->contains($comment)) {
             $this->comment->removeElement($comment);
@@ -282,7 +292,5 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
-
-        return $this;
     }
 }

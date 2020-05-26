@@ -9,10 +9,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Class Book.
+ *
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  * @ORM\Table(name="books")
+ *
+ * @UniqueEntity(fields={"title"})
  */
 class Book
 {
@@ -34,6 +40,8 @@ class Book
      *
      * @ORM\Column(type="datetime")
      *
+     * @Assert\DateTime
+     *
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
@@ -44,6 +52,8 @@ class Book
      * @var \DateTimeInterface
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\DateTime
      *
      * @Gedmo\Timestampable(on="update")
      */
@@ -56,7 +66,14 @@ class Book
      *
      * @ORM\Column(
      *     type="string",
-     *     length=255)
+     *     length=255
+     * )
+     * @Assert\Type(type="string")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="3",
+     *     max="255",
+     * )
      */
     private $title;
 
@@ -66,6 +83,11 @@ class Book
      * @var string
      *
      * @ORM\Column(type="text")
+     *
+     * @Assert\Type(type="string")
+     * @Assert\Length(
+     *     min="10"
+     * )
      */
     private $description;
 
@@ -344,17 +366,25 @@ class Book
         return $this->comment;
     }
 
-    public function addComment(Comment $comment): self
+    /**
+     * Add comment.
+     *
+     * @param Comment $comment Comment
+     */
+    public function addComment(Comment $comment): void
     {
         if (!$this->comment->contains($comment)) {
             $this->comment[] = $comment;
             $comment->setBook($this);
         }
-
-        return $this;
     }
 
-    public function removeComment(Comment $comment): self
+    /**
+     * Remove comment.
+     *
+     * @param Comment $comment Comment
+     */
+    public function removeComment(Comment $comment): void
     {
         if ($this->comment->contains($comment)) {
             $this->comment->removeElement($comment);
@@ -363,8 +393,6 @@ class Book
                 $comment->setBook(null);
             }
         }
-
-        return $this;
     }
 
 }

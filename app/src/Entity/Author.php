@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Class Author.
+ *
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  * @ORM\Table(name="authors")
  *
@@ -112,9 +114,17 @@ class Author
      * @var string
      *
      * @ORM\Column(type="text")
+     *
+     * @Assert\Type(type="string")
+     * @Assert\Length(
+     *     min="10"
+     * )
      */
     private $description;
 
+    /**
+     * Author constructor.
+     */
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -191,24 +201,34 @@ class Author
     }
 
     /**
-     * @return Collection|Book[]
+     * Getter for Books.
+     *
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Book[] Book collection
      */
     public function getBooks(): Collection
     {
         return $this->books;
     }
 
-    public function addBook(Book $book): self
+    /**
+     * Add book to collection.
+     *
+     * @param \App\Entity\Book $book Book entity
+     */
+    public function addBook(Book $book): void
     {
         if (!$this->books->contains($book)) {
             $this->books[] = $book;
             $book->setAuthor($this);
         }
-
-        return $this;
     }
 
-    public function removeBook(Book $book): self
+    /**
+     * Remove book from collection.
+     *
+     * @param \App\Entity\Book $book Book entity
+     */
+    public function removeBook(Book $book): void
     {
         if ($this->books->contains($book)) {
             $this->books->removeElement($book);
@@ -217,31 +237,45 @@ class Author
                 $book->setAuthor(null);
             }
         }
-
-        return $this;
     }
 
+    /**
+     * Getter for Code.
+     *
+     * @return string|null Code
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
-    public function setCode(string $code): self
+    /**
+     * Setter for Code.
+     *
+     * @param string $code Code
+     */
+    public function setCode(string $code): void
     {
         $this->code = $code;
-
-        return $this;
     }
 
+    /**
+     * Getter for Description.
+     *
+     * @return string|null Description
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    /**
+     * Setter for Description.
+     *
+     * @param string $description Description
+     */
+    public function setDescription(string $description): void
     {
         $this->description = $description;
-
-        return $this;
     }
 }

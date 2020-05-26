@@ -188,6 +188,8 @@ class CategoryController extends AbstractController
      *
      * @param \App\Entity\Category $category Category entity
      *
+     * @param \App\Repository\BookRepository $repository Book repository
+     * @param Book $book
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(
