@@ -198,12 +198,11 @@ class CategoryController extends AbstractController
      *     name="category_show",
      * )
      */
-    public function show(Category $category, BookRepository $repository, Book $book): Response
+    public function show(Category $category): Response
     {
         return $this->render(
             'category/show.html.twig',
             [
-                'book' => $repository->findBy(['category' => $category]),
                 'category' => $category,
             ]
         );

@@ -15,9 +15,11 @@
                 {% if is_granted('ROLE_USER') %}
                 <li><a href="{{ url('user_favourite_index') }}">{{'favourite_list'|trans}}</a></li>
                 {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
                 <li><a href="{{ url('author_index') }}">{{'author_list'|trans}}</a></li>
                 <li><a href="{{ url('category_index') }}">{{'category_list'|trans}}</a></li>
                 <li><a href="{{ url('tag_index') }}">{{ 'tag_list'|trans }}</a></li>
+                {% endif %}
             </ul>
 
     {% if pagination is defined and pagination.items|length %}
@@ -43,8 +45,8 @@
                     <td>{{ book.createdAt|date('Y/m/d') }}</td>
                     <td>{{ book.updatedAt|date('Y/m/d') }}</td>
                     <td>{{ book.title }}</td>
-                    <td><a href="{{ url('author_show', {'id':book.author.id}) }}">{{ book.author.title }}</a></td>
-                    <td><a href="{{ url('category_show', {'id':book.category.id}) }}">{{ book.category.title }}</a></td>
+                    <td><a href="{#{{ url('author_show', {'id':book.author.id}) }}#}">{{ book.author.title }}</a></td>
+                    <td><a href="{#{{ url('category_show', {'id':book.category.id}) }}#}">{{ book.category.title }}</a></td>
                     <td>
                         {% for tag in book.getTags() %}
                             {{ tag.title }}
@@ -53,9 +55,7 @@
                     <td>
                         <a href="{{ url('book_show', {'id':book.id}) }}">{{ 'action_show'|trans }}</a>
                         {% if is_granted('ROLE_USER') %}
-
                                 <a href="{{ url('favourite_add', {'id':book.id}) }}">{{ 'add_to_favourites'|trans }}</a>
-
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ url('book_edit', {'id':book.id}) }}">{{ 'label_edit'|trans }}</a>

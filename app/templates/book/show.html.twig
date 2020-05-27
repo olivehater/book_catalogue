@@ -47,7 +47,7 @@
                 </div>
             {% endif %}
             <div style="margin-top: 4%">
-                {% if book.getComment()|length %}
+                {% if book.getComment()|length %} {# dzięki temu pokazują się te komentarze, które trzeba #}
                     {% for comment in book.getComment() %}
                         <div style="border-style: groove">
                         <h6>{{ comment.getUser.username }}</h6>

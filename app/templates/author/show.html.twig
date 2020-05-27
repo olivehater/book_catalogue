@@ -21,30 +21,7 @@
             <dd>{{ author.title }}</dd>
             <dt>{{ 'label_description'|trans }}</dt>
             <dd>{{ author.description }}</dd>
-            <dt><h4>{{ 'books_written'|trans }}</h4></dt>
         </dl>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>{{ 'label_id'|trans }}</th>
-                <th>{{ 'label_title'|trans }}</th>
-                <th>{{ ' ' }}</th>
-                <th>{{ 'label_category'|trans }}</th>
-                <th>{{ ' ' }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in book %}
-                <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.title }}</td>
-                    <td><a href="{{ url('book_show', {'id':item.id}) }}">{{ 'show_book'|trans }}</a></td>
-                    <td>{{ item.category.title }}</td>
-                    <td><a href="{{ url('category_show', {'id':item.category.id}) }}">{{ 'show_category'|trans }}</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
 
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {

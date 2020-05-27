@@ -96,6 +96,8 @@ class User implements UserInterface
     private $favourite;
 
     /**
+     * Comment.
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
     private $comment;
@@ -219,7 +221,7 @@ class User implements UserInterface
     /**
      * Getter for Favourite.
      *
-     * @return Collection|Favourite[] Favourite
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Favourite[] Favourite collection
      */
     public function getFavourite(): Collection
     {
@@ -227,9 +229,9 @@ class User implements UserInterface
     }
 
     /**
-     * Add Favourite.
+     * Add Favourite to collection.
      *
-     * @param Favourite $favourite Favourite
+     * @param \App\Entity\Favourite $favourite Favourite entity
      */
     public function addFavourite(Favourite $favourite): void
     {
@@ -240,9 +242,9 @@ class User implements UserInterface
     }
 
     /**
-     * Remove favourite.
+     * Remove favourite from collection.
      *
-     * @param Favourite $favourite Favourite
+     * @param \App\Entity\Favourite $favourite Favourite entity
      */
     public function removeFavourite(Favourite $favourite): void
     {

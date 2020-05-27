@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Comment;
 use App\Entity\Favourite;
+use App\Entity\User;
 use App\Form\BookType;
 use App\Form\CommentType;
 use App\Form\FavouriteType;
@@ -105,18 +106,19 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}/favourite",
      *     methods={"GET", "POST"},
      *     name="favourite_add"
      *     )
      */
-    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository, BookRepository $bookRepository): Response
+    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository, BookRepository $bookRepository, User $user): Response
     {
+
         $favourite = new Favourite();
         $form = $this->createForm(FavouriteType::class, $favourite);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $favourite->setUser($this->getUser());
@@ -130,8 +132,10 @@ class BookController extends AbstractController
 
         return $this->render(
             'favourite/add.html.twig',
-            ['form' => $form->createView(),
-                'book' => $book, ]
+            [
+                'form' => $form->createView(),
+                'book' => $book,
+                ]
         );
     }
 
@@ -262,6 +266,8 @@ class BookController extends AbstractController
     }
 
     /**
+     * Delete comment.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
      * @param \App\Entity\Comment                       $comment           Comment entity
      * @param \App\Repository\CommentRepository         $commentRepository Comment repository
@@ -284,7 +290,7 @@ class BookController extends AbstractController
         $form = $this->createForm(FormType::class, $comment, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
-        $book = $bookRepository->find($id);
+        $book = $bookRepository->find($id); // szuka id książki
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));
@@ -294,7 +300,7 @@ class BookController extends AbstractController
             $commentRepository->delete($comment);
             $this->addFlash('success', 'message_deleted_successfully');
 
-            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]);
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); // dzięki temu wie gdzie wrócić
         }
 
         return $this->render(

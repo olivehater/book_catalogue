@@ -322,7 +322,7 @@ class Book
     /**
      * Getter for Favourite.
      *
-     * @return Collection|Favourite[]
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Favourite[] Favourite collection
      */
     public function getFavourite(): Collection
     {
@@ -330,9 +330,9 @@ class Book
     }
 
     /**
-     * Add favourite.
+     * Add favourite to collection.
      *
-     * @param Favourite $favourite Favourite
+     * @param \App\Entity\Favourite $favourite Favourite
      */
     public function addFavourite(Favourite $favourite): void
     {
@@ -343,9 +343,9 @@ class Book
     }
 
     /**
-     * Remove favourite.
+     * Remove favourite from collection.
      *
-     * @param Favourite $favourite Favourite
+     * @param \App\Entity\Favourite $favourite Favourite
      */
     public function removeFavourite(Favourite $favourite): void
     {
@@ -359,7 +359,9 @@ class Book
     }
 
     /**
-     * @return Collection|Comment[]
+     * Getter for comment.
+     *
+     * @return \Doctrine\Common\Collections\Collection|\App\Entity\Comment[] Comment collection
      */
     public function getComment(): Collection
     {
@@ -367,9 +369,9 @@ class Book
     }
 
     /**
-     * Add comment.
+     * Add comment to collection.
      *
-     * @param Comment $comment Comment
+     * @param \App\Entity\Comment $comment Comment
      */
     public function addComment(Comment $comment): void
     {
@@ -380,9 +382,9 @@ class Book
     }
 
     /**
-     * Remove comment.
+     * Remove comment from collection.
      *
-     * @param Comment $comment Comment
+     * @param \App\Entity\Comment $comment Comment
      */
     public function removeComment(Comment $comment): void
     {

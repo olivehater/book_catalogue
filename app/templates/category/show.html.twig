@@ -18,30 +18,7 @@
             <dd>{{ category.updatedAt|date('d/m/Y') }}</dd>
             <dt>{{ 'label_title'|trans }}</dt>
             <dd>{{ category.title }}</dd>
-            <dt><h4>{{ 'books_in_this_category'|trans }}</h4></dt>
         </dl>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>{{ 'label_id'|trans }}</th>
-                <th>{{ 'label_title'|trans }}</th>
-                <th>{{ ' ' }}</th>
-                <th>{{ 'label_author'|trans }}</th>
-                <th>{{ ' ' }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for item in book %}
-                    <tr>
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.title }}</td>
-                        <td><a href="{{ url('book_show', {'id':item.id}) }}">{{ 'show_book'|trans }}</a></td>
-                        <td>{{ item.author.title }}</td>
-                        <td><a href="{{ url('author_show', {'id':item.author.id}) }}">{{ 'show_author'|trans }}</a></td>
-                    </tr>
-            {% endfor %}
-            </tbody>
-        </table>
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
             type: 'warning',
