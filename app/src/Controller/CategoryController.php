@@ -8,7 +8,6 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -186,10 +185,10 @@ class CategoryController extends AbstractController
     /**
      * Show selected category.
      *
-     * @param \App\Entity\Category $category Category entity
-     *
+     * @param \App\Entity\Category           $category   Category entity
      * @param \App\Repository\BookRepository $repository Book repository
-     * @param Book $book
+     * @param Book                           $book
+     *
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(

@@ -103,6 +103,13 @@ class User implements UserInterface
     private $comment;
 
     /**
+     * UserData.
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\UserData", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $userData;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -294,5 +301,25 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
+    }
+
+    /**
+     * Getter for User Data.
+     *
+     * @return UserData|null User data
+     */
+    public function getUserData(): ?UserData
+    {
+        return $this->userData;
+    }
+
+    /**
+     * Setter for User Data.
+     *
+     * @param UserData $userData User data
+     */
+    public function setUserData(UserData $userData): void
+    {
+        $this->userData = $userData;
     }
 }

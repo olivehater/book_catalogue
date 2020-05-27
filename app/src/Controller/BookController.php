@@ -15,6 +15,7 @@ use App\Form\FavouriteType;
 use App\Repository\BookRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FavouriteRepository;
+use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -46,15 +47,19 @@ class BookController extends AbstractController
      */
     public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
     {
+
         $pagination = $paginator->paginate(
             $bookRepository->queryAll(),
             $request->query->getInt('page', 1),
             BookRepository::PAGINATOR_ITEMS_FOR_PAGE
         );
 
+
         return $this->render(
             'book/index.html.twig',
-            ['pagination' => $pagination]
+            [
+                'pagination' => $pagination,
+            ]
         );
     }
 
