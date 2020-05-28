@@ -53,7 +53,8 @@
                         <h6>{{ comment.getUser.username }}</h6>
                         <p>{{ comment.createdAt|date('Y/m/d') }}</p>
                         <p>{{ comment.getContent() }}</p>
-                            {% if is_granted('ROLE_ADMIN') %}
+                           {# {% if comment.user.id == app.user.id or is_granted('ROLE_ADMIN') %} #}
+                            {% if is_granted('MANAGE', comment) %}
                             <a href="{{ url('comment_delete', {'id':comment.id}) }}">{{ 'label_delete'|trans }}</a>
                             {% endif %}
                         </div>

@@ -15,8 +15,8 @@ use App\Form\FavouriteType;
 use App\Repository\BookRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FavouriteRepository;
-use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,13 +47,11 @@ class BookController extends AbstractController
      */
     public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
     {
-
         $pagination = $paginator->paginate(
             $bookRepository->queryAll(),
             $request->query->getInt('page', 1),
             BookRepository::PAGINATOR_ITEMS_FOR_PAGE
         );
-
 
         return $this->render(
             'book/index.html.twig',
@@ -79,6 +77,7 @@ class BookController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="book_create",
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function create(Request $request, BookRepository $bookRepository): Response
     {
@@ -106,6 +105,7 @@ class BookController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request             HTTP request
      * @param \App\Repository\FavouriteRepository       $favouriteRepository Favourite repository
      * @param \App\Repository\BookRepository            $bookRepository      Book repository
+     * @param User                                      $user
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -117,13 +117,11 @@ class BookController extends AbstractController
      *     name="favourite_add"
      *     )
      */
-    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository, BookRepository $bookRepository, User $user): Response
+    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository, BookRepository $bookRepository): Response
     {
-
         $favourite = new Favourite();
         $form = $this->createForm(FavouriteType::class, $favourite);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $favourite->setUser($this->getUser());
@@ -161,6 +159,7 @@ class BookController extends AbstractController
      *     methods={"GET", "PUT"},
      *     name="book_edit"
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
     {
@@ -200,6 +199,7 @@ class BookController extends AbstractController
      *     methods={"GET", "DELETE"},
      *     name="book_delete"
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
     {
@@ -288,6 +288,10 @@ class BookController extends AbstractController
      *     "/{id}/deletecomment",
      *     methods={"GET", "DELETE"},
      *     name="comment_delete"
+     * )
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="comment"
      * )
      */
     public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response

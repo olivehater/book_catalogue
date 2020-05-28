@@ -72,9 +72,10 @@ class BookRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            ->select('book', 'category', 'author')
+            ->select('book', 'category', 'author', 'tags')
             ->join('book.category', 'category')
             ->join('book.author', 'author')
+            ->join('book.tags', 'tags')
             ->orderBy('book.updatedAt', 'DESC');
     }
 

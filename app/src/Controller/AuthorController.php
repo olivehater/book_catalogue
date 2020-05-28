@@ -6,11 +6,10 @@
 namespace App\Controller;
 
 use App\Entity\Author;
-use App\Entity\Book;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
-use App\Repository\BookRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +20,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AuthorController.
  *
  * @Route("/author")
+ *
+ * @IsGranted("ROLE_ADMIN")
  */
 class AuthorController extends AbstractController
 {
@@ -181,6 +182,7 @@ class AuthorController extends AbstractController
      * Show selected author.
      *
      * @param \App\Entity\Author $author Author entity
+     *
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(
@@ -191,7 +193,6 @@ class AuthorController extends AbstractController
      */
     public function show(Author $author): Response
     {
-
         return $this->render(
             'author/show.html.twig',
             [

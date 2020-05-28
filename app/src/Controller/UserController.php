@@ -6,8 +6,10 @@
 namespace App\Controller;
 
 use App\Entity\Favourite;
+use App\Entity\User;
 use App\Repository\FavouriteRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
