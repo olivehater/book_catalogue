@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Favourite;
 use App\Entity\User;
 use App\Repository\FavouriteRepository;
+use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,38 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    /**
+     * Index action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
+     * @param \App\Repository\UserRepository            $userRepository User repository
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Pagination interface
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP Response
+     *
+     * @Route(
+     *     "/",
+     *     methods={"GET"},
+     *     name="user_index",
+     * )
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
+    {
+        $pagination = $paginator->paginate(
+            $userRepository->queryAll(),
+            $request->query->getInt('page', 1),
+            UserRepository::PAGINATOR_ITEMS_FOR_PAGE
+        );
+
+        return $this->render(
+            'user/index.html.twig',
+            [
+                'pagination' => $pagination,
+            ]
+        );
+    }
+
     /**
      * User's favourites.
      *
@@ -99,6 +132,30 @@ class UserController extends AbstractController
                 'form' => $form->createView(),
                 'favourite' => $favourite,
             ]
+        );
+    }
+
+    /**
+     * Show user.
+     *
+     * @param \App\Entity\User $user User entity
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @Route(
+     *     "/{id}",
+     *     name="user_show",
+     * )
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="user"
+     * )
+     */
+    public function show(User $user): Response
+    {
+        return $this->render(
+            'user/show.html.twig',
+            ['user' => $user]
         );
     }
 }

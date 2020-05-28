@@ -263,7 +263,7 @@
             </trans-unit>
             <trans-unit id="log_in">
                 <source>log_in</source>
-                <target>Zaloguj</target>
+                <target>Zaloguj się</target>
             </trans-unit>
             <trans-unit id="you_are_logged_in_as">
                 <source>you_are_logged_in_as</source>
@@ -332,6 +332,74 @@
             <trans-unit id="title_comment_delete">
                 <source>title_comment_delete</source>
                 <target>Usuwanie komentarza: %content%</target>
+            </trans-unit>
+            <trans-unit id="user_list">
+                <source>user_list</source>
+                <target>Lista użytkowników</target>
+            </trans-unit>
+            <trans-unit id="empty_user_list">
+                <source>empty_user_list</source>
+                <target>Lista użytkowników jest pusta</target>
+            </trans-unit>
+            <trans-unit id="label_name">
+                <source>label_name</source>
+                <target>Imię</target>
+            </trans-unit>
+            <trans-unit id="label_surname">
+                <source>label_surname</source>
+                <target>Nazwisko</target>
+            </trans-unit>
+            <trans-unit id="label_nickname">
+                <source>label_nickname</source>
+                <target>Nick</target>
+            </trans-unit>
+            <trans-unit id="label_role">
+                <source>label_role</source>
+                <target>Rola</target>
+            </trans-unit>
+            <trans-unit id="role_user">
+                <source>role_user</source>
+                <target>Użytkownik</target>
+            </trans-unit>
+            <trans-unit id="role_admin">
+                <source>role_admin</source>
+                <target>Administrator</target>
+            </trans-unit>
+            <trans-unit id="label_email">
+                <source>label_email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="title_user_view">
+                <source>title_user_view</source>
+                <target>Konto użytkownika %nickname%</target>
+            </trans-unit>
+            <trans-unit id="user_not_found">
+                <source>user_not_found</source>
+                <target>Użytkownika nie znaleziono</target>
+            </trans-unit>
+            <trans-unit id="all_user_list_back">
+                <source>all_user_list_back</source>
+                <target>Powrót do listy użytkowników</target>
+            </trans-unit>
+            <trans-unit id="logged_as">
+                <source>logged_as</source>
+                <target>Zalogowano jako </target>
+            </trans-unit>
+            <trans-unit id="your_account">
+                <source>your_account</source>
+                <target>Twoje konto</target>
+            </trans-unit>
+            <trans-unit id="change_data">
+                <source>change_data</source>
+                <target>Zmień dane</target>
+            </trans-unit>
+            <trans-unit id="change_password">
+                <source>change_password</source>
+                <target>Zmień hasło</target>
+            </trans-unit>
+            <trans-unit id="register">
+                <source>register</source>
+                <target>Zarejestruj się</target>
             </trans-unit>
 
         </body>

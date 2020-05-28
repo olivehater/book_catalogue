@@ -54,11 +54,11 @@ class BookController extends AbstractController
         );
 
         return $this->render(
-            'book/index.html.twig',
-            [
-                'pagination' => $pagination,
-            ]
-        );
+        'book/index.html.twig',
+        [
+            'pagination' => $pagination,
+        ]
+    );
     }
 
     /**
