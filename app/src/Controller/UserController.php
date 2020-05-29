@@ -7,8 +7,11 @@ namespace App\Controller;
 
 use App\Entity\Favourite;
 use App\Entity\User;
+use App\Entity\UserData;
 use App\Form\ChangePasswordType;
+use App\Form\UserDataType;
 use App\Repository\FavouriteRepository;
+use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -30,6 +33,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+
     /**
      * Index action.
      *
@@ -61,6 +65,8 @@ class UserController extends AbstractController
             ]
         );
     }
+
+
 
     /**
      * User's favourites.
@@ -139,6 +145,8 @@ class UserController extends AbstractController
         );
     }
 
+
+
     /**
      * Change password action.
      *
@@ -153,6 +161,7 @@ class UserController extends AbstractController
      * @Route(
      *     "/{id}/changepassword",
      *     methods={"GET", "PUT"},
+     *     requirements={"id": "[1-9]\d*"},
      *     name="user_change_password",
      * )
      * @IsGranted(
@@ -189,6 +198,44 @@ class UserController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param UserData $userData
+     * @param UserDataRepository $repository
+     * @return Response
+     * @throws ORMException
+     * @throws OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/changedata",
+     *     methods={"GET", "PUT"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="user_data_change",
+     * )
+
+     */
+    public function changeData(Request $request, UserData $userData, UserDataRepository $repository): Response
+    {
+        $form = $this->createForm(UserDataType::class, $userData, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $repository->save($userData);
+
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('user_show', ['id' => $userData->getUser()->getId()]);
+        }
+
+        return $this->render(
+            'user/change_data.html.twig',
+            [
+                'form' => $form->createView(),
+                'userData' => $userData,
+            ]
+        );
+    }
+
+    /**
      * Show user.
      *
      * @param \App\Entity\User $user User entity
@@ -197,6 +244,7 @@ class UserController extends AbstractController
      *
      * @Route(
      *     "/{id}",
+     *     requirements={"id": "[1-9]\d*"},
      *     name="user_show",
      * )
      * @IsGranted(
@@ -211,4 +259,6 @@ class UserController extends AbstractController
             ['user' => $user]
         );
     }
+
+
 }

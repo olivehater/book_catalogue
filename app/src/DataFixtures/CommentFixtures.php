@@ -21,7 +21,7 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
     {
         $this->createMany(20, 'comments', function ($i){
             $comment = new Comment();
-            $comment->setContent($this->faker->paragraph);
+            $comment->setContent($this->faker->sentence);
             $comment->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $comment->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $comment->setBook($this->getRandomReference('books'));

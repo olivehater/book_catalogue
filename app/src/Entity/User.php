@@ -336,5 +336,10 @@ class User implements UserInterface
     public function setUserData(UserData $userData): void
     {
         $this->userData = $userData;
+
+        if ($this !== $userData->getUser()) {
+            $userData->setUser($this);
+        }
+
     }
 }
