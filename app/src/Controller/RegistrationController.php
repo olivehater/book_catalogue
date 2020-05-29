@@ -10,7 +10,6 @@ use App\Entity\UserData;
 use App\Form\RegistrationType;
 use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +22,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Repository\UserRepository $userRepository User repository
-     *
+     * @param \Symfony\Component\HttpFoundation\Request                             $request         HTTP request
+     * @param \App\Repository\UserRepository                                        $userRepository  User repository
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder Password encoder
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
@@ -39,6 +38,10 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, UserDataRepository $userDataRepository): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('book_index');
+        }
+
         $user = new User();
         $userData = new UserData();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -59,6 +62,7 @@ class RegistrationController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $userRepository->save($user);
             $userDataRepository->save($userData);
+
             //$entityManager = $this->getDoctrine()->getManager();
             //$entityManager->persist($user);
             //$entityManager->flush();

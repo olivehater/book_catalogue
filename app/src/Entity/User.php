@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class User.
@@ -26,6 +27,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  * )
  *
  * @UniqueEntity(fields={"email"})
+ *
  */
 class User implements UserInterface
 {
@@ -69,6 +71,13 @@ class User implements UserInterface
      *     length=180,
      *     unique=true
      *)
+     * @Assert\NotBlank
+     * @Assert\Email
+     * @Assert\Type(type="string")
+     * @Assert\Length(
+     *     min="5",
+     *     max="180",
+     * )
      */
     private $email;
 
@@ -85,6 +94,12 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="6",
+     *     max="255",
+     * )
      */
     private $password;
 
@@ -306,7 +321,7 @@ class User implements UserInterface
     /**
      * Getter for User Data.
      *
-     * @return UserData|null User data
+     * @return \App\Entity\UserData|null User data entity
      */
     public function getUserData(): ?UserData
     {
@@ -316,7 +331,7 @@ class User implements UserInterface
     /**
      * Setter for User Data.
      *
-     * @param UserData $userData User data
+     * @param \App\Entity\UserData $userData User data entity
      */
     public function setUserData(UserData $userData): void
     {

@@ -1,0 +1,10 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_user_data_change',
+    page_title_param: {'%nickname%': user.nickname},
+    attr: {
+        method: 'PUT',
+        action: url('user_data_change', {'id': user.id}),
+    },
+    form: form,
+    back_to_list_path: 'book_index',
+} %}

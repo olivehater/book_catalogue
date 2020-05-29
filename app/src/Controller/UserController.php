@@ -7,8 +7,11 @@ namespace App\Controller;
 
 use App\Entity\Favourite;
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Repository\FavouriteRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController.
@@ -131,6 +135,55 @@ class UserController extends AbstractController
             [
                 'form' => $form->createView(),
                 'favourite' => $favourite,
+            ]
+        );
+    }
+
+    /**
+     * Change password action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request    HTTP request
+     * @param \App\Entity\User                          $user       User entity
+     * @param \App\Repository\UserRepository            $repository User repository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @Route(
+     *     "/{id}/changepassword",
+     *     methods={"GET", "PUT"},
+     *     name="user_change_password",
+     * )
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="user"
+     * )
+     */
+    public function changePassword(Request $request, User $user, UserRepository $repository, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $form = $this->createForm(ChangePasswordType::class, $user, ['method' => 'PUT']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $user->getPassword()
+                )
+            );
+            $repository->save($user);
+
+            $this->addFlash('success', 'message_updated_successfully');
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render(
+            'user/change_password.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
             ]
         );
     }

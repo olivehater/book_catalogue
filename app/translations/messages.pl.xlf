@@ -421,6 +421,10 @@
                 <source>label_save</source>
                 <target>Zapisz</target>
             </trans-unit>
+            <trans-unit id="title_password_change">
+                <source>title_password_change</source>
+                <target>Zmiana hasła</target>
+            </trans-unit>
 
         </body>
     </file>

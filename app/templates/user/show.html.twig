@@ -9,7 +9,7 @@
 
     {% if user is defined and user|length %}
         <a href="{#{{ url('user_change_data') }}#}">{{'change_data'|trans}}</a><br>
-        <a href="{#{{ url('user_change_password') }}#}">{{'change_password'|trans}}</a>
+        <a href="{{ url('user_change_password', {'id':app.user.id}) }}">{{'change_password'|trans}}</a>
 
         <dl class="dl-horizontal"> {# dl tag, a list with term and descriptions #}
             <dt>{{ 'label_id'|trans }}</dt>
