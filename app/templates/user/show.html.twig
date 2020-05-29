@@ -15,9 +15,17 @@
             <dt>{{ 'label_id'|trans }}</dt>
             <dd>{{ user.id }}</dd>
             <dt>{{ 'label_name'|trans }}</dt>
-            <dd>{{ user.userData.name }}</dd>
+            {% if user.name is defined and user.name|length %}
+                <dd>{{ user.userData.name }}</dd>
+            {% else %}
+                <dd>{{ 'data_not_set'|trans }}</dd>
+            {% endif %}
             <dt>{{ 'label_surname'|trans }}</dt>
-            <dd>{{ user.userData.surname }}</dd>
+            {% if user.surname is defined and user.surname|length %}
+                <dd>{{ user.userData.surname }}</dd>
+            {% else %}
+                <dd>{{ 'data_not_set'|trans }}</dd>
+            {% endif %}
             <dt>{{ 'label_nickname'|trans }}</dt>
             <dd>{{ user.userData.nickname }}</dd>
             <dt>{{ 'label_email'|trans }}</dt>

@@ -18,7 +18,7 @@
     {% else %}
         <div>
             <a href="{{ url('app_login') }}">{{ 'log_in'|trans }}</a><br>
-            <a href="{#{{ url('app_register') }}#}">{{ 'register'|trans }}</a>
+            <a href="{{ url('register') }}">{{ 'register'|trans }}</a>
         </div>
     {% endif %}
         <div class="container-fluid">

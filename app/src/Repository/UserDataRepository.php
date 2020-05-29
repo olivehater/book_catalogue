@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\UserData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +20,21 @@ class UserDataRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserData::class);
     }
+
+    /**
+     * Save record.
+     *
+     * @param UserData $userData
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(UserData $userData): void
+    {
+        $this->_em->persist($userData);
+        $this->_em->flush($userData);
+    }
+
 
     // /**
     //  * @return UserData[] Returns an array of UserData objects

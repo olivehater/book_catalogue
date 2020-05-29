@@ -401,6 +401,26 @@
                 <source>register</source>
                 <target>Zarejestruj się</target>
             </trans-unit>
+            <trans-unit id="data_not_set">
+                <source>data_not_set</source>
+                <target>Nie podano</target>
+            </trans-unit>
+            <trans-unit id="title_register">
+                <source>title_register</source>
+                <target>Zarejestruj się</target>
+            </trans-unit>
+            <trans-unit id="label_password">
+                <source>label_password</source>
+                <target>Hasło</target>
+            </trans-unit>
+            <trans-unit id="label_repeat_password">
+                <source>label_repeat_password</source>
+                <target>Powtórz hasło</target>
+            </trans-unit>
+            <trans-unit id="label_save">
+                <source>label_save</source>
+                <target>Zapisz</target>
+            </trans-unit>
 
         </body>
     </file>
