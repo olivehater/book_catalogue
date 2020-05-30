@@ -123,16 +123,28 @@ class BookController extends AbstractController
      */
     public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository): Response
     {
-        $favourite = new Favourite();
-        $form = $this->createForm(FavouriteType::class, $favourite);
-        $form->handleRequest($request);
+        $favourite = $favouriteRepository->findOneBy([
+            'book' => $book,
+            'user' => $this->getUser()
+        ]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $favourite->setUser($this->getUser());
-            $favourite->setBook($book);
-            $favouriteRepository->save($favourite);
+        if(!$favourite) {
+            $favourite = new Favourite();
+            $form = $this->createForm(FavouriteType::class, $favourite);
+            $form->handleRequest($request);
 
-            $this->addFlash('success', 'message_created_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $favourite->setUser($this->getUser());
+                $favourite->setBook($book);
+                $favouriteRepository->save($favourite);
+
+                $this->addFlash('success', 'message_created_successfully');
+
+                return $this->redirectToRoute('book_index');
+            }
+        } else {
+
+            $this->addFlash('warning', 'message_already_in_favourites');
 
             return $this->redirectToRoute('book_index');
         }

@@ -157,6 +157,7 @@ class CategoryController extends AbstractController
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         if ($category->getBooks()->count()) {
+
             $this->addFlash('warning', 'message_category_contains_books');
 
             return $this->redirectToRoute('category_index');

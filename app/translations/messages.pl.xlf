@@ -429,6 +429,10 @@
                 <source>title_user_data_change</source>
                 <target>Zmiana danych użytkownika</target>
             </trans-unit>
+            <trans-unit id="massage_already_in_favourites">
+                <source>message_already_in_favourites</source>
+                <target>Książka już jest w ulubionych</target>
+            </trans-unit>
 
         </body>
     </file>
