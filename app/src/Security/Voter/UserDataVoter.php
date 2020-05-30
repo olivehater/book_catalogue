@@ -1,20 +1,21 @@
 <?php
+
 /**
- * Comment Voter.
+ * User voter.
  */
 
 namespace App\Security\Voter;
 
-use App\Entity\Comment;
+use App\Entity\UserData;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class CommentVoter.
+ * Class UserVoter.
  */
-class CommentVoter extends Voter
+class UserDataVoter extends Voter
 {
     /**
      * Security helper.
@@ -24,7 +25,7 @@ class CommentVoter extends Voter
     private $security;
 
     /**
-     * CommentVoter constructor.
+     * UserVoter constructor.
      *
      * @param Security $security Security helper
      */
@@ -44,7 +45,7 @@ class CommentVoter extends Voter
     protected function supports($attribute, $subject)
     {
         return in_array($attribute, ['MANAGE'])
-            && $subject instanceof Comment;
+            && $subject instanceof UserData;
     }
 
     /**
@@ -52,7 +53,8 @@ class CommentVoter extends Voter
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
      * @param string $attribute
-     * @param mixed $subject
+     * @param mixed  $subject
+     *
      * @return bool
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
@@ -61,16 +63,16 @@ class CommentVoter extends Voter
             return true;
         }
 
-        $user = $token->getUser();
+        $userData = $token->getUser();
         // if the user is anonymous, do not grant access
-        if (!$user instanceof UserInterface) {
+        if (!$userData instanceof UserInterface) {
             return false;
         }
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'MANAGE':
-                if ($subject->getUser() === $user) {
+                if ($subject === $userData) {
                     return true;
                 }
                 break;

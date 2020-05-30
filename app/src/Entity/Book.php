@@ -98,7 +98,8 @@ class Book
      *
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Category",
-     *     inversedBy="books"
+     *     inversedBy="books",
+     *     fetch="EXTRA_LAZY",
      * )
      * @ORM\JoinColumn(nullable=false)
      */
@@ -111,7 +112,8 @@ class Book
      *
      * @ORM\ManyToOne(
      *     targetEntity="App\Entity\Author",
-     *     inversedBy="books"
+     *     inversedBy="books",
+     *     fetch="EXTRA_LAZY",
      * )
      * @ORM\JoinColumn(nullable=false)
      */
@@ -125,7 +127,8 @@ class Book
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\Tag",
      *     inversedBy="books",
-     *     orphanRemoval=true
+     *     orphanRemoval=true,
+     *     fetch="EXTRA_LAZY",
      * )
      * @ORM\JoinTable(name="books_tags")
      */

@@ -75,8 +75,6 @@ class AuthorRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            //->select('category', 'task.id') // nie wiem czemu nie działa
-            //->innerJoin('category.tasks', 'tasks')
             ->orderBy('author.title', 'ASC'); // domyśne sortowanie
     }
 }

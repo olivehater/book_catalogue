@@ -73,8 +73,6 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
-            //->select('category', 'book.id')
-            //->innerJoin('category.books', 'books')
             ->orderBy('category.title', 'ASC');
     }
 

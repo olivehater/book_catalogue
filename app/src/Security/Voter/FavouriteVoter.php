@@ -1,11 +1,11 @@
 <?php
 /**
- * Comment Voter.
+ * Favourite Voter.
  */
 
 namespace App\Security\Voter;
 
-use App\Entity\Comment;
+use App\Entity\Favourite;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Class CommentVoter.
  */
-class CommentVoter extends Voter
+class FavouriteVoter extends Voter
 {
     /**
      * Security helper.
@@ -44,7 +44,7 @@ class CommentVoter extends Voter
     protected function supports($attribute, $subject)
     {
         return in_array($attribute, ['MANAGE'])
-            && $subject instanceof Comment;
+            && $subject instanceof Favourite;
     }
 
     /**

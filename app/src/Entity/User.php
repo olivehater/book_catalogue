@@ -120,7 +120,7 @@ class User implements UserInterface
     /**
      * UserData.
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\UserData", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\UserData", mappedBy="user", cascade={"persist", "remove"}, fetch="EXTRA_LAZY")
      */
     private $userData;
 

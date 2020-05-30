@@ -36,6 +36,7 @@ class BookController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
      * @param \App\Repository\BookRepository            $bookRepository Book repository
      * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Pagination interface
+     * @param Favourite                                 $favourite
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -45,7 +46,7 @@ class BookController extends AbstractController
      *     name="book_index",
      * )
      */
-    public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator, FavouriteRepository $favouriteRepository): Response
     {
         $pagination = $paginator->paginate(
             $bookRepository->queryAll(),
@@ -111,13 +112,16 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/favourite",
      *     methods={"GET", "POST"},
      *     name="favourite_add"
-     *     )
+     * )
+     *
+     * @IsGranted("ROLE_USER")
      */
-    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository, BookRepository $bookRepository): Response
+    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository): Response
     {
         $favourite = new Favourite();
         $form = $this->createForm(FavouriteType::class, $favourite);
@@ -243,6 +247,7 @@ class BookController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="new_comment",
      * )
+     * @IsGranted("ROLE_USER")
      */
     public function addComment(Request $request, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
     {

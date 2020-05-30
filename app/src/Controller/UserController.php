@@ -33,7 +33,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-
     /**
      * Index action.
      *
@@ -66,8 +65,6 @@ class UserController extends AbstractController
         );
     }
 
-
-
     /**
      * User's favourites.
      *
@@ -87,7 +84,7 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
         $favourite = $paginator->paginate(
-            $repository->queryByUser($user),
+            $repository->queryByUser($user), // to już blokuje wyświetlanie twojej listy przez innych użytkowników
             $request->query->getInt('page', 1),
             FavouriteRepository::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -118,6 +115,7 @@ class UserController extends AbstractController
      *     methods={"GET", "DELETE"},
      *     name="favourite_delete"
      * )
+     * @IsGranted("MANAGE", subject="favourite")
      */
     public function deleteFavourite(Request $request, Favourite $favourite, FavouriteRepository $favouriteRepository): Response
     {
@@ -144,8 +142,6 @@ class UserController extends AbstractController
             ]
         );
     }
-
-
 
     /**
      * Change password action.
@@ -198,10 +194,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param UserData $userData
-     * @param UserDataRepository $repository
-     * @return Response
      * @throws ORMException
      * @throws OptimisticLockException
      *
@@ -211,7 +203,10 @@ class UserController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="user_data_change",
      * )
-
+     * @IsGranted(
+     *     "MANAGE",
+     *     subject="userData"
+     * )
      */
     public function changeData(Request $request, UserData $userData, UserDataRepository $repository): Response
     {
@@ -220,7 +215,6 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->save($userData);
-
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('user_show', ['id' => $userData->getUser()->getId()]);
@@ -259,6 +253,4 @@ class UserController extends AbstractController
             ['user' => $user]
         );
     }
-
-
 }

@@ -14,8 +14,17 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class RegistrationType.
+ */
 class RegistrationType extends AbstractType
 {
+    /**
+     * Builds form.
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder Form builder interface
+     * @param array $options The options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(

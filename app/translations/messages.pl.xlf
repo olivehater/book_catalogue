@@ -425,6 +425,10 @@
                 <source>title_password_change</source>
                 <target>Zmiana hasła</target>
             </trans-unit>
+            <trans-unit id="title_user_data_change">
+                <source>title_user_data_change</source>
+                <target>Zmiana danych użytkownika</target>
+            </trans-unit>
 
         </body>
     </file>

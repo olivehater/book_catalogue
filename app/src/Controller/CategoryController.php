@@ -21,6 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CategoryController.
  *
  * @Route("/category")
+ *
+ * @IsGranted("ROLE_ADMIN")
  */
 class CategoryController extends AbstractController
 {
@@ -38,7 +40,7 @@ class CategoryController extends AbstractController
      *     name="category_index",
      *     methods={"GET"},
      * )
-     * @IsGranted("ROLE_ADMIN")
+     *
      */
     public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
     {

@@ -14,6 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangePasswordType extends AbstractType
 {
+    /**
+     * Builds form.
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder Form builder interface
+     * @param array $options The options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
@@ -28,11 +34,21 @@ class ChangePasswordType extends AbstractType
         );
     }
 
+    /**
+     * Configures options.
+     *
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver Resolver for the options
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => User::class]);
     }
 
+    /**
+     * Gets the prefix.
+     *
+     * @return string Result
+     */
     public function getBlockPrefix(): string
     {
         return 'user_change_password';
