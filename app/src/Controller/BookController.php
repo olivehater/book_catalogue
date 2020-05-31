@@ -36,7 +36,6 @@ class BookController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
      * @param \App\Repository\BookRepository            $bookRepository Book repository
      * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Pagination interface
-     * @param Favourite                                 $favourite
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -46,7 +45,7 @@ class BookController extends AbstractController
      *     name="book_index",
      * )
      */
-    public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator, FavouriteRepository $favouriteRepository): Response
+    public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
             $bookRepository->queryAll(),
@@ -55,12 +54,12 @@ class BookController extends AbstractController
         );
 
         return $this->render(
-        'book/index.html.twig',
-        [
-            'pagination' => $pagination,
-        ]
-    );
+            'book/index.html.twig',
+            ['pagination' => $pagination]
+        );
     }
+
+
 
     /**
      * Create action.
@@ -125,10 +124,10 @@ class BookController extends AbstractController
     {
         $favourite = $favouriteRepository->findOneBy([
             'book' => $book,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
 
-        if(!$favourite) {
+        if (!$favourite) {
             $favourite = new Favourite();
             $form = $this->createForm(FavouriteType::class, $favourite);
             $form->handleRequest($request);
@@ -143,7 +142,6 @@ class BookController extends AbstractController
                 return $this->redirectToRoute('book_index');
             }
         } else {
-
             $this->addFlash('warning', 'message_already_in_favourites');
 
             return $this->redirectToRoute('book_index');
@@ -154,7 +152,7 @@ class BookController extends AbstractController
             [
                 'form' => $form->createView(),
                 'book' => $book,
-                ]
+            ]
         );
     }
 
@@ -241,6 +239,8 @@ class BookController extends AbstractController
             ]
         );
     }
+
+
 
     /**
      * Add comment.
@@ -350,16 +350,14 @@ class BookController extends AbstractController
      *     "/{id}",
      *     methods={"GET"},
      *     name="book_show",
-     *     requirements={"id": "[1-9]\d*"},
      * )
+     * @IsGranted("ROLE_USER")
      */
     public function show(Book $book): Response
     {
         return $this->render(
             'book/show.html.twig',
-            [
-                'book' => $book,
-            ]
+            ['book' => $book]
         );
     }
 }

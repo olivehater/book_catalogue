@@ -433,6 +433,10 @@
                 <source>message_already_in_favourites</source>
                 <target>Książka już jest w ulubionych</target>
             </trans-unit>
+            <trans-unit id="action_log_in">
+                <source>action_log_in</source>
+                <target>Zaloguj się żeby zobaczyć szczegóły</target>
+            </trans-unit>
 
         </body>
     </file>
