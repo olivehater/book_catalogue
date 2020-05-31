@@ -437,7 +437,10 @@
                 <source>action_log_in</source>
                 <target>Zaloguj się żeby zobaczyć szczegóły</target>
             </trans-unit>
-
+            <trans-unit id="message_registered_successfully">
+                <source>message_registered_successfully</source>
+                <target>Zarejestrowano nowego użytkownika</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

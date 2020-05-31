@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,28 +29,36 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'email',
-            EmailType::class,
+            'nickname',
+            TextType::class,
             [
-                'label' => 'label_email',
+                'label' => 'label_nickname',
                 'required' => true,
-                'attr' => ['max_length' => 180],
+                'attr' => ['max_length' => 50],
             ]
         );
         $builder->add(
-            'password',
-            RepeatedType::class,
+            'name',
+            TextType::class,
             [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Hasła się nie zgadzają',
-                'required' => true,
-                'first_options' => ['label' => 'label_password'],
-                'second_options' => ['label' => 'label_repeat_password'],
+                'label' => 'label_name',
+                'required' => false,
+                'attr' => ['max_length' => 30],
             ]
         );
         $builder->add(
-            'userData', UserDataType::class, [
-                'data_class' => UserData::class,
+            'surname',
+            TextType::class,
+            [
+                'label' => 'label_surname',
+                'required' => false,
+                'attr' => ['max_length' => 45],
+            ]
+        );
+        $builder->add(
+            'user', UserType::class, [
+                'label' => 'label_access_data',
+                'required' => true,
             ]
         );
     }
@@ -61,7 +70,7 @@ class RegistrationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => User::class]);
+        $resolver->setDefaults(['data_class' => UserData::class]);
     }
 
     /**
@@ -74,6 +83,6 @@ class RegistrationType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'user';
+        return 'registration';
     }
 }

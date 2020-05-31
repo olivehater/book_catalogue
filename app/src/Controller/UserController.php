@@ -194,19 +194,20 @@ class UserController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param UserData $userData
+     * @param UserDataRepository $repository
+     * @return Response
      * @throws ORMException
      * @throws OptimisticLockException
-     *
      * @Route(
      *     "/{id}/changedata",
      *     methods={"GET", "PUT"},
-     *     requirements={"id": "[1-9]\d*"},
      *     name="user_data_change",
      * )
-     * @IsGranted(
-     *     "MANAGE",
-     *     subject="userData"
-     * )
+     *
+     *
+     * @IsGranted("MANAGE", subject="userData")
      */
     public function changeData(Request $request, UserData $userData, UserDataRepository $repository): Response
     {

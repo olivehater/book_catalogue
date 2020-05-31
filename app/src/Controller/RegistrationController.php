@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
 
         $user = new User();
         $userData = new UserData();
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(RegistrationType::class, $userData);
         $form->handleRequest($request);
 
         // zakodowane hasło
@@ -52,20 +52,20 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $user->getPassword()
+                    $form->get('user')->get('password')->getData()
                 )
             );
-            $userData->setUser($user); // żeby widziało id usera
-            $userData->setNickname($form->get('userData')->get('nickname')->getData()); //żeby widziało nick
-            $userData->setName($form->get('userData')->get('name')->getData()); // żeby widziało imię
-            $userData->setSurname($form->get('userData')->get('surname')->getData());
+            $user->setEmail($form->get('user')->get('email')->getData());
+            $user->setUserData($userData);
             $user->setRoles(['ROLE_USER']);
-            $userRepository->save($user);
+            $user->setRoles(['ROLE_USER']);
             $userDataRepository->save($userData);
+            $userRepository->save($user);
 
-            //$entityManager = $this->getDoctrine()->getManager();
-            //$entityManager->persist($user);
-            //$entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->persist($userData);
+            $entityManager->flush();
 
             $this->addFlash('success', 'message_registered_successfully');
 
