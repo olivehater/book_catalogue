@@ -59,8 +59,6 @@ class BookController extends AbstractController
         );
     }
 
-
-
     /**
      * Create action.
      *
@@ -252,53 +250,6 @@ class BookController extends AbstractController
         );
     }
 
-
-
-    /**
-     * Add comment.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
-     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
-     * @param \App\Repository\BookRepository            $bookRepository    Book repository
-     * @param $id
-     *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @Route(
-     *     "/{id}",
-     *     methods={"GET", "POST"},
-     *     name="new_comment",
-     * )
-     * @IsGranted("ROLE_USER")
-     */
-    public function addComment(Request $request, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
-    {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        $book = $bookRepository->find($id);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setBook($book);
-            $comment->setUser($this->getUser());
-            $commentRepository->save($comment);
-
-            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); //żeby wiedzieć pod jakie id wrócić
-        }
-
-        return $this->render(
-            'book/show.html.twig',
-            [
-                'form' => $form->createView(),
-                'comment' => $comment,
-                'book' => $book,
-            ]
-        );
-    }
-
     /**
      * Delete comment.
      *
@@ -352,6 +303,51 @@ class BookController extends AbstractController
     }
 
     /**
+     * Add comment.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
+     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
+     * @param \App\Repository\BookRepository            $bookRepository    Book repository
+     * @param $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Route(
+     *     "/{id}",
+     *     methods={"GET", "POST"},
+     *     name="add_comment",
+     * )
+     *
+     */
+    public function addComment(Request $request, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        $book = $bookRepository->find($id);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setBook($book);
+            $comment->setUser($this->getUser());
+            $commentRepository->save($comment);
+
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); //żeby wiedzieć pod jakie id wrócić
+        }
+
+        return $this->render(
+            'book/show.html.twig',
+            [
+                'form' => $form->createView(),
+                'comment' => $comment,
+                'book' => $book,
+            ]
+        );
+    }
+
+    /**
      * Show action.
      *
      * @param \App\Entity\Book $book Book entity
@@ -363,13 +359,15 @@ class BookController extends AbstractController
      *     methods={"GET"},
      *     name="book_show",
      * )
-     * @IsGranted("ROLE_USER")
      */
     public function show(Book $book): Response
     {
+
         return $this->render(
             'book/show.html.twig',
-            ['book' => $book]
+            [
+                'book' => $book,
+            ]
         );
     }
 }

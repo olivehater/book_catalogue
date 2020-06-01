@@ -41,7 +41,7 @@
             {% if is_granted('ROLE_USER') %}
                 <div class="container">
                     <h5>{{ 'title_comment_new'|trans }}</h5>
-                    {{ form_start(form, { method: 'POST', action: url('new_comment', {id: book.getId()}) }) }}
+                    {{ form_start(form, { method: 'POST', action: url('add_comment', {id: book.getId()}) }) }}
                     {{ form_widget(form) }}
                     <div class="form-group row float-sm-right">
                         <input type="submit" value="{{ 'action_save'|trans }}" class="btn btn-primary" />
