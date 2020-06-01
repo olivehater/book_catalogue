@@ -217,6 +217,18 @@ class BookController extends AbstractController
      */
     public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
     {
+        if ($book->getFavourite()->count()) {
+            $this->addFlash('warning', 'message_delete_favourites');
+
+            return $this->redirectToRoute('book_index');
+        }
+
+        if ($book->getComment()->count()) {
+            $this->addFlash('warning', 'message_delete_comments');
+
+            return $this->redirectToRoute('book_index');
+        }
+
         $form = $this->createForm(FormType::class, $book, ['method' => 'DELETE']);
         $form->handleRequest($request);
 

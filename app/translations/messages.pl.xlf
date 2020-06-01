@@ -441,6 +441,14 @@
                 <source>message_registered_successfully</source>
                 <target>Zarejestrowano nowego użytkownika</target>
             </trans-unit>
+            <trans-unit id="message_delete_comments">
+                <source>message_delete_comments</source>
+                <target>Żeby usunąć, najpierw usuń komentarze</target>
+            </trans-unit>
+            <trans-unit id="message_delete_favourites">
+                <source>message_delete_favourites</source>
+                <target>Nie można usunąć, książka jest w ulubionych</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
