@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use App\Service\AuthorService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,11 +27,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorController extends AbstractController
 {
     /**
+     * Author service.
+     *
+     * @var \App\Service\AuthorService
+     */
+    private $authorService;
+
+    /**
+     * AuthorController constructor.
+     *
+     * @param \App\Service\AuthorService $authorService
+     */
+    public function __construct(AuthorService $authorService)
+    {
+        $this->authorService = $authorService;
+    }
+
+    /**
      * Show all authors.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP request
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator Paginator interface
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
@@ -39,13 +55,11 @@ class AuthorController extends AbstractController
      *     methods={"GET"},
      * )
      */
-    public function index(Request $request, AuthorRepository $authorRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $authorRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            AuthorRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->authorService->createPaginatedList($page);
+
 
         return $this->render(
             'author/index.html.twig',
@@ -56,21 +70,18 @@ class AuthorController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
-     * @param \App\Repository\AuthorRepository          $authorRepository Author repository
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/create",
      *     methods={"GET", "POST"},
      *     name="author_create",
      * )
      */
-    public function create(Request $request, AuthorRepository $authorRepository): Response
+    public function create(Request $request): Response
     {
         $author = new Author();
         $form = $this->createForm(AuthorType::class, $author);
@@ -79,7 +90,7 @@ class AuthorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //$author->setCreatedAt(new \DateTime());
             //$author->setUpdatedAt(new \DateTime());
-            $authorRepository->save($author);
+            $this->authorService->save($author);
 
             $this->addFlash('success', 'message_created_successfully');
 
@@ -95,10 +106,8 @@ class AuthorController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
-     * @param \App\Entity\Author                        $author           Author entity
-     * @param \App\Repository\AuthorRepository          $authorRepository Author repository
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Author $author Author entity
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
@@ -109,14 +118,14 @@ class AuthorController extends AbstractController
      *     name="author_edit",
      * )
      */
-    public function edit(Request $request, Author $author, AuthorRepository $authorRepository): Response
+    public function edit(Request $request, Author $author): Response
     {
         $form = $this->createForm(AuthorType::class, $author, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             //$author->setUpdatedAt(new \DateTime());
-            $authorRepository->save($author);
+            $this->authorService->save($author);
 
             $this->addFlash('success', 'message_updated_successfully');
 
@@ -135,12 +144,14 @@ class AuthorController extends AbstractController
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request          HTTP request
-     * @param \App\Entity\Author                        $author           Entity author
-     * @param \App\Repository\AuthorRepository          $authorRepository Author repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Author $author Entity author
+     * @param \App\Repository\AuthorRepository $authorRepository Author repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      * @Route(
      *     "/{id}/delete",
      *     methods={"GET", "DELETE"},
@@ -163,7 +174,8 @@ class AuthorController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $authorRepository->delete($author);
+            $this->authorService->delete($author);
+
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('author_index');

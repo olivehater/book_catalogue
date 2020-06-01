@@ -48,6 +48,12 @@ class AuthorRepository extends ServiceEntityRepository
         $this->_em->flush($author);
     }
 
+    /**
+     * @param \App\Entity\Author $author Author entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function delete(Author $author): void
     {
         $this->_em->remove($author);

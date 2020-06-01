@@ -5,10 +5,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Book;
 use App\Entity\Category;
 use App\Form\CategoryType;
-use App\Repository\CategoryRepository;
 use App\Service\CategoryService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,6 +33,8 @@ class CategoryController extends AbstractController
 
     /**
      * CategoryController constructor.
+     *
+     * @param \App\Service\CategoryService $categoryService
      */
     public function __construct(CategoryService $categoryService)
     {
@@ -146,8 +146,9 @@ class CategoryController extends AbstractController
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Entity\Category $category Entity category
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
+     * @param \App\Entity\Category                      $category Entity category
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
@@ -194,6 +195,7 @@ class CategoryController extends AbstractController
      * Show selected category.
      *
      * @param \App\Entity\Category $category Category entity
+     *
      * @return \Symfony\Component\HttpFoundation\Response Response
      *
      * @Route(
