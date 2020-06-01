@@ -15,7 +15,7 @@ use App\Form\FavouriteType;
 use App\Repository\BookRepository;
 use App\Repository\CommentRepository;
 use App\Repository\FavouriteRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\BookService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -31,11 +31,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     /**
+     * Book service.
+     *
+     * @var \App\Service\BookService
+     */
+    private $bookService;
+
+    /**
+     * BookController constructor.
+     */
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
+
+    /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
-     * @param \App\Repository\BookRepository            $bookRepository Book repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Pagination interface
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -45,13 +58,10 @@ class BookController extends AbstractController
      *     name="book_index",
      * )
      */
-    public function index(Request $request, BookRepository $bookRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $bookRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            BookRepository::PAGINATOR_ITEMS_FOR_PAGE
-        );
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->bookService->createPaginatedList($page);
 
         return $this->render(
             'book/index.html.twig',
@@ -77,14 +87,15 @@ class BookController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function create(Request $request, BookRepository $bookRepository): Response
+    public function create(Request $request): Response
     {
         $book = new Book();
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bookRepository->save($book);
+            $this->bookService->save($book);
+
             $this->addFlash('success', 'message_created_successfully');
 
             return $this->redirectToRoute('book_index');
@@ -102,14 +113,11 @@ class BookController extends AbstractController
      * @param \App\Entity\Book                          $book                Book entity
      * @param \Symfony\Component\HttpFoundation\Request $request             HTTP request
      * @param \App\Repository\FavouriteRepository       $favouriteRepository Favourite repository
-     * @param \App\Repository\BookRepository            $bookRepository      Book repository
-     * @param User                                      $user
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}/favourite",
      *     methods={"GET", "POST"},
@@ -157,15 +165,13 @@ class BookController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Entity\Book                          $book           Book entity
-     * @param \App\Repository\BookRepository            $bookRepository Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Book                          $book    Book entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}/edit",
      *     methods={"GET", "PUT"},
@@ -173,13 +179,14 @@ class BookController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
+    public function edit(Request $request, Book $book): Response
     {
         $form = $this->createForm(BookType::class, $book, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bookRepository->save($book);
+            $this->bookService->save($book);
+
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('book_index');
@@ -197,15 +204,13 @@ class BookController extends AbstractController
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Entity\Book                          $book           Book entity
-     * @param \App\Repository\BookRepository            $bookRepository Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Book                          $book    Book entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}/delete",
      *     methods={"GET", "DELETE"},
@@ -213,7 +218,7 @@ class BookController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
+    public function delete(Request $request, Book $book): Response
     {
         if ($book->getFavourite()->count()) {
             $this->addFlash('warning', 'message_delete_favourites');
@@ -235,7 +240,8 @@ class BookController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bookRepository->delete($book);
+            $this->bookService->delete($book);
+
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('book_index');
@@ -307,7 +313,6 @@ class BookController extends AbstractController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
      * @param \App\Repository\CommentRepository         $commentRepository Comment repository
-     * @param \App\Repository\BookRepository            $bookRepository    Book repository
      * @param $id
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
@@ -319,15 +324,15 @@ class BookController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="add_comment",
      * )
-     *
      */
-    public function addComment(Request $request, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
+    public function addComment(Request $request, CommentRepository $commentRepository, $id): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        $book = $bookRepository->find($id);
+        //$book = $bookRepository->find($id);
+        $book = $this->bookService->findBookId($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setBook($book);
@@ -362,7 +367,6 @@ class BookController extends AbstractController
      */
     public function show(Book $book): Response
     {
-
         return $this->render(
             'book/show.html.twig',
             [

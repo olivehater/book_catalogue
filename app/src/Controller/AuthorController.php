@@ -9,7 +9,6 @@ use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use App\Service\AuthorService;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -35,8 +34,6 @@ class AuthorController extends AbstractController
 
     /**
      * AuthorController constructor.
-     *
-     * @param \App\Service\AuthorService $authorService
      */
     public function __construct(AuthorService $authorService)
     {
@@ -47,6 +44,7 @@ class AuthorController extends AbstractController
      * Show all authors.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @Route(
@@ -60,7 +58,6 @@ class AuthorController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $pagination = $this->authorService->createPaginatedList($page);
 
-
         return $this->render(
             'author/index.html.twig',
             ['pagination' => $pagination]
@@ -71,6 +68,7 @@ class AuthorController extends AbstractController
      * Create action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
@@ -107,7 +105,8 @@ class AuthorController extends AbstractController
      * Edit action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Entity\Author $author Author entity
+     * @param \App\Entity\Author                        $author  Author entity
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
@@ -146,8 +145,6 @@ class AuthorController extends AbstractController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      * @param \App\Entity\Author $author Entity author
-     * @param \App\Repository\AuthorRepository $authorRepository Author repository
-     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @throws \Doctrine\ORM\ORMException
@@ -158,7 +155,7 @@ class AuthorController extends AbstractController
      *     name="author_delete"
      * )
      */
-    public function delete(Request $request, Author $author, AuthorRepository $authorRepository): Response
+    public function delete(Request $request, Author $author): Response
     {
         if ($author->getBooks()->count()) {
             $this->addFlash('warning', 'message_author_contains_books');

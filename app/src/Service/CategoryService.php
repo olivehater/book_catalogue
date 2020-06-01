@@ -10,6 +10,9 @@ use App\Repository\CategoryRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * Class CategoryService.
+ */
 class CategoryService
 {
     /**
@@ -28,6 +31,9 @@ class CategoryService
 
     /**
      * CategoryService constructor.
+     *
+     * @param \App\Repository\CategoryRepository $categoryRepository Category repository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator interface
      */
     public function __construct(CategoryRepository $categoryRepository, PaginatorInterface $paginator)
     {
@@ -40,7 +46,7 @@ class CategoryService
      *
      * @param int $page Page number
      *
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface Pagination interface
      */
     public function createPaginatedList(int $page): PaginationInterface
     {
