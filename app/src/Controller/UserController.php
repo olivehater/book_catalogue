@@ -12,18 +12,17 @@ use App\Form\ChangePasswordType;
 use App\Form\UserDataType;
 use App\Repository\FavouriteRepository;
 use App\Repository\UserDataRepository;
-use App\Repository\UserRepository;
+use App\Service\FavouriteService;
+use App\Service\UserDataService;
 use App\Service\UserService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController.
@@ -36,15 +35,22 @@ class UserController extends AbstractController
 {
     private $userService;
 
-    public function __construct(UserService $userService)
+    private $favouriteService;
+
+    private $userDataService;
+
+    public function __construct(UserService $userService, FavouriteService $favouriteService, UserDataService $userDataService)
     {
         $this->userService = $userService;
+        $this->favouriteService = $favouriteService;
+        $this->userDataService = $userDataService;
     }
 
     /**
      * Index action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @Route(
@@ -70,9 +76,7 @@ class UserController extends AbstractController
     /**
      * User's favourites.
      *
-     * @param \App\Repository\FavouriteRepository       $repository Favourite repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator  Paginator interface
-     * @param \Symfony\Component\HttpFoundation\Request $request    HTTP request
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -82,14 +86,18 @@ class UserController extends AbstractController
      *     name="user_favourite_index",
      * )
      */
-    public function showFavourites(FavouriteRepository $repository, PaginatorInterface $paginator, Request $request)
+    public function showFavourites(Request $request)
     {
         $user = $this->getUser();
+        /*
         $favourite = $paginator->paginate(
             $repository->queryByUser($user), // to już blokuje wyświetlanie twojej listy przez innych użytkowników
             $request->query->getInt('page', 1),
             FavouriteRepository::PAGINATOR_ITEMS_PER_PAGE
         );
+        */
+        $page = $request->query->getInt('page', 1);
+        $favourite = $this->favouriteService->createPaginatedList($page, $user);
 
         return $this->render(
             'user/favourite.html.twig',
@@ -103,15 +111,12 @@ class UserController extends AbstractController
     /**
      * Delete favourite action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request             HTTP request
-     * @param \App\Entity\Favourite                     $favourite           Favourite entity
-     * @param \App\Repository\FavouriteRepository       $favouriteRepository Favourite repository
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Favourite $favourite Favourite entity
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      * @Route(
      *     "/favourite/{id}/delete",
      *     methods={"GET", "DELETE"},
@@ -119,7 +124,7 @@ class UserController extends AbstractController
      * )
      * @IsGranted("MANAGE", subject="favourite")
      */
-    public function deleteFavourite(Request $request, Favourite $favourite, FavouriteRepository $favouriteRepository): Response
+    public function deleteFavourite(Request $request, Favourite $favourite): Response
     {
         $form = $this->createForm(FormType::class, $favourite, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -129,7 +134,8 @@ class UserController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $favouriteRepository->delete($favourite);
+            //$favouriteRepository->delete($favourite);
+            $this->favouriteService->delete($favourite);
 
             $this->addFlash('success', 'message_deleted_successfully');
 
@@ -148,9 +154,8 @@ class UserController extends AbstractController
     /**
      * Change password action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request    HTTP request
-     * @param \App\Entity\User                          $user       User entity
-     * @param \App\Repository\UserRepository            $repository User repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\User                          $user    User entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -167,11 +172,12 @@ class UserController extends AbstractController
      *     subject="user"
      * )
      */
-    public function changePassword(Request $request, User $user, UserRepository $repository, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function changePassword(Request $request, User $user): Response
     {
         $form = $this->createForm(ChangePasswordType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
 
+        /*
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -179,7 +185,14 @@ class UserController extends AbstractController
                     $user->getPassword()
                 )
             );
-            $repository->save($user);
+        */
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword( // zakodowane hasło
+                $this->userService->encodingPassword($user)
+            );
+            //$repository->save($user);
+            $this->userService->save($user);
 
             $this->addFlash('success', 'message_updated_successfully');
 
@@ -196,10 +209,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param UserData $userData
-     * @param UserDataRepository $repository
-     * @return Response
+     * Change user's data.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\UserData $userData User data entity
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
      * @throws ORMException
      * @throws OptimisticLockException
      * @Route(
@@ -208,16 +222,16 @@ class UserController extends AbstractController
      *     name="user_data_change",
      * )
      *
-     *
      * @IsGranted("MANAGE", subject="userData")
      */
-    public function changeData(Request $request, UserData $userData, UserDataRepository $repository): Response
+    public function changeData(Request $request, UserData $userData): Response
     {
         $form = $this->createForm(UserDataType::class, $userData, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $repository->save($userData);
+            //$repository->save($userData);
+            $this->userDataService->save($userData);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('user_show', ['id' => $userData->getUser()->getId()]);

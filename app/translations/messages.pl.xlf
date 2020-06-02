@@ -449,6 +449,10 @@
                 <source>message_delete_favourites</source>
                 <target>Nie można usunąć, książka jest w ulubionych</target>
             </trans-unit>
+            <trans-unit id="label_access_data">
+                <source>label_access_data</source>
+                <target>Dane dostępu</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

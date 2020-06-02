@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserService.
@@ -27,15 +28,18 @@ class UserService
      */
     private $paginator;
 
+    private  $passwordEncoder; // czy potrzebne?
+
     /**
      * UserService constructor.
      *
      * @param \App\Repository\UserRepository $userRepository User repository
      */
-    public function __construct(UserRepository $userRepository, PaginatorInterface $paginator)
+    public function __construct(UserRepository $userRepository, PaginatorInterface $paginator, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->userRepository = $userRepository;
         $this->paginator = $paginator;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -65,5 +69,25 @@ class UserService
     public function save(User $user)
     {
         $this->userRepository->save($user);
+    }
+
+    /**
+     * Encoding user's password.
+     *
+     * @param $user
+     * @param $form
+     * @return string
+     */
+    public function encodingPassword(User $user)
+    {
+        return $this->passwordEncoder->encodePassword(
+            $user,
+            $user->getPassword()
+        );
+    }
+
+    public function findByEmail($array)
+    {
+        return $this->userRepository->findOneBy($array);
     }
 }
