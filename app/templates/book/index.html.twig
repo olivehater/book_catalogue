@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <h1>{{ 'title_book_list'|trans }}</h1>
+    <h1><a href="{{ url('book_index') }}">{{ 'title_book_list'|trans }}</a></h1>
 
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ url('book_create') }}">{{'title_book_create'|trans}}</a><br><br>
@@ -46,11 +46,13 @@
                     <td>{{ book.createdAt|date('Y/m/d') }}</td>
                     <td>{{ book.updatedAt|date('Y/m/d') }}</td>
                     <td>{{ book.title }}</td>
-                    <td><a href="{#{{ url('author_show', {'id':book.author.id}) }}#}">{{ book.author.title }}</a></td>
-                    <td><a href="{#{{ url('category_show', {'id':book.category.id}) }}#}">{{ book.category.title }}</a></td>
+                    <td><a href="{{ url('author_show', {'id':book.author.id}) }}">{{ book.author.title }}</a></td>
+                    <td><a href="{{ url('book_index', {'filters' : {'category' : book.category.id}}) }}" >{{ book.category.title }}</a></td>
                     <td>
                         {% for tag in book.getTags() %}
-                            {{ tag.title }}
+                            <a href="{{ url('book_index', {'filters' : {'tag' : tag.id}}) }}" >
+                                    {{ tag.title }}
+                            </a>
                         {% endfor %}
                     </td>
                     <td>

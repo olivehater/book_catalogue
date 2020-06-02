@@ -64,6 +64,7 @@ class TagRepository extends ServiceEntityRepository
         $this->_em->flush($tag);
     }
 
+
     /**
      * Query all records.
      *
@@ -86,4 +87,5 @@ class TagRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('tag');
     }
+
 }

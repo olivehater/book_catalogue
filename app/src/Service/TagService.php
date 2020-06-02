@@ -41,9 +41,26 @@ class TagService
         $this->paginator = $paginator;
     }
 
+    /**
+     * Find tag by title.
+     *
+     * @param string $title Tag title
+     * @return \App\Entity\Tag|null Tag entity
+     */
     public function findOneByTitle(string $title): ?Tag
     {
         return $this->tagRepository->findOneByTitle($title);
+    }
+
+    /**
+     * Find tag by id.
+     *
+     * @param int $id Tag id
+     * @return \App\Entity\Tag|null Tag entity
+     */
+    public function findOneById(int $id): ?Tag
+    {
+        return $this->tagRepository->findOneById($id);
     }
 
     /**

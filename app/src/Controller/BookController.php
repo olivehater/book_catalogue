@@ -70,8 +70,13 @@ class BookController extends AbstractController
      */
     public function index(Request $request): Response
     {
+
         $page = $request->query->getInt('page', 1);
-        $pagination = $this->bookService->createPaginatedList($page);
+        $pagination = $this->bookService->createPaginatedList(
+            $page,
+            //$this->getUser(),
+            $request->query->getAlnum('filters', [])
+        );
 
         return $this->render(
             'book/index.html.twig',

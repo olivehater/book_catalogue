@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/author")
  *
- * @IsGranted("ROLE_ADMIN")
+ *
  */
 class AuthorController extends AbstractController
 {
@@ -51,6 +51,7 @@ class AuthorController extends AbstractController
      *     name="author_index",
      *     methods={"GET"},
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(Request $request): Response
     {
@@ -77,6 +78,7 @@ class AuthorController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="author_create",
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function create(Request $request): Response
     {
@@ -115,6 +117,7 @@ class AuthorController extends AbstractController
      *     methods={"GET", "PUT"},
      *     name="author_edit",
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Author $author): Response
     {
@@ -154,6 +157,7 @@ class AuthorController extends AbstractController
      *     methods={"GET", "DELETE"},
      *     name="author_delete"
      * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Author $author): Response
     {
