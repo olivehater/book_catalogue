@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
+use App\Service\TagService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TagController extends AbstractController
 {
+    private $tagService;
+
+    public function __construct(TagService $tagService)
+    {
+        $this->tagService = $tagService;
+    }
+
     /**
      * Show all tags.
      *
@@ -42,11 +50,15 @@ class TagController extends AbstractController
      */
     public function index(Request $request, TagRepository $tagRepository, PaginatorInterface $paginator)
     {
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->tagService->createPaginatedList($page);
+        /*
         $pagination = $paginator->paginate(
             $tagRepository->queryAll(),
             $request->query->getInt('page', 1),
             TagRepository::PAGINATOR_ITEMS_PER_PAGE
         );
+        */
 
         return $this->render(
             'tag/index.html.twig',
@@ -79,7 +91,8 @@ class TagController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             //$tag->setUpdatedAt(new \DateTime());
-            $tagRepository->save($tag);
+            //$tagRepository->save($tag);
+            $this->tagService->save($tag);
 
             $this->addFlash('success', 'message_updated_successfully');
 
@@ -123,7 +136,8 @@ class TagController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->delete($tag);
+            //$tagRepository->delete($tag);
+            $this->tagService->delete($tag);
 
             $this->addFlash('success', 'message_deleted_successfully');
 

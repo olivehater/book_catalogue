@@ -39,7 +39,7 @@ class SecurityController extends AbstractController
     public function login(): Response
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return $this->redirectToRoute('article_index');
+            return $this->redirectToRoute('book_index');
         }
 
         // get the login error if there is one

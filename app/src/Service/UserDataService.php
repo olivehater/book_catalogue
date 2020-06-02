@@ -38,7 +38,7 @@ class UserDataService
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save(UserData $userData)
+    public function save(UserData $userData):void
     {
         $this->userDataRepository->save($userData);
     }
