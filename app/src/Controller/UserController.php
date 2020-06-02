@@ -13,6 +13,7 @@ use App\Form\UserDataType;
 use App\Repository\FavouriteRepository;
 use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
@@ -33,13 +34,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+    private $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP Request
-     * @param \App\Repository\UserRepository            $userRepository User repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Pagination interface
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @Route(
@@ -49,13 +54,10 @@ class UserController extends AbstractController
      * )
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $userRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            UserRepository::PAGINATOR_ITEMS_FOR_PAGE
-        );
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->userService->createPaginatedList($page);
 
         return $this->render(
             'user/index.html.twig',

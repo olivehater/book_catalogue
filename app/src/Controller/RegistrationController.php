@@ -8,9 +8,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserData;
 use App\Form\RegistrationType;
-use App\Repository\UserRepository;
 use App\Service\RegistrationService;
 use App\Service\UserDataService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,22 +36,29 @@ class RegistrationController extends AbstractController
     private $userDataService;
 
     /**
+     * User service.
+     *
+     * @var \App\Service\UserService
+     */
+    private $userService;
+
+    /**
      * RegistrationController constructor.
      *
      * @param \App\Service\RegistrationService $registrationService Registration service
      * @param \App\Service\UserDataService     $userDataService     User data service
      */
-    public function __construct(RegistrationService $registrationService, UserDataService $userDataService)
+    public function __construct(RegistrationService $registrationService, UserDataService $userDataService, UserService $userService)
     {
         $this->registrationService = $registrationService;
         $this->userDataService = $userDataService;
+        $this->userService = $userService;
     }
 
     /**
      * Register.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\UserRepository            $userRepository User repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -62,7 +69,7 @@ class RegistrationController extends AbstractController
      *     name="register"
      * )
      */
-    public function register(Request $request, UserRepository $userRepository): Response
+    public function register(Request $request): Response
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('book_index');
@@ -92,7 +99,8 @@ class RegistrationController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             //$userDataRepository->save($userData);
             $this->userDataService->save($userData);
-            $userRepository->save($user);
+            //$userRepository->save($user);
+            $this->userService->save($user);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
