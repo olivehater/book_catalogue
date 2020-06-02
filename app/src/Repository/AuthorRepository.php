@@ -10,6 +10,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class AuthorRepository.
+ *
  * @method Author|null find($id, $lockMode = null, $lockVersion = null)
  * @method Author|null findOneBy(array $criteria, array $orderBy = null)
  * @method Author[]    findAll()

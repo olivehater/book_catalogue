@@ -7,7 +7,6 @@ namespace App\Controller;
 
 use App\Entity\Author;
 use App\Form\AuthorType;
-use App\Repository\AuthorRepository;
 use App\Service\AuthorService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -144,7 +143,8 @@ class AuthorController extends AbstractController
      * Delete action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Entity\Author $author Entity author
+     * @param \App\Entity\Author                        $author  Entity author
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @throws \Doctrine\ORM\ORMException

@@ -33,8 +33,6 @@ class CategoryController extends AbstractController
 
     /**
      * CategoryController constructor.
-     *
-     * @param \App\Service\CategoryService $categoryService
      */
     public function __construct(CategoryService $categoryService)
     {
@@ -105,15 +103,13 @@ class CategoryController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Entity\Category                      $category           Category entity
-     * @param \App\Repository\CategoryRepository        $categoryRepository Category repository
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
+     * @param \App\Entity\Category                      $category Category entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}/edit",
      *     methods={"GET", "PUT"},

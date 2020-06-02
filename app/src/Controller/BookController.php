@@ -12,10 +12,9 @@ use App\Entity\User;
 use App\Form\BookType;
 use App\Form\CommentType;
 use App\Form\FavouriteType;
-use App\Repository\BookRepository;
-use App\Repository\CommentRepository;
-use App\Repository\FavouriteRepository;
 use App\Service\BookService;
+use App\Service\CommentService;
+use App\Service\FavouriteService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -38,11 +37,22 @@ class BookController extends AbstractController
     private $bookService;
 
     /**
+     * Favourite service.
+     *
+     * @var \App\Service\FavouriteService
+     */
+    private $favouriteService;
+
+    private $commentService;
+
+    /**
      * BookController constructor.
      */
-    public function __construct(BookService $bookService)
+    public function __construct(BookService $bookService, FavouriteService $favouriteService, CommentService $commentService)
     {
         $this->bookService = $bookService;
+        $this->favouriteService = $favouriteService;
+        $this->commentService = $commentService;
     }
 
     /**
@@ -110,9 +120,8 @@ class BookController extends AbstractController
     /**
      * Add favourite.
      *
-     * @param \App\Entity\Book                          $book                Book entity
-     * @param \Symfony\Component\HttpFoundation\Request $request             HTTP request
-     * @param \App\Repository\FavouriteRepository       $favouriteRepository Favourite repository
+     * @param \App\Entity\Book                          $book    Book entity
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -126,12 +135,16 @@ class BookController extends AbstractController
      *
      * @IsGranted("ROLE_USER")
      */
-    public function addFavourite(Book $book, Request $request, FavouriteRepository $favouriteRepository): Response
+    public function addFavourite(Book $book, Request $request): Response
     {
+        $user = $this->getUser();
+        /*
         $favourite = $favouriteRepository->findOneBy([
             'book' => $book,
             'user' => $this->getUser(),
         ]);
+        */
+        $favourite = $this->favouriteService->alreadyInUsersFavourites($book, $user);
 
         if (!$favourite) {
             $favourite = new Favourite();
@@ -141,7 +154,8 @@ class BookController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $favourite->setUser($this->getUser());
                 $favourite->setBook($book);
-                $favouriteRepository->save($favourite);
+                //$favouriteRepository->save($favourite);
+                $this->favouriteService->save($favourite);
 
                 $this->addFlash('success', 'message_created_successfully');
 
@@ -259,17 +273,14 @@ class BookController extends AbstractController
     /**
      * Delete comment.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
-     * @param \App\Entity\Comment                       $comment           Comment entity
-     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
-     * @param \App\Repository\BookRepository            $bookRepository    Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Comment                       $comment Comment entity
      * @param $id
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/{id}/deletecomment",
      *     methods={"GET", "DELETE"},
@@ -280,19 +291,22 @@ class BookController extends AbstractController
      *     subject="comment"
      * )
      */
-    public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository, BookRepository $bookRepository, $id): Response
+    public function deleteComment(Request $request, Comment $comment, $id): Response
     {
         $form = $this->createForm(FormType::class, $comment, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
-        $book = $bookRepository->find($id); // szuka id książki
+        //$book = $bookRepository->find($id); // szuka id książki
+        $book = $this->bookService->findBookId($id);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentRepository->delete($comment);
+            //$commentRepository->delete($comment);
+            $this->commentService->delete($comment);
+
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); // dzięki temu wie gdzie wrócić
@@ -311,8 +325,7 @@ class BookController extends AbstractController
     /**
      * Add comment.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request           HTTP request
-     * @param \App\Repository\CommentRepository         $commentRepository Comment repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      * @param $id
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
@@ -325,7 +338,7 @@ class BookController extends AbstractController
      *     name="add_comment",
      * )
      */
-    public function addComment(Request $request, CommentRepository $commentRepository, $id): Response
+    public function addComment(Request $request, $id): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -337,7 +350,8 @@ class BookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setBook($book);
             $comment->setUser($this->getUser());
-            $commentRepository->save($comment);
+            //$commentRepository->save($comment);
+            $this->commentService->save($comment);
 
             return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); //żeby wiedzieć pod jakie id wrócić
         }

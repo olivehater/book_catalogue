@@ -15,8 +15,18 @@ use Knp\Component\Pager\PaginatorInterface;
  */
 class BookService
 {
+    /**
+     * Book repository
+     *
+     * @var \App\Repository\BookRepository
+     */
     private $bookRepository;
 
+    /**
+     * Paginator interface.
+     *
+     * @var \Knp\Component\Pager\PaginatorInterface
+     */
     private $paginator;
 
     /**
@@ -50,6 +60,7 @@ class BookService
     /**
      * Save book.
      *
+     * @param \App\Entity\Book $book Book entity
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */

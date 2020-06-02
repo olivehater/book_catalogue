@@ -8,13 +8,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserData;
 use App\Form\RegistrationType;
-use App\Repository\UserDataRepository;
 use App\Repository\UserRepository;
+use App\Service\RegistrationService;
+use App\Service\UserDataService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class RegistrationController.
@@ -22,21 +22,47 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request                             $request         HTTP request
-     * @param \App\Repository\UserRepository                                        $userRepository  User repository
-     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder Password encoder
+     * Registration service.
+     *
+     * @var \App\Service\RegistrationService
+     */
+    private $registrationService;
+
+    /**
+     * User data service.
+     *
+     * @var \App\Service\UserDataService
+     */
+    private $userDataService;
+
+    /**
+     * RegistrationController constructor.
+     *
+     * @param \App\Service\RegistrationService $registrationService Registration service
+     * @param \App\Service\UserDataService     $userDataService     User data service
+     */
+    public function __construct(RegistrationService $registrationService, UserDataService $userDataService)
+    {
+        $this->registrationService = $registrationService;
+        $this->userDataService = $userDataService;
+    }
+
+    /**
+     * Register.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param \App\Repository\UserRepository            $userRepository User repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
-     *
      * @Route(
      *     "/registration",
      *     name="register"
      * )
      */
-    public function register(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, UserDataRepository $userDataRepository): Response
+    public function register(Request $request, UserRepository $userRepository): Response
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('book_index');
@@ -47,7 +73,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationType::class, $userData);
         $form->handleRequest($request);
 
-        // zakodowane hasło
+        /*
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -55,11 +81,17 @@ class RegistrationController extends AbstractController
                     $form->get('user')->get('password')->getData()
                 )
             );
+        */
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword( // zakodowane hasło
+                $this->registrationService->encodingPassword($user, $form->get('user')->get('password')->getData())
+            );
+
             $user->setEmail($form->get('user')->get('email')->getData());
             $user->setUserData($userData);
             $user->setRoles(['ROLE_USER']);
-            $user->setRoles(['ROLE_USER']);
-            $userDataRepository->save($userData);
+            //$userDataRepository->save($userData);
+            $this->userDataService->save($userData);
             $userRepository->save($user);
 
             $entityManager = $this->getDoctrine()->getManager();
