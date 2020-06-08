@@ -149,6 +149,17 @@ class Book
     private $comment;
 
     /**
+     * Code.
+     *
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $code;
+
+    /**
      * Book constructor.
      */
     public function __construct()
@@ -398,6 +409,18 @@ class Book
                 $comment->setBook(null);
             }
         }
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
 }

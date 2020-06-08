@@ -67,13 +67,12 @@ class BookRepository extends ServiceEntityRepository
         $this->_em->flush($book);
     }
 
-
     /**
      * Query all records.
      *
      * @param array $filters Filters array
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return \Doctrine\ORM\QueryBuilder Query builer
      */
     public function queryAll(array $filters = []): QueryBuilder
     {
@@ -86,7 +85,7 @@ class BookRepository extends ServiceEntityRepository
             )
             ->join('book.category', 'category')
             ->join('book.author', 'author')
-            ->join('book.tags', 'tags')
+            ->leftjoin('book.tags', 'tags')
             ->orderBy('book.updatedAt', 'DESC');
 
         $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);

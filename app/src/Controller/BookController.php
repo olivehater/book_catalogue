@@ -74,7 +74,6 @@ class BookController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $pagination = $this->bookService->createPaginatedList(
             $page,
-            //$this->getUser(),
             $request->query->getAlnum('filters', [])
         );
 
