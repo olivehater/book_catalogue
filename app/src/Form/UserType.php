@@ -29,7 +29,7 @@ class UserType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'label' => 'label_email',
+                    'label' => 'label_email_star',
                     'required' => true,
                     'attr' => ['max_length' => 180],
                 ]
@@ -42,8 +42,8 @@ class UserType extends AbstractType
                     'type' => PasswordType::class,
                     'invalid_message' => 'Hasła się nie zgadzają',
                     'required' => true,
-                    'first_options' => ['label' => 'label_password'],
-                    'second_options' => ['label' => 'label_repeat_password'],
+                    'first_options' => ['label' => 'label_password_star'],
+                    'second_options' => ['label' => 'label_repeat_password_star'],
                 ]
             );
     }

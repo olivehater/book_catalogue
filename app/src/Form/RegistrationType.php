@@ -32,7 +32,7 @@ class RegistrationType extends AbstractType
             'nickname',
             TextType::class,
             [
-                'label' => 'label_nickname',
+                'label' => 'label_nickname_star',
                 'required' => true,
                 'attr' => ['max_length' => 50],
             ]

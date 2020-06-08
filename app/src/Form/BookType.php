@@ -49,7 +49,7 @@ class BookType extends AbstractType
             'title',
             TextType::class,
             [
-                'label' => 'label_title',
+                'label' => 'label_title_star',
                 'required' => true,
                 'attr' => ['max_length' => 255],
             ]
@@ -62,7 +62,7 @@ class BookType extends AbstractType
                 'choice_label' => function ($category) {
                     return $category->getTitle();
                 },
-                'label' => 'label_category',
+                'label' => 'label_category_star',
                 'placeholder' => 'label_none',
                 'required' => true,
             ]
@@ -75,7 +75,7 @@ class BookType extends AbstractType
                 'choice_label' => function ($author) {
                     return $author->getTitle();
                 },
-                'label' => 'label_author',
+                'label' => 'label_author_star',
                 'placeholder' => 'label_none',
                 'required' => true,
             ]
@@ -84,7 +84,7 @@ class BookType extends AbstractType
             'description',
             TextType::class,
             [
-                'label' => 'label_description',
+                'label' => 'label_description_star',
                 'required' => true,
                 'attr' => ['max_length' => 2000],
             ]

@@ -25,7 +25,7 @@ class AuthorType extends AbstractType
             'title',
             TextType::class,
             [
-                'label' => 'label_author',
+                'label' => 'label_author_star',
                 'required' => true,
                 'attr' => ['max_length' => 100],
             ]
@@ -34,7 +34,7 @@ class AuthorType extends AbstractType
             'description',
             TextType::class,
         [
-            'label' => 'label_description',
+            'label' => 'label_description_star',
             'required' => true,
             'attr' => [
                 'max_length' => 2000,

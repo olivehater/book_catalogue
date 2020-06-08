@@ -43,7 +43,7 @@ class UserVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['MANAGE'])
+        return in_array($attribute, ['MANAGE','VIEW'])
             && $subject instanceof User;
     }
 

@@ -28,8 +28,8 @@ class ChangePasswordType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Hasła nie są takie same',
                 'required' => true,
-                'first_options' => ['label' => 'label_password'],
-                'second_options' => ['label' => 'label_repeat_password'],
+                'first_options' => ['label' => 'label_password_star'],
+                'second_options' => ['label' => 'label_repeat_password_star'],
             ]
         );
     }

@@ -10,8 +10,6 @@ use App\Entity\User;
 use App\Entity\UserData;
 use App\Form\ChangePasswordType;
 use App\Form\UserDataType;
-use App\Repository\FavouriteRepository;
-use App\Repository\UserDataRepository;
 use App\Service\FavouriteService;
 use App\Service\UserDataService;
 use App\Service\UserService;
@@ -89,13 +87,6 @@ class UserController extends AbstractController
     public function showFavourites(Request $request)
     {
         $user = $this->getUser();
-        /*
-        $favourite = $paginator->paginate(
-            $repository->queryByUser($user), // to już blokuje wyświetlanie twojej listy przez innych użytkowników
-            $request->query->getInt('page', 1),
-            FavouriteRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-        */
         $page = $request->query->getInt('page', 1);
         $favourite = $this->favouriteService->createPaginatedList($page, $user);
 
@@ -111,8 +102,9 @@ class UserController extends AbstractController
     /**
      * Delete favourite action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Entity\Favourite $favourite Favourite entity
+     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP request
+     * @param \App\Entity\Favourite                     $favourite Favourite entity
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws ORMException
@@ -177,16 +169,6 @@ class UserController extends AbstractController
         $form = $this->createForm(ChangePasswordType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
 
-        /*
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $user->getPassword()
-                )
-            );
-        */
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword( // zakodowane hasło
                 $this->userService->encodingPassword($user)
@@ -211,9 +193,11 @@ class UserController extends AbstractController
     /**
      * Change user's data.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
-     * @param \App\Entity\UserData $userData User data entity
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP request
+     * @param \App\Entity\UserData                      $userData User data entity
+     *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      * @Route(
@@ -230,7 +214,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$repository->save($userData);
             $this->userDataService->save($userData);
             $this->addFlash('success', 'message_updated_successfully');
 

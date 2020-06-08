@@ -453,6 +453,38 @@
                 <source>label_access_data</source>
                 <target>Dane dostępu</target>
             </trans-unit>
+            <trans-unit id="label_nickname_star">
+                <source>label_nickname_star</source>
+                <target>Nick *</target>
+            </trans-unit>
+            <trans-unit id="label_email_star">
+                <source>label_email_star</source>
+                <target>E-mail *</target>
+            </trans-unit>
+            <trans-unit id="label_password_star">
+                <source>label_password_star</source>
+                <target>Hasło *</target>
+            </trans-unit>
+            <trans-unit id="label_repeat_password_star">
+                <source>label_repeat_password_star</source>
+                <target>Powtórz hasło *</target>
+            </trans-unit>
+            <trans-unit id="label_title_star">
+                <source>label_title_star</source>
+                <target>Tytuł *</target>
+            </trans-unit>
+            <trans-unit id="label_category_star">
+                <source>label_category_star</source>
+                <target>Kategoria *</target>
+            </trans-unit>
+            <trans-unit id="label_author_star">
+                <source>label_author_star</source>
+                <target>Autor *</target>
+            </trans-unit>
+            <trans-unit id="label_description_star">
+                <source>label_description_star</source>
+                <target>Opis *</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

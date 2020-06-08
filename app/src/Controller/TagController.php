@@ -126,7 +126,7 @@ class TagController extends AbstractController
      *     name="tag_delete"
      * )
      */
-    public function delete(Request $request, Tag $tag, TagRepository $tagRepository): Response
+    public function delete(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(FormType::class, $tag, ['method' => 'DELETE']);
         $form->handleRequest($request);

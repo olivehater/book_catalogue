@@ -28,7 +28,10 @@ class UserService
      */
     private $paginator;
 
-    private  $passwordEncoder; // czy potrzebne?
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
 
     /**
      * UserService constructor.
@@ -49,7 +52,7 @@ class UserService
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function createPaginatedList(int $page):PaginationInterface
+    public function createPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
           $this->userRepository->queryAll(),
@@ -76,6 +79,7 @@ class UserService
      *
      * @param $user
      * @param $form
+     *
      * @return string
      */
     public function encodingPassword(User $user)
@@ -86,6 +90,12 @@ class UserService
         );
     }
 
+    /**
+     * Find by email.
+     *
+     * @param $array
+     * @return \App\Entity\User|null User entity
+     */
     public function findByEmail($array)
     {
         return $this->userRepository->findOneBy($array);
