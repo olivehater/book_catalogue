@@ -2,92 +2,480 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="title_book_list">
-                <source>title_book_list</source>
-                <target>List of books</target>
-            </trans-unit>
-            <trans-unit id="label_actions">
-                <source>label_actions</source>
-                <target>Actions</target>
-            </trans-unit>
-            <trans-unit id="label_id">
-                <source>label_id</source>
-                <target>#</target>
-            </trans-unit>
-            <trans-unit id="label_created_at">
-                <source>label_created_at</source>
-                <target>Created at</target>
-            </trans-unit>
-            <trans-unit id="label_updated_at">
-                <source>label_updated_at</source>
-                <target>Updated at</target>
-            </trans-unit>
-            <trans-unit id="label_title">
-                <source>label_title</source>
-                <target>Title</target>
-            </trans-unit>
-            <trans-unit id="label_category">
-                <source>label_category</source>
-                <target>Category</target>
-             </trans-unit>
-            <trans-unit id="label_author">
-                <source>label_author</source>
-                <target>Autor</target>
-            </trans-unit>
-            <trans-unit id="label_tag">
-                 <source>label_tag</source>
-                 <target>Tagi</target>
-            </trans-unit>
-            <trans-unit id="action_show">
-                <source>action_show</source>
-                <target>Show</target>
-            </trans-unit>
-            <trans-unit id="empty_book_list">
-                <source>empty_book_list</source>
-                <target>List of books is empty...</target>
-            </trans-unit>
-            <trans-unit id="see_more">
-                <source>see_more</source>
-                <target>See more:</target>
-            </trans-unit>
-            <trans-unit id="category_list">
-                <source>category_list</source>
-                <target>List of categories</target>
-            </trans-unit>
+             <trans-unit id="title_book_list">
+                            <source>title_book_list</source>
+                            <target>List of books</target>
+                        </trans-unit>
+                        <trans-unit id="label_actions">
+                            <source>label_actions</source>
+                            <target>Actions</target>
+                        </trans-unit>
+                        <trans-unit id="label_id">
+                            <source>label_id</source>
+                            <target>#</target>
+                        </trans-unit>
+                        <trans-unit id="label_created_at">
+                            <source>label_created_at</source>
+                            <target>Created at</target>
+                        </trans-unit>
+                        <trans-unit id="label_updated_at">
+                            <source>label_updated_at</source>
+                            <target>Updated at</target>
+                        </trans-unit>
+                        <trans-unit id="label_title">
+                            <source>label_title</source>
+                            <target>Title</target>
+                        </trans-unit>
+                        <trans-unit id="label_category">
+                            <source>label_category</source>
+                            <target>Category</target>
+                        </trans-unit>
+                        <trans-unit id="label_author">
+                            <source>label_author</source>
+                            <target>Author</target>
+                        </trans-unit>
+                        <trans-unit id="label_tag">
+                            <source>label_tag</source>
+                            <target>Tags</target>
+                        </trans-unit>
+                        <trans-unit id="action_show">
+                            <source>action_show</source>
+                            <target>Show</target>
+                        </trans-unit>
+                        <trans-unit id="empty_book_list">
+                            <source>empty_book_list</source>
+                            <target>List of books is empty...</target>
+                        </trans-unit>
+                        <trans-unit id="see_more">
+                            <source>see_more</source>
+                            <target>See more:</target>
+                        </trans-unit>
+                        <trans-unit id="category_list">
+                            <source>category_list</source>
+                            <target>Category list</target>
+                        </trans-unit>
+                        <trans-unit id="label_edit">
+                            <source>label_edit</source>
+                            <target>Edit</target>
+                        </trans-unit>
+                        <trans-unit id="label_delete">
+                            <source>label_delete</source>
+                            <target>Delete</target>
+                        </trans-unit>
+                        <trans-unit id="title_book_create">
+                            <source>title_book_create</source>
+                            <target>Add new book</target>
+                        </trans-unit>
+                        <trans-unit id="tag_list">
+                            <source>tag_list</source>
+                            <target>List of tags</target>
+                        </trans-unit>
+                        <trans-unit id="title_book_details">
+                            <source>title_book_details</source>
+                            <target>Details of "%title%"</target>
+                        </trans-unit>
+                        <trans-unit id="label_description">
+                            <source>label_description</source>
+                            <target>Description</target>
+                        </trans-unit>
+                        <trans-unit id="book_not_found">
+                            <source>book_not_found</source>
+                            <target>Book not found...</target>
+                        </trans-unit>
+                        <trans-unit id="show_book_details">
+                            <source>show_book_details</source>
+                            <target>Book details</target>
+                        </trans-unit>
+                        <trans-unit id="all_books_list_back">
+                            <source>all_books_list_back</source>
+                            <target>Back to list of books</target>
+                        </trans-unit>
+                        <trans-unit id="all_category_list_back">
+                            <source>all_category_list_back</source>
+                            <target>Back to list of categories</target>
+                        </trans-unit>
+                        <trans-unit id="title_selected_category">
+                            <source>title_selected_category</source>
+                            <target>Chosen category: %title%</target>
+                        </trans-unit>
+                        <trans-unit id="show_category_details">
+                            <source>show_category_details</source>
+                            <target>Category details</target>
+                        </trans-unit>
+                        <trans-unit id="title_category_create">
+                            <source>title_category_create</source>
+                            <target>Add new category</target>
+                        </trans-unit>
+                        <trans-unit id="action_save">
+                            <source>action_save</source>
+                            <target>Save</target>
+                        </trans-unit>
+                        <trans-unit id="action_create">
+                            <source>action_create</source>
+                            <target>Create</target>
+                        </trans-unit>
+                        <trans-unit id="action_delete">
+                            <source>action_delete</source>
+                            <target>Delete</target>
+                        </trans-unit>
+                        <trans-unit id="title_category_edit">
+                            <source>title_category_edit</source>
+                            <target>Edit category: %title%</target>
+                        </trans-unit>
+                        <trans-unit id="title_category_delete">
+                            <source>title_category_delete</source>
+                            <target>Delete category: %title%</target>
+                        </trans-unit>
+                        <trans-unit id="empty_category_list">
+                            <source>empty_category_list</source>
+                            <target>List of categories is empty</target>
+                        </trans-unit>
+                        <trans-unit id="category_not_found">
+                            <source>category_not_found</source>
+                            <target>Category not found</target>
+                        </trans-unit>
+                        <trans-unit id="author_list">
+                            <source>author_list</source>
+                            <target>List of authors</target>
+                        </trans-unit>
+                        <trans-unit id="show_author_details">
+                            <source>show_author_details</source>
+                            <target>Author details</target>
+                        </trans-unit>
+                        <trans-unit id="title_selected_author">
+                            <source>title_selected_author</source>
+                            <target>Chosen author: %title%</target>
+                        </trans-unit>
+                        <trans-unit id="all_authors_list_back">
+                            <source>all_authors_list_back</source>
+                            <target>Back to list of authors</target>
+                        </trans-unit>
+                        <trans-unit id="label_name_surname">
+                            <source>label_name_surname</source>
+                            <target>Name</target>
+                        </trans-unit>
+                        <trans-unit id="title_author_create">
+                            <source>title_author_create</source>
+                            <target>Add new author</target>
+                        </trans-unit>
+                        <trans-unit id="title_author_edit">
+                            <source>title_author_edit</source>
+                            <target>Edit author: %title%</target>
+                        </trans-unit>
+                        <trans-unit id="title_author_delete">
+                            <source>title_author_delete</source>
+                            <target>Delete author: %title%</target>
+                        </trans-unit>
+                        <trans-unit id="empty_author_list">
+                            <source>empty_author_list</source>
+                            <target>List of authors is empty</target>
+                        </trans-unit>
+                        <trans-unit id="author_not_found">
+                            <source>author_not_found</source>
+                            <target>Author not found</target>
+                        </trans-unit>
 
+                        <trans-unit id="action_back">
+                            <source>action_back</source>
+                            <target>Back</target>
+                        </trans-unit>
+                        <trans-unit id="add_to_favourites">
+                            <source>add_to_favourites</source>
+                            <target>Add to favourites</target>
+                        </trans-unit>
+                        <trans-unit id="title_add_to_favourite">
+                            <source>title_add_to_favourite</source>
+                            <target>Add to favourites: %title%</target>
+                        </trans-unit>
 
-
-            <trans-unit id="title_book_details">
-                <source>title_book_details</source>
-                <target>Details of "%title%"</target>
-            </trans-unit>
-            <trans-unit id="label_description">
-                <source>label_description</source>
-                <target>Book description</target>
-            </trans-unit>
-            <trans-unit id="action_back_to_list">
-                <source>action_back_to_list</source>
-                <target>Back to list of books</target>
-            </trans-unit>
-            <trans-unit id="book_not_found">
-                <source>book_not_found</source>
-                <target>Book not found...</target>
-            </trans-unit>
-
-            <trans-unit id="all_category_list_back">
-                <source>all_category_list_back</source>
-                <target>Back to list of categories</target>
-            </trans-unit>
-            <trans-unit id="title_selected_category">
-                <source>title_selected_category</source>
-                <target>Selected category</target>
-            </trans-unit>
-
-
-            <trans-unit id="author_list">
-                <source>author_list</source>
-                <target>List of authors</target>
-            </trans-unit>
+                        <trans-unit id="message_created_successfully">
+                            <source>message_created_successfully</source>
+                            <target>Record created!</target>
+                        </trans-unit>
+                        <trans-unit id="message_updated_successfully">
+                            <source>message_updated_successfully</source>
+                            <target>Record updated!</target>
+                        </trans-unit>
+                        <trans-unit id="message_form_error">
+                            <source>message_form_error</source>
+                            <target>Form error</target>
+                        </trans-unit>
+                        <trans-unit id="message_deleted_successfully">
+                            <source>message_deleted_successfully</source>
+                            <target>Record deleted!</target>
+                        </trans-unit>
+                        <trans-unit id="message_author_contains_books">
+                            <source>message_author_contains_books</source>
+                            <target>There are books written by this author!</target>
+                        </trans-unit>
+                        <trans-unit id="message_category_contains_books">
+                            <source>message_category_contains_books</source>
+                            <target>Category contains books!</target>
+                        </trans-unit>
+                        <trans-unit id="label_none">
+                            <source>label_none</source>
+                            <target>Choose from list</target>
+                        </trans-unit>
+                        <trans-unit id="title_book_edit">
+                            <source>title_book_edit</source>
+                            <target>Edit book "%title%"</target>
+                        </trans-unit>
+                        <trans-unit id="title_book_delete">
+                            <source>title_book_delete</source>
+                            <target>Delete book "%title%"</target>
+                        </trans-unit>
+                        <trans-unit id="empty_tag_list">
+                            <source>empty_tag_list</source>
+                            <target>List of tags is empty</target>
+                        </trans-unit>
+                        <trans-unit id="title_tag_edit">
+                            <source>title_tag_edit</source>
+                            <target>Edit tag "%title%"</target>
+                        </trans-unit>
+                        <trans-unit id="title_tag_delete">
+                            <source>title_tag_delete</source>
+                            <target>Delete tag "%title%"</target>
+                        </trans-unit>
+                        <trans-unit id="title_login">
+                            <source>title_login</source>
+                            <target>Sign in</target>
+                        </trans-unit>
+                        <trans-unit id="please_sign_in">
+                            <source>please_sign_in</source>
+                            <target>Sign in</target>
+                        </trans-unit>
+                        <trans-unit id="email">
+                            <source>email</source>
+                            <target>E-mail</target>
+                        </trans-unit>
+                        <trans-unit id="password">
+                            <source>password</source>
+                            <target>Password</target>
+                        </trans-unit>
+                        <trans-unit id="log_in">
+                            <source>log_in</source>
+                            <target>Sign in</target>
+                        </trans-unit>
+                        <trans-unit id="you_are_logged_in_as">
+                            <source>you_are_logged_in_as</source>
+                            <target>Hello </target>
+                        </trans-unit>
+                        <trans-unit id="logout">
+                            <source>logout</source>
+                            <target>Sign out</target>
+                        </trans-unit>
+                        <trans-unit id="books_written">
+                            <source>books_written</source>
+                            <target>Books written</target>
+                        </trans-unit>
+                        <trans-unit id="books_in_this_category">
+                            <source>books_in_this_category</source>
+                            <target>Books in this category</target>
+                        </trans-unit>
+                        <trans-unit id="show_book">
+                            <source>show_book</source>
+                            <target>Show book</target>
+                        </trans-unit>
+                        <trans-unit id="show_category">
+                            <source>show_category</source>
+                            <target>Show category</target>
+                        </trans-unit>
+                        <trans-unit id="show_author">
+                            <source>show_author</source>
+                            <target>Show author</target>
+                        </trans-unit>
+                        <trans-unit id="user_favourites">
+                            <source>user_favourites</source>
+                            <target>Favourite books</target>
+                        </trans-unit>
+                        <trans-unit id="empty_list_of_favourites">
+                            <source>empty_list_of_favourites</source>
+                            <target>List of favourites is empty</target>
+                        </trans-unit>
+                        <trans-unit id="label_user">
+                            <source>label_user</source>
+                            <target>User</target>
+                        </trans-unit>
+                        <trans-unit id="favourite_list">
+                            <source>favourite_list</source>
+                            <target>Your favourite books</target>
+                        </trans-unit>
+                        <trans-unit id="title_favourite_delete">
+                            <source>title_favourite_delete</source>
+                            <target>Deleting from favourites "%title%"</target>
+                        </trans-unit>
+                        <trans-unit id="title_comments">
+                            <source>title_comments</source>
+                            <target>Comments</target>
+                        </trans-unit>
+                        <trans-unit id="add_comment">
+                            <source>add_comment</source>
+                            <target>Add comment</target>
+                        </trans-unit>
+                        <trans-unit id="title_comment_new">
+                            <source>title_comment_new</source>
+                            <target>Add comment</target>
+                        </trans-unit>
+                        <trans-unit id="label_comment">
+                            <source>label_comment</source>
+                            <target>Your comment:</target>
+                        </trans-unit>
+                        <trans-unit id="title_comment_delete">
+                            <source>title_comment_delete</source>
+                            <target>Delete comment: %content%</target>
+                        </trans-unit>
+                        <trans-unit id="user_list">
+                            <source>user_list</source>
+                            <target>List of users</target>
+                        </trans-unit>
+                        <trans-unit id="empty_user_list">
+                            <source>empty_user_list</source>
+                            <target>List of users is empty</target>
+                        </trans-unit>
+                        <trans-unit id="label_name">
+                            <source>label_name</source>
+                            <target>Name</target>
+                        </trans-unit>
+                        <trans-unit id="label_surname">
+                            <source>label_surname</source>
+                            <target>Surname</target>
+                        </trans-unit>
+                        <trans-unit id="label_nickname">
+                            <source>label_nickname</source>
+                            <target>Nick</target>
+                        </trans-unit>
+                        <trans-unit id="label_role">
+                            <source>label_role</source>
+                            <target>Role</target>
+                        </trans-unit>
+                        <trans-unit id="role_user">
+                            <source>role_user</source>
+                            <target>User</target>
+                        </trans-unit>
+                        <trans-unit id="role_admin">
+                            <source>role_admin</source>
+                            <target>Admin</target>
+                        </trans-unit>
+                        <trans-unit id="label_email">
+                            <source>label_email</source>
+                            <target>E-mail</target>
+                        </trans-unit>
+                        <trans-unit id="title_user_view">
+                            <source>title_user_view</source>
+                            <target>Account %nickname%</target>
+                        </trans-unit>
+                        <trans-unit id="user_not_found">
+                            <source>user_not_found</source>
+                            <target>User not found</target>
+                        </trans-unit>
+                        <trans-unit id="all_user_list_back">
+                            <source>all_user_list_back</source>
+                            <target>Back to users list</target>
+                        </trans-unit>
+                        <trans-unit id="logged_as">
+                            <source>logged_as</source>
+                            <target>Signed as </target>
+                        </trans-unit>
+                        <trans-unit id="your_account">
+                            <source>your_account</source>
+                            <target>Your account</target>
+                        </trans-unit>
+                        <trans-unit id="change_data">
+                            <source>change_data</source>
+                            <target>Change data</target>
+                        </trans-unit>
+                        <trans-unit id="change_password">
+                            <source>change_password</source>
+                            <target>Change password</target>
+                        </trans-unit>
+                        <trans-unit id="register">
+                            <source>register</source>
+                            <target>Register</target>
+                        </trans-unit>
+                        <trans-unit id="data_not_set">
+                            <source>data_not_set</source>
+                            <target>Data not set</target>
+                        </trans-unit>
+                        <trans-unit id="title_register">
+                            <source>title_register</source>
+                            <target>Register</target>
+                        </trans-unit>
+                        <trans-unit id="label_password">
+                            <source>label_password</source>
+                            <target>Password</target>
+                        </trans-unit>
+                        <trans-unit id="label_repeat_password">
+                            <source>label_repeat_password</source>
+                            <target>Repeat password</target>
+                        </trans-unit>
+                        <trans-unit id="label_save">
+                            <source>label_save</source>
+                            <target>Save</target>
+                        </trans-unit>
+                        <trans-unit id="title_password_change">
+                            <source>title_password_change</source>
+                            <target>Change password</target>
+                        </trans-unit>
+                        <trans-unit id="title_user_data_change">
+                            <source>title_user_data_change</source>
+                            <target>Change user data</target>
+                        </trans-unit>
+                        <trans-unit id="massage_already_in_favourites">
+                            <source>message_already_in_favourites</source>
+                            <target>Book already in favourites</target>
+                        </trans-unit>
+                        <trans-unit id="action_log_in">
+                            <source>action_log_in</source>
+                            <target>Sign in to see details</target>
+                        </trans-unit>
+                        <trans-unit id="message_registered_successfully">
+                            <source>message_registered_successfully</source>
+                            <target>New user registered</target>
+                        </trans-unit>
+                        <trans-unit id="message_delete_comments">
+                            <source>message_delete_comments</source>
+                            <target>To delete, you need to delete comments first</target>
+                        </trans-unit>
+                        <trans-unit id="message_delete_favourites">
+                            <source>message_delete_favourites</source>
+                            <target>Can't be deleted, book in favourites</target>
+                        </trans-unit>
+                        <trans-unit id="label_access_data">
+                            <source>label_access_data</source>
+                            <target>Access data</target>
+                        </trans-unit>
+                        <trans-unit id="label_nickname_star">
+                            <source>label_nickname_star</source>
+                            <target>Nick *</target>
+                        </trans-unit>
+                        <trans-unit id="label_email_star">
+                            <source>label_email_star</source>
+                            <target>E-mail *</target>
+                        </trans-unit>
+                        <trans-unit id="label_password_star">
+                            <source>label_password_star</source>
+                            <target>Password *</target>
+                        </trans-unit>
+                        <trans-unit id="label_repeat_password_star">
+                            <source>label_repeat_password_star</source>
+                            <target>Repeat password *</target>
+                        </trans-unit>
+                        <trans-unit id="label_title_star">
+                            <source>label_title_star</source>
+                            <target>Title *</target>
+                        </trans-unit>
+                        <trans-unit id="label_category_star">
+                            <source>label_category_star</source>
+                            <target>Category *</target>
+                        </trans-unit>
+                        <trans-unit id="label_author_star">
+                            <source>label_author_star</source>
+                            <target>Author *</target>
+                        </trans-unit>
+                        <trans-unit id="label_description_star">
+                            <source>label_description_star</source>
+                            <target>Description *</target>
+                        </trans-unit>
         </body>
     </file>
 </xliff>
