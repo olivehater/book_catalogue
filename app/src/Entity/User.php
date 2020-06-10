@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 /**
  * Class User.
@@ -96,6 +97,7 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank
+     * @SecurityAssert\UserPassword(groups={"password"})
      * @Assert\Length(
      *     min="6",
      *     max="255",

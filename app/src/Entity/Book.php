@@ -137,14 +137,14 @@ class Book
     /**
      * Favourite.
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Favourite", mappedBy="book")
+     * @ORM\OneToMany(targetEntity="App\Entity\Favourite", mappedBy="book", orphanRemoval=true)
      */
     private $favourite;
 
     /**
      * Comment.
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="book")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="book", orphanRemoval=true)
      */
     private $comment;
 

@@ -62,15 +62,7 @@
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ url('book_edit', {'id':book.id}) }}">{{ 'label_edit'|trans }}</a>
-                            {% if not book.favourite|length %} {# nie można usunąć artykułu jeśli ma komentarze lub jeśli jest w czyjejś liście ulubionych #}
-                                {% if not book.comment|length %}
-                                    <a href="{{ url('book_delete', {'id':book.id}) }}">Usuń</a>
-                                {% else %}
-                                    <p>{{ 'message_delete_comments'|trans }}</p>
-                                {% endif %}
-                            {% else %}
-                                <p>{{ 'message_delete_favourites'|trans }}</p>
-                            {% endif %}
+                            <a href="{{ url('book_delete', {'id':book.id}) }}">Usuń</a>
                         {% endif %}
 
                     </td>
