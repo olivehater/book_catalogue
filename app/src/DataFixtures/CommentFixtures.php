@@ -16,10 +16,11 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
 {
     /**
      * Load data.
+     * @param ObjectManager $manager
      */
-    protected function loadData(ObjectManager $manager): void
+    public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(20, 'comments', function ($i){
+        $this->createMany(20, 'comments', function ($i) {
             $comment = new Comment();
             $comment->setContent($this->faker->sentence);
             $comment->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));

@@ -27,12 +27,17 @@ class ChangePasswordType extends AbstractType
     {
         $builder->add(
             'password',
-            RepeatedType::class, [
+            RepeatedType::class,
+            [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Hasła nie są takie same',
                 'required' => true,
-                'first_options' => ['label' => 'label_password_star'],
-                'second_options' => ['label' => 'label_repeat_password_star'],
+                'first_options' => [
+                        'label' => 'label_password_star',
+                    ],
+                'second_options' => [
+                        'label' => 'label_repeat_password_star',
+                    ],
             ]
         );
     }

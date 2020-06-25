@@ -51,8 +51,7 @@ class RegistrationType extends AbstractType
             )
             ->add('userData', UserDataType::class, [
                     'data_class' => UserData::class,
-                ]
-            );
+            ]);
 
 //        $builder->add(
 //            'nickname',

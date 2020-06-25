@@ -80,7 +80,6 @@ class UserService
      * Encoding user's password.
      *
      * @param $user
-     * @param $form
      *
      * @return string
      */

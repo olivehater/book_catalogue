@@ -62,9 +62,9 @@ class BookService
     /**
      * Create paginated list.
      *
-     * @param int $page Page number
-     *
+     * @param int   $page    Page number
      * @param array $filters
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface Pagination interface
      */
     public function createPaginatedList(int $page, array $filters = []): PaginationInterface
@@ -72,9 +72,9 @@ class BookService
         $filters = $this->prepareFilters($filters);
 
         return $this->paginator->paginate(
-             $this->bookRepository->queryAll($filters),
-             $page,
-             BookRepository::PAGINATOR_ITEMS_FOR_PAGE
+            $this->bookRepository->queryAll($filters),
+            $page,
+            BookRepository::PAGINATOR_ITEMS_FOR_PAGE
         );
     }
 
