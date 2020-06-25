@@ -21,6 +21,7 @@ class SecurityService
 
     /**
      * SecurityService constructor.
+     * @param AuthenticationUtils $authenticationUtils
      */
     public function __construct(AuthenticationUtils $authenticationUtils)
     {

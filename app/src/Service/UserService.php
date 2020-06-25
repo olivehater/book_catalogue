@@ -36,7 +36,9 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param \App\Repository\UserRepository $userRepository User repository
+     * @param \App\Repository\UserRepository $userRepository  User repository
+     * @param PaginatorInterface             $paginator
+     * @param UserPasswordEncoderInterface   $passwordEncoder
      */
     public function __construct(UserRepository $userRepository, PaginatorInterface $paginator, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -55,9 +57,9 @@ class UserService
     public function createPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
-          $this->userRepository->queryAll(),
-          $page,
-          UserRepository::PAGINATOR_ITEMS_FOR_PAGE
+            $this->userRepository->queryAll(),
+            $page,
+            UserRepository::PAGINATOR_ITEMS_FOR_PAGE
         );
     }
 
@@ -94,6 +96,7 @@ class UserService
      * Find by email.
      *
      * @param $array
+     *
      * @return \App\Entity\User|null User entity
      */
     public function findByEmail($array)

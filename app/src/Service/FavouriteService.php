@@ -33,6 +33,7 @@ class FavouriteService
      * FavouriteService constructor.
      *
      * @param \App\Repository\FavouriteRepository $favouriteRepository Favourite repository
+     * @param PaginatorInterface                  $paginator
      */
     public function __construct(FavouriteRepository $favouriteRepository, PaginatorInterface $paginator)
     {
@@ -45,6 +46,7 @@ class FavouriteService
      *
      * @param int $page Page number
      * @param $user
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function createPaginatedList(int $page, $user): PaginationInterface
@@ -61,6 +63,7 @@ class FavouriteService
      *
      * @param $book
      * @param $user
+     *
      * @return \App\Entity\Favourite|null
      */
     public function alreadyInUsersFavourites($book, $user)

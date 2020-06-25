@@ -11,13 +11,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class AuthorType
+ */
 class AuthorType extends AbstractType
 {
     /**
      * Builds the form.
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                                        $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -33,13 +36,13 @@ class AuthorType extends AbstractType
         $builder->add(
             'description',
             TextType::class,
-        [
+            [
             'label' => 'label_description_star',
             'required' => true,
             'attr' => [
                 'max_length' => 2000,
                 ],
-        ]
+            ]
         );
     }
 
@@ -48,7 +51,7 @@ class AuthorType extends AbstractType
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver The resolver for the options
      */
-    public function configureOptions( OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Author::class]);
     }

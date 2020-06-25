@@ -23,6 +23,7 @@ class UserFixtures extends AbstractBaseFixtures
 
     /**
      * UserFixtures constructor.
+     * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {

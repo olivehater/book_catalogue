@@ -1,7 +1,8 @@
 <?php
 /**
- * User repository
+ * User repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -41,8 +42,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
-     * @param \Symfony\Component\Security\Core\User\UserInterface $user User interface
-     * @param string $newEncodedPassword New password
+     *
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user               User interface
+     * @param string                                              $newEncodedPassword New password
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -68,6 +70,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function save(User $user): void
     {
+
         $this->_em->persist($user);
         $this->_em->flush($user);
     }

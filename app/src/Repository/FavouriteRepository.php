@@ -105,5 +105,4 @@ class FavouriteRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('favourite');
     }
-
 }

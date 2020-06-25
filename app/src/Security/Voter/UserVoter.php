@@ -43,7 +43,7 @@ class UserVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['MANAGE','VIEW'])
+        return in_array($attribute, ['MANAGE', 'VIEW'])
             && $subject instanceof User;
     }
 
@@ -51,9 +51,10 @@ class UserVoter extends Voter
      * Perform a single access check operation on a given attribute, subject and token.
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
-     * @param string $attribute
-     * @param mixed $subject
+     * @param string         $attribute
+     * @param mixed          $subject
      * @param TokenInterface $token
+     *
      * @return bool
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool

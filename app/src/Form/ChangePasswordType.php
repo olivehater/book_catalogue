@@ -12,13 +12,16 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ChangePasswordType.
+ */
 class ChangePasswordType extends AbstractType
 {
     /**
      * Builds form.
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder Form builder interface
-     * @param array $options The options
+     * @param FormBuilderInterface $builder Form builder interface
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -37,12 +40,12 @@ class ChangePasswordType extends AbstractType
     /**
      * Configures options.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver Resolver for the options
+     * @param OptionsResolver $resolver Resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class
+            'data_class' => User::class,
         ]);
     }
 
@@ -55,5 +58,4 @@ class ChangePasswordType extends AbstractType
     {
         return 'user_change_password';
     }
-
 }

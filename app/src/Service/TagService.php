@@ -45,6 +45,7 @@ class TagService
      * Find tag by title.
      *
      * @param string $title Tag title
+     *
      * @return \App\Entity\Tag|null Tag entity
      */
     public function findOneByTitle(string $title): ?Tag
@@ -56,6 +57,7 @@ class TagService
      * Find tag by id.
      *
      * @param int $id Tag id
+     *
      * @return \App\Entity\Tag|null Tag entity
      */
     public function findOneById(int $id): ?Tag
@@ -99,9 +101,9 @@ class TagService
     public function createPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
-          $this->tagRepository->queryAll(),
-          $page,
-          TagRepository::PAGINATOR_ITEMS_PER_PAGE
+            $this->tagRepository->queryAll(),
+            $page,
+            TagRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
 }

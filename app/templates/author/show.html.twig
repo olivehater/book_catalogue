@@ -31,6 +31,8 @@
     {% endif %}
 
     <a href="{{ url('book_index') }}">{{'all_books_list_back'|trans}}</a><br>
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ url('author_index') }}">{{'all_authors_list_back'|trans}}</a>
+    {% endif %}
 
 {% endblock %}

@@ -17,15 +17,7 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
  * Class User.
  *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(
- *     name="users",
- *     uniqueConstraints={
- *          @ORM\UniqueConstraint(
- *              name="email_idx",
- *              columns={"email"},
- *          )
- *     }
- * )
+ * @ORM\Table(name="users")
  *
  * @UniqueEntity(fields={"email"})
  *
@@ -69,8 +61,7 @@ class User implements UserInterface
      *
      * @ORM\Column(
      *     type="string",
-     *     length=180,
-     *     unique=true
+     *     length=180
      *)
      * @Assert\NotBlank
      * @Assert\Email
@@ -97,7 +88,9 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank
+     *
      * @SecurityAssert\UserPassword(groups={"password"})
+     *
      * @Assert\Length(
      *     min="6",
      *     max="255",
@@ -342,6 +335,5 @@ class User implements UserInterface
         if ($this !== $userData->getUser()) {
             $userData->setUser($this);
         }
-
     }
 }

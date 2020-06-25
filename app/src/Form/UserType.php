@@ -21,6 +21,8 @@ class UserType extends AbstractType
 {
     /**
      * Build form.
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -50,6 +52,7 @@ class UserType extends AbstractType
 
     /**
      * Configure option.
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {

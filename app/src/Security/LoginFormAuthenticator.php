@@ -60,6 +60,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
      */
     private $passwordEncoder;
 
+    /**
+     * @var UserService
+     */
     private $userService;
 
     /**
@@ -69,6 +72,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface            $urlGenerator     URL generator
      * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface            $csrfTokenManager CSRF token manager
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder  Password encoder
+     * @param UserService                                                           $userService
      */
     public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, UserService $userService)
     {

@@ -11,6 +11,9 @@ use App\Repository\AuthorRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * Class AuthorService.
+ */
 class AuthorService
 {
     /**
@@ -29,6 +32,8 @@ class AuthorService
 
     /**
      * AuthorService constructor.
+     * @param AuthorRepository   $authorRepository
+     * @param PaginatorInterface $paginator
      */
     public function __construct(AuthorRepository $authorRepository, PaginatorInterface $paginator)
     {

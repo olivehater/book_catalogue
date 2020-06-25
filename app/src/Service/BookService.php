@@ -49,6 +49,7 @@ class BookService
      * @param \App\Repository\BookRepository          $bookRepository  Book repository
      * @param \Knp\Component\Pager\PaginatorInterface $paginator       Paginator interface
      * @param \App\Service\CategoryService            $categoryService Category service
+     * @param TagService                              $tagService
      */
     public function __construct(BookRepository $bookRepository, PaginatorInterface $paginator, CategoryService $categoryService, TagService $tagService)
     {
@@ -63,6 +64,7 @@ class BookService
      *
      * @param int $page Page number
      *
+     * @param array $filters
      * @return \Knp\Component\Pager\Pagination\PaginationInterface Pagination interface
      */
     public function createPaginatedList(int $page, array $filters = []): PaginationInterface
@@ -70,9 +72,9 @@ class BookService
         $filters = $this->prepareFilters($filters);
 
         return $this->paginator->paginate(
-          $this->bookRepository->queryAll($filters),
-          $page,
-          BookRepository::PAGINATOR_ITEMS_FOR_PAGE
+             $this->bookRepository->queryAll($filters),
+             $page,
+             BookRepository::PAGINATOR_ITEMS_FOR_PAGE
         );
     }
 
@@ -104,6 +106,8 @@ class BookService
 
     /**
      * Find id for the book.
+     *
+     * @param int $id
      *
      * @return \App\Entity\Book|null Book entity
      */

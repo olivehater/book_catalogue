@@ -63,6 +63,17 @@ class AuthorRepository extends ServiceEntityRepository
     }
 
     /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builer
+     */
+    public function queryAll(): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->orderBy('author.title', 'ASC'); // domyśne sortowanie
+    }
+
+    /**
      * Get or create new query.
      *
      * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
@@ -73,16 +84,5 @@ class AuthorRepository extends ServiceEntityRepository
     {
         // jeśli nie ma query buildera to utworz nowy
         return $queryBuilder ?? $this->createQueryBuilder('author'); // task to alias
-    }
-
-    /**
-     * Query all records.
-     *
-     * @return \Doctrine\ORM\QueryBuilder Query builer
-     */
-    public function queryAll(): QueryBuilder
-    {
-        return $this->getOrCreateQueryBuilder()
-            ->orderBy('author.title', 'ASC'); // domyśne sortowanie
     }
 }

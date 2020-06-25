@@ -7,6 +7,8 @@ namespace App\Service;
 
 use App\Entity\UserData;
 use App\Repository\UserDataRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * Class UserDataService.
@@ -16,14 +18,14 @@ class UserDataService
     /**
      * User data repository.
      *
-     * @var \App\Repository\UserDataRepository
+     * @var UserDataRepository
      */
     private $userDataRepository;
 
     /**
      * UserDataService constructor.
      *
-     * @param \App\Repository\UserDataRepository $userDataRepository User data repository
+     * @param UserDataRepository $userDataRepository User data repository
      */
     public function __construct(UserDataRepository $userDataRepository)
     {
@@ -33,10 +35,10 @@ class UserDataService
     /**
      * Save user data.
      *
-     * @param \App\Entity\UserData $userData User data entity
+     * @param UserData $userData User data entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(UserData $userData):void
     {

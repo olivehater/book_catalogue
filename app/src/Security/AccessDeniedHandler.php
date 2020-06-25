@@ -18,7 +18,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     /**
      * Access Denied Handler.
      *
-     * @param Request $request
+     * @param Request               $request
      * @param AccessDeniedException $accessDeniedException
      *
      * @return Response|null

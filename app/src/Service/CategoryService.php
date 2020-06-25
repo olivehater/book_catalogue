@@ -32,8 +32,8 @@ class CategoryService
     /**
      * CategoryService constructor.
      *
-     * @param \App\Repository\CategoryRepository $categoryRepository Category repository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator interface
+     * @param \App\Repository\CategoryRepository      $categoryRepository Category repository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator          Paginator interface
      */
     public function __construct(CategoryRepository $categoryRepository, PaginatorInterface $paginator)
     {

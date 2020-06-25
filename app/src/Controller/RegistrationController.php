@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\UserData;
 use App\Form\RegistrationType;
+use App\Repository\UserRepository;
 use App\Service\RegistrationService;
 use App\Service\UserDataService;
 use App\Service\UserService;
@@ -78,41 +79,62 @@ class RegistrationController extends AbstractController
         }
 
         $user = new User();
-        $userData = new UserData();
-        $form = $this->createForm(RegistrationType::class, $userData);
+        $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
-        /*
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('user')->get('password')->getData()
-                )
-            );
-        */
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword( // zakodowane hasło
-                $this->registrationService->encodingPassword($user, $form->get('user')->get('password')->getData())
+                $this->registrationService->encodingPassword($user, $user->getPassword())
             );
 
-            $user->setEmail($form->get('user')->get('email')->getData());
-            $user->setUserData($userData);
             $user->setRoles(['ROLE_USER']);
-            //$userDataRepository->save($userData);
-            $this->userDataService->save($userData);
-            //$userRepository->save($user);
-            $this->userService->save($user);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-            $entityManager->persist($userData);
             $entityManager->flush();
 
             $this->addFlash('success', 'message_registered_successfully');
 
             return $this->redirectToRoute('app_login');
         }
+
+//        $user = new User();
+//        $userData = new UserData();
+//        $form = $this->createForm(RegistrationType::class, $userData);
+//        $form->handleRequest($request);
+//
+//        /*
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $user->setPassword(
+//                $passwordEncoder->encodePassword(
+//                    $user,
+//                    $form->get('user')->get('password')->getData()
+//                )
+//            );
+//        */
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $user->setPassword( // zakodowane hasło
+//                $this->registrationService->encodingPassword($user, $form->get('user')->get('password')->getData())
+//            );
+//
+//            $user->setEmail($form->get('user')->get('email')->getData());
+//            $user->setUserData($userData);
+//            $user->setRoles(['ROLE_USER']);
+//
+//            //$this->userService->save($user);
+//            //$this->userDataService->save($userData);
+//
+//            //$userDataRepository->save($userData);
+//            //$userRepository->save($user);
+//
+//            $entityManager = $this->getDoctrine()->getManager();
+//            //$entityManager->persist($user);
+//            $entityManager->persist($userData);
+//            $entityManager->flush();
+//
+//            $this->addFlash('success', 'message_registered_successfully');
+//
+//            return $this->redirectToRoute('app_login');
+//        }
 
         return $this->render(
             'registration/register.html.twig',

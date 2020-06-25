@@ -7,6 +7,8 @@ namespace App\Service;
 
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * Class CommentService.
@@ -16,14 +18,14 @@ class CommentService
     /**
      * Comment repository.
      *
-     * @var \App\Repository\CommentRepository
+     * @var CommentRepository
      */
     private $commentRepository;
 
     /**
      * CommentService constructor.
      *
-     * @param \App\Repository\CommentRepository $commentRepository Comment repository
+     * @param CommentRepository $commentRepository Comment repository
      */
     public function __construct(CommentRepository $commentRepository)
     {
@@ -33,10 +35,10 @@ class CommentService
     /**
      * Delete comment.
      *
-     * @param \App\Entity\Comment $comment Comment entity
+     * @param Comment $comment Comment entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Comment $comment): void
     {
@@ -46,10 +48,10 @@ class CommentService
     /**
      * Save comment.
      *
-     * @param \App\Entity\Comment $comment Comment entity
+     * @param Comment $comment Comment entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(Comment $comment): void
     {
