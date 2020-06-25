@@ -31,12 +31,28 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @var UserService
+     */
     private $userService;
 
+    /**
+     * @var FavouriteService
+     */
     private $favouriteService;
 
+    /**
+     * @var UserDataService
+     */
     private $userDataService;
 
+    /**
+     * UserController constructor.
+     *
+     * @param UserService      $userService
+     * @param FavouriteService $favouriteService
+     * @param UserDataService  $userDataService
+     */
     public function __construct(UserService $userService, FavouriteService $favouriteService, UserDataService $userDataService)
     {
         $this->userService = $userService;
@@ -109,6 +125,7 @@ class UserController extends AbstractController
      *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
      * @Route(
      *     "/favourite/{id}/delete",
      *     methods={"GET", "DELETE"},
@@ -153,6 +170,7 @@ class UserController extends AbstractController
      *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
      * @Route(
      *     "/{id}/changepassword",
      *     methods={"GET", "PUT"},
@@ -200,6 +218,7 @@ class UserController extends AbstractController
      *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
      * @Route(
      *     "/{id}/changedata",
      *     methods={"GET", "PUT"},

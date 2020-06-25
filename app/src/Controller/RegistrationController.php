@@ -47,6 +47,7 @@ class RegistrationController extends AbstractController
      *
      * @param \App\Service\RegistrationService $registrationService Registration service
      * @param \App\Service\UserDataService     $userDataService     User data service
+     * @param UserService                      $userService
      */
     public function __construct(RegistrationService $registrationService, UserDataService $userDataService, UserService $userService)
     {
@@ -64,6 +65,7 @@ class RegistrationController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/registration",
      *     name="register"

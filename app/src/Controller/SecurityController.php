@@ -23,6 +23,8 @@ class SecurityController extends AbstractController
 
     /**
      * SecurityController constructor.
+     *
+     * @param SecurityService $securityService
      */
     public function __construct(SecurityService $securityService)
     {

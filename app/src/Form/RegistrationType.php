@@ -21,7 +21,7 @@ class RegistrationType extends AbstractType
      * Builds form.
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder Form builder interface
-     * @param array                                        $options The options
+     * @param array $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -70,7 +70,7 @@ class RegistrationType extends AbstractType
         $resolver->setDefaults([
             'data_class' => UserData::class,
             'validation_groups' => ['password'],
-            ]);
+        ]);
     }
 
     /**

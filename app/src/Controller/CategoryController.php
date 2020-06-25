@@ -33,6 +33,8 @@ class CategoryController extends AbstractController
 
     /**
      * CategoryController constructor.
+     *
+     * @param CategoryService $categoryService
      */
     public function __construct(CategoryService $categoryService)
     {
@@ -72,6 +74,7 @@ class CategoryController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/create",
      *     methods={"GET", "POST"},
@@ -110,6 +113,7 @@ class CategoryController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/edit",
      *     methods={"GET", "PUT"},
@@ -149,6 +153,7 @@ class CategoryController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/delete",
      *     methods={"GET", "DELETE"},

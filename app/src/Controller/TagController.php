@@ -26,8 +26,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TagController extends AbstractController
 {
+    /**
+     * @var TagService
+     */
     private $tagService;
 
+    /**
+     * TagController constructor.
+     *
+     * @param TagService $tagService
+     */
     public function __construct(TagService $tagService)
     {
         $this->tagService = $tagService;
@@ -111,11 +119,10 @@ class TagController extends AbstractController
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP request
-     * @param \App\Entity\Tag                           $tag           Tag entity
-     * @param \App\Repository\TagRepository             $tagRepository Tag repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Tag                           $tag     Tag entity
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return \Symfony\Component\HttpFoundation\Response        HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

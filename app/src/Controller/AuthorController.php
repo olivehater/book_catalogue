@@ -19,8 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AuthorController.
  *
  * @Route("/author")
- *
- *
  */
 class AuthorController extends AbstractController
 {
@@ -33,6 +31,7 @@ class AuthorController extends AbstractController
 
     /**
      * AuthorController constructor.
+     * @param AuthorService $authorService
      */
     public function __construct(AuthorService $authorService)
     {
@@ -73,6 +72,7 @@ class AuthorController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/create",
      *     methods={"GET", "POST"},
@@ -112,6 +112,7 @@ class AuthorController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/edit",
      *     methods={"GET", "PUT"},
@@ -152,6 +153,7 @@ class AuthorController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/delete",
      *     methods={"GET", "DELETE"},

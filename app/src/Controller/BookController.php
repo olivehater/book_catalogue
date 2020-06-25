@@ -43,10 +43,17 @@ class BookController extends AbstractController
      */
     private $favouriteService;
 
+    /**
+     * @var CommentService
+     */
     private $commentService;
 
     /**
      * BookController constructor.
+     *
+     * @param BookService      $bookService
+     * @param FavouriteService $favouriteService
+     * @param CommentService   $commentService
      */
     public function __construct(BookService $bookService, FavouriteService $favouriteService, CommentService $commentService)
     {
@@ -70,7 +77,6 @@ class BookController extends AbstractController
      */
     public function index(Request $request): Response
     {
-
         $page = $request->query->getInt('page', 1);
         $pagination = $this->bookService->createPaginatedList(
             $page,
@@ -86,8 +92,7 @@ class BookController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\BookRepository            $bookRepository Book repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -131,6 +136,7 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/favourite",
      *     methods={"GET", "POST"},
@@ -190,6 +196,7 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/edit",
      *     methods={"GET", "PUT"},
@@ -229,6 +236,7 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/delete",
      *     methods={"GET", "DELETE"},
@@ -245,13 +253,13 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_index');
         }
         */
-/*
-        if ($book->getComment()->count()) {
-            $this->addFlash('warning', 'message_delete_comments');
+        /*
+                if ($book->getComment()->count()) {
+                    $this->addFlash('warning', 'message_delete_comments');
 
-            return $this->redirectToRoute('book_index');
-        }
-*/
+                    return $this->redirectToRoute('book_index');
+                }
+        */
         $form = $this->createForm(FormType::class, $book, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
@@ -287,6 +295,7 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}/deletecomment",
      *     methods={"GET", "DELETE"},
@@ -338,6 +347,7 @@ class BookController extends AbstractController
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
      * @Route(
      *     "/{id}",
      *     methods={"GET", "POST"},
