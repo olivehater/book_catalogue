@@ -485,6 +485,18 @@
                 <source>label_description_star</source>
                 <target>Opis *</target>
             </trans-unit>
+            <trans-unit id="User data">
+                <source>User data</source>
+                <target>Dane</target>
+            </trans-unit>
+            <trans-unit id="message_access_denied">
+                <source>message_access_denied</source>
+                <target>Brak dostępu</target>
+            </trans-unit>
+            <trans-unit id="title_access_denied">
+                <source>title_access_denied</source>
+                <target>Nie ma dostępu</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

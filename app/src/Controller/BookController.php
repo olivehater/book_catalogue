@@ -148,12 +148,6 @@ class BookController extends AbstractController
     public function addFavourite(Book $book, Request $request): Response
     {
         $user = $this->getUser();
-        /*
-        $favourite = $favouriteRepository->findOneBy([
-            'book' => $book,
-            'user' => $this->getUser(),
-        ]);
-        */
         $favourite = $this->favouriteService->alreadyInUsersFavourites($book, $user);
 
         if (!$favourite) {
@@ -246,20 +240,6 @@ class BookController extends AbstractController
      */
     public function delete(Request $request, Book $book): Response
     {
-        /*
-        if ($book->getFavourite()->count()) {
-            $this->addFlash('warning', 'message_delete_favourites');
-
-            return $this->redirectToRoute('book_index');
-        }
-        */
-        /*
-                if ($book->getComment()->count()) {
-                    $this->addFlash('warning', 'message_delete_comments');
-
-                    return $this->redirectToRoute('book_index');
-                }
-        */
         $form = $this->createForm(FormType::class, $book, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
@@ -311,7 +291,6 @@ class BookController extends AbstractController
         $form = $this->createForm(FormType::class, $comment, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
-        //$book = $bookRepository->find($id); // szuka id książki
         $book = $this->bookService->findBookId($id);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
@@ -319,7 +298,6 @@ class BookController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$commentRepository->delete($comment);
             $this->commentService->delete($comment);
 
             $this->addFlash('success', 'message_deleted_successfully');
@@ -360,13 +338,11 @@ class BookController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        //$book = $bookRepository->find($id);
         $book = $this->bookService->findBookId($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setBook($book);
             $comment->setUser($this->getUser());
-            //$commentRepository->save($comment);
             $this->commentService->save($comment);
 
             return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); //żeby wiedzieć pod jakie id wrócić

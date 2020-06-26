@@ -7,9 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Tag;
 use App\Form\TagType;
-use App\Repository\TagRepository;
 use App\Service\TagService;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -33,7 +31,6 @@ class TagController extends AbstractController
 
     /**
      * TagController constructor.
-     *
      * @param TagService $tagService
      */
     public function __construct(TagService $tagService)
@@ -44,9 +41,7 @@ class TagController extends AbstractController
     /**
      * Show all tags.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP request
-     * @param \App\Repository\TagRepository             $tagRepository Tag repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator     Paginator
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -56,17 +51,10 @@ class TagController extends AbstractController
      *     methods={"GET"},
      * )
      */
-    public function index(Request $request, TagRepository $tagRepository, PaginatorInterface $paginator)
+    public function index(Request $request)
     {
         $page = $request->query->getInt('page', 1);
         $pagination = $this->tagService->createPaginatedList($page);
-        /*
-        $pagination = $paginator->paginate(
-            $tagRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            TagRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
-        */
 
         return $this->render(
             'tag/index.html.twig',
@@ -77,9 +65,8 @@ class TagController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP request
-     * @param \App\Entity\Tag                           $tag           Tag entity
-     * @param \App\Repository\TagRepository             $tagRepository Tag repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
+     * @param \App\Entity\Tag                           $tag     Tag entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -92,14 +79,12 @@ class TagController extends AbstractController
      *     name="tag_edit",
      * )
      */
-    public function edit(Request $request, Tag $tag, TagRepository $tagRepository): Response
+    public function edit(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(TagType::class, $tag, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$tag->setUpdatedAt(new \DateTime());
-            //$tagRepository->save($tag);
             $this->tagService->save($tag);
 
             $this->addFlash('success', 'message_updated_successfully');
@@ -122,7 +107,7 @@ class TagController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      * @param \App\Entity\Tag                           $tag     Tag entity
      *
-     * @return \Symfony\Component\HttpFoundation\Response        HTTP response
+     * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -143,7 +128,6 @@ class TagController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$tagRepository->delete($tag);
             $this->tagService->delete($tag);
 
             $this->addFlash('success', 'message_deleted_successfully');

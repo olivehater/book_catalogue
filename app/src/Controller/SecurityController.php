@@ -43,12 +43,7 @@ class SecurityController extends AbstractController
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('book_index');
         }
-
-        // get the login error if there is one
-        //$error = $authenticationUtils->getLastAuthenticationError();
         $error = $this->securityService->lastAuthenticationError();
-        // last username entered by the user
-        //$lastUsername = $authenticationUtils->getLastUsername();
         $lastUsername = $this->securityService->lastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);

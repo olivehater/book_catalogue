@@ -476,6 +476,14 @@
                             <source>label_description_star</source>
                             <target>Description *</target>
                         </trans-unit>
+            <trans-unit id="message_access_denied">
+                <source>message_access_denied</source>
+                <target>Access denied</target>
+            </trans-unit>
+            <trans-unit id="title_access_denied">
+                <source>title_access_denied</source>
+                <target>No access</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

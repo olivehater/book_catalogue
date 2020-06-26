@@ -188,10 +188,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword( // zakodowane hasło
+            $user->setPassword(
                 $this->userService->encodingPassword($user)
             );
-            //$repository->save($user);
             $this->userService->save($user);
 
             $this->addFlash('success', 'message_updated_successfully');

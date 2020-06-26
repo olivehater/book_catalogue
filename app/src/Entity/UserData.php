@@ -176,10 +176,5 @@ class UserData
     public function setUser(User $user): void
     {
         $this->user = $user;
-
-        // set the owning side of the relation if necessary
-        //if ($user->getUserData() !== $this) {
-        //    $user->setUserData($this);
-        // }
     }
 }

@@ -88,8 +88,6 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$category->setCreatedAt(new \DateTime());
-            //$category->setUpdatedAt(new \DateTime());
             $this->categoryService->save($category);
 
             $this->addFlash('success', 'message_created_successfully');
@@ -126,7 +124,6 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$category->setUpdatedAt(new \DateTime());
             $this->categoryService->save($category);
 
             $this->addFlash('success', 'message_updated_successfully');

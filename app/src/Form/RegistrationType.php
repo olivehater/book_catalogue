@@ -52,40 +52,6 @@ class RegistrationType extends AbstractType
             ->add('userData', UserDataType::class, [
                     'data_class' => UserData::class,
             ]);
-
-//        $builder->add(
-//            'nickname',
-//            TextType::class,
-//            [
-//                'label' => 'label_nickname_star',
-//                'required' => true,
-//                'attr' => ['max_length' => 50],
-//            ]
-//        );
-//        $builder->add(
-//            'name',
-//            TextType::class,
-//            [
-//                'label' => 'label_name',
-//                'required' => false,
-//                'attr' => ['max_length' => 30],
-//            ]
-//        );
-//        $builder->add(
-//            'surname',
-//            TextType::class,
-//            [
-//                'label' => 'label_surname',
-//                'required' => false,
-//                'attr' => ['max_length' => 45],
-//            ]
-//        );
-//        $builder->add(
-//            'user', UserType::class, [
-//                'label' => 'label_access_data',
-//                'required' => true,
-//            ]
-//        );
     }
 
     /**
@@ -96,9 +62,7 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            //'data_class' => UserData::class,
             'data_class' => User::class,
-            //'validation_groups' => ['password'],
         ]);
     }
 

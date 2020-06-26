@@ -9,7 +9,7 @@ use App\Entity\Author;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * Class CategoryFixtures.
+ * Class AuthorFixtures.
  */
 class AuthorFixtures extends AbstractBaseFixtures
 {
@@ -21,7 +21,6 @@ class AuthorFixtures extends AbstractBaseFixtures
     public function loadData(ObjectManager $manager): void
     {
         $this->createMany(10, 'authors', function ($i) {
-
             $author = new Author();
             $author->setTitle($this->faker->firstName);
             $author->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
