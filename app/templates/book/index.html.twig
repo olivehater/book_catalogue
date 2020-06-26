@@ -43,8 +43,8 @@
             {% for book in pagination.items %}
                 <tr>
                     <td>{{ book.id }}</td>
-                    <td>{{ book.createdAt|date('Y/m/d') }}</td>
-                    <td>{{ book.updatedAt|date('Y/m/d') }}</td>
+                    <td>{{ book.createdAt|format_date('long') }}</td>
+                    <td>{{ book.updatedAt|format_date('long') }}</td>
                     <td>{{ book.title }}</td>
                     <td><a href="{{ url('author_show', {'id':book.author.id}) }}">{{ book.author.title }}</a></td>
                     <td><a href="{{ url('book_index', {'filters' : {'category' : book.category.id}}) }}" >{{ book.category.title }}</a></td>

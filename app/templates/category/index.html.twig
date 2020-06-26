@@ -27,8 +27,8 @@
             {% for category in pagination.items %}
                 <tr>
                     <td>{{ category.id }}</td> {# task.nazwa pola taka jak w enccji task #}
-                    <td>{{ category.createdAt|date('d/m/Y') }}</td> {#trzeba dodać filtr, bo to typ danym datetime#}
-                    <td>{{ category.updatedAt|date('d/m/Y') }}</td>
+                    <td>{{ category.createdAt|format_date('long') }}</td> {#trzeba dodać filtr, bo to typ danym datetime#}
+                    <td>{{ category.updatedAt|format_date('long') }}</td>
                     <td>{{ category.title }}</td>
                     <td>
 

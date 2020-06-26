@@ -26,8 +26,8 @@
             {% for author in pagination.items %}
                 <tr>
                     <td>{{ author.id }}</td> {# task.nazwa pola taka jak w enccji task #}
-                    <td>{{ author.createdAt|date('d/m/Y') }}</td> {#trzeba dodać filtr, bo to typ danym datetime#}
-                    <td>{{ author.updatedAt|date('d/m/Y') }}</td>
+                    <td>{{ author.createdAt|format_date('long') }}</td> {#trzeba dodać filtr, bo to typ danym datetime#}
+                    <td>{{ author.updatedAt|format_date('long') }}</td>
                     <td>{{ author.title }}</td>
                     <td>
 

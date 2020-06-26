@@ -24,8 +24,8 @@
             {% for tag in pagination.items %}
                 <tr>
                     <td>{{ tag.id }}</td> {# task.nazwa pola taka jak w enccji task #}
-                    <td>{{ tag.createdAt|date('d/m/Y') }}</td> {#trzeba dodać filtr, bo to typ danym datetime#}
-                    <td>{{ tag.updatedAt|date('d/m/Y') }}</td>
+                    <td>{{ tag.createdAt|format_date('long') }}</td> {#trzeba dodać filtr, bo to typ danym datetime#}
+                    <td>{{ tag.updatedAt|format_date('long') }}</td>
                     <td>{{ tag.title }}</td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}
