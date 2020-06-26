@@ -1,6 +1,6 @@
 <?php
 /**
- * Error Controller
+ * Error Controller.
  */
 
 namespace App\Controller;
@@ -9,12 +9,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ErrorController
+ * Class ErrorController.
  */
 class ErrorController extends Controller
 {
     /**
-     * Access Denied action.
+     * Access denied controller.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @Route("/access_denied", name="access_denied")
      */

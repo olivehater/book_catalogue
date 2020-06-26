@@ -19,6 +19,11 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
     private $router;
 
+    /**
+     * AccessDeniedHandler constructor.
+     *
+     * @param RouterInterface $router
+     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -37,6 +42,5 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         $url = $this->router->generate('access_denied');
 
         return new RedirectResponse($url);
-
     }
 }
