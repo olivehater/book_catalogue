@@ -15,6 +15,8 @@ use App\Form\FavouriteType;
 use App\Service\BookService;
 use App\Service\CommentService;
 use App\Service\FavouriteService;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -51,9 +53,9 @@ class BookController extends AbstractController
     /**
      * BookController constructor.
      *
-     * @param BookService      $bookService
-     * @param FavouriteService $favouriteService
-     * @param CommentService   $commentService
+     * @param BookService      $bookService      Book service
+     * @param FavouriteService $favouriteService Favourite service
+     * @param CommentService   $commentService   Comment service
      */
     public function __construct(BookService $bookService, FavouriteService $favouriteService, CommentService $commentService)
     {
@@ -96,8 +98,8 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/create",
@@ -134,8 +136,8 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/favourite",
@@ -188,8 +190,8 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/edit",
@@ -228,8 +230,8 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/delete",
@@ -273,8 +275,8 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/deletecomment",
@@ -323,8 +325,8 @@ class BookController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}",
@@ -345,7 +347,7 @@ class BookController extends AbstractController
             $comment->setUser($this->getUser());
             $this->commentService->save($comment);
 
-            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]); //żeby wiedzieć pod jakie id wrócić
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]);
         }
 
         return $this->render(
